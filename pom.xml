@@ -26,7 +26,6 @@
         <module>custom-boot-starters</module>
         <module>custom-boot-dependency</module>
         <module>custom-boot-examples</module>
-        <module>spring-boot-examples</module>
     </modules>
 
 
