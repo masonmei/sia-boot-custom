@@ -2,17 +2,13 @@ package com.baidu.oped.sia.boot.iplist;
 
 import com.baidu.oped.sia.boot.common.FileWatcher;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
+import com.baidu.oped.sia.boot.exception.RequestFobiddenException;
 import com.baidu.oped.sia.boot.utils.IpV4Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -45,7 +41,7 @@ public class IpFilter implements Filter {
         if (blackSet != null) {
             for (String blackRange : blackSet) {
                 if (IpV4Utils.isInRange(blackRange, ip)) {
-                    return;
+                    throw new RequestFobiddenException();
                 }
             }
         }

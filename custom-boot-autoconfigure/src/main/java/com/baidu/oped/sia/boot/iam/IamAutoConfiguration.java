@@ -54,7 +54,7 @@ public class IamAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = IAM_PREFIX, name = ENABLED, havingValue = "false", matchIfMissing = false)
+    @ConditionalOnProperty(prefix = IAM_PREFIX, name = ENABLED, havingValue = "false", matchIfMissing = true)
     public IamManager emptyIamManager() {
         return new IamManager() {
             @Override

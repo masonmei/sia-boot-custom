@@ -3,8 +3,7 @@
  */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
-import com.baidu.oped.sia.boot.exception.SystemCode;
-import com.baidu.oped.sia.boot.exception.SystemException;
+import com.baidu.oped.sia.boot.exception.RequestFobiddenException;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -20,7 +19,8 @@ public class ClientSourceCheckingHandler {
     private final ClientSourceCheckingProperties properties;
     private final ClientSourceWhiteLabel clientSourceWhiteLabel;
 
-    public ClientSourceCheckingHandler(ClientSourceCheckingProperties properties, ClientSourceWhiteLabel clientSourceWhiteLabel) {
+    public ClientSourceCheckingHandler(ClientSourceCheckingProperties properties,
+                                       ClientSourceWhiteLabel clientSourceWhiteLabel) {
         Assert.notNull(properties);
         Assert.notNull(clientSourceWhiteLabel);
         this.properties = properties;
@@ -50,7 +50,7 @@ public class ClientSourceCheckingHandler {
         }
 
         if (checkSource && !isFromValidateSource()) {
-            throw new SystemException(SystemCode.ACCESS_DENIED, "You are not allowed for this action.");
+            throw new RequestFobiddenException();
         }
     }
 

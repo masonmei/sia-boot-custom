@@ -5,25 +5,17 @@ import com.baidu.bce.iam.IamException;
 import com.baidu.bce.iam.SignatureAuthentication;
 import com.baidu.bce.iam.internal.Token;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
-import com.baidu.oped.sia.boot.exception.SystemCode;
-import com.baidu.oped.sia.boot.exception.SystemException;
+import com.baidu.oped.sia.boot.exception.AuthenticationFailureException;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_SERVICE;
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_USER;
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_SERVICE_NOT_AUTHENTICATED;
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_USER_NOT_AUTHENTICATED;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.*;
 import static com.baidu.oped.sia.boot.utils.Constrains.AUTHORIZATION;
+import static org.springframework.util.StringUtils.collectionToDelimitedString;
 
 /**
  * Created by mason on 12/2/15.
@@ -42,10 +34,10 @@ public class DefaultIamManager implements IamManager {
 
         String currentUser = RequestInfoHolder.getThreadCurrentUser();
         if (currentUser == null) {
-            throw new SystemException(SystemCode.AUTHENTICATION_ERROR, AUTH_USER_NOT_AUTHENTICATED);
+            throw new AuthenticationFailureException(AUTH_USER_NOT_AUTHENTICATED);
         }
         if (!currentUser.equals(userId)) {
-            throw new SystemException(SystemCode.AUTHORIZATION_ERROR, AUTH_INVALID_USER);
+            throw new AuthenticationFailureException(AUTH_INVALID_USER);
         }
     }
 
@@ -57,12 +49,12 @@ public class DefaultIamManager implements IamManager {
 
         String currentUser = RequestInfoHolder.getThreadCurrentUser();
         if (currentUser == null) {
-            throw new SystemException(SystemCode.AUTHENTICATION_ERROR, AUTH_SERVICE_NOT_AUTHENTICATED);
+            throw new AuthenticationFailureException(AUTH_SERVICE_NOT_AUTHENTICATED);
         }
 
         String userScope = getServiceScope(currentUser);
         if (userScope == null || !userScope.equals(scope)) {
-            throw new SystemException(SystemCode.AUTHORIZATION_ERROR, AUTH_INVALID_SERVICE);
+            throw new AuthenticationFailureException(AUTH_INVALID_SERVICE);
         }
     }
 
@@ -74,7 +66,7 @@ public class DefaultIamManager implements IamManager {
 
         String currentUser = RequestInfoHolder.getThreadCurrentUser();
         if (currentUser == null) {
-            throw new SystemException(SystemCode.AUTHENTICATION_ERROR, AUTH_SERVICE_NOT_AUTHENTICATED);
+            throw new AuthenticationFailureException(AUTH_SERVICE_NOT_AUTHENTICATED);
         }
 
         if (currentUser.equals(userId)) {
@@ -83,7 +75,7 @@ public class DefaultIamManager implements IamManager {
 
         String userScope = getServiceScope(currentUser);
         if (userScope == null || !userScope.equals(scope)) {
-            throw new SystemException(SystemCode.AUTHORIZATION_ERROR, AUTH_INVALID_SERVICE);
+            throw new AuthenticationFailureException(AUTH_INVALID_SERVICE);
         }
     }
 
@@ -140,7 +132,7 @@ public class DefaultIamManager implements IamManager {
 
             if (valueArray.size() > 1) {
                 Collections.sort(valueArray);
-                userRequest.addParam(key, String.join(",", valueArray));
+                userRequest.addParam(key, collectionToDelimitedString(valueArray, ";"));
             } else {
                 userRequest.addParam(key, valueArray.get(0));
             }
@@ -160,7 +152,8 @@ public class DefaultIamManager implements IamManager {
             // http headers.
             if (headerValues.size() > 1) {
                 Collections.sort(headerValues);
-                userRequest.addHeader(header, String.join(";", headerValues));
+                ;
+                userRequest.addHeader(header, collectionToDelimitedString(headerValues, ";"));
             } else {
                 userRequest.addHeader(header, headerValues.get(0));
             }

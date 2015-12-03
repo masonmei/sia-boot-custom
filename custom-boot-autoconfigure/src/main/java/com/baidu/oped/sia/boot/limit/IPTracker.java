@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.limit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 /**
  * Created by mason on 11/10/15.

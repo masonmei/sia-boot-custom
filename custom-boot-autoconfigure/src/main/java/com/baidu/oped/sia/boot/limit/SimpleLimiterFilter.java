@@ -1,18 +1,12 @@
 package com.baidu.oped.sia.boot.limit;
 
 import com.baidu.oped.sia.boot.common.FileWatcher;
+import com.baidu.oped.sia.boot.exception.TooManyRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -50,10 +44,7 @@ public class SimpleLimiterFilter implements Filter {
         String remoteAddr = servletRequest.getRemoteAddr();
 
         if (ipStats.shouldLimit(remoteAddr) && !inWhiteList(remoteAddr)) {
-            HttpServletResponse response = (HttpServletResponse) servletResponse;
-            response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-            response.getWriter().append(HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase());
-            LOG.info("Blocked IP: {}", remoteAddr);
+            throw new TooManyRequestException();
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

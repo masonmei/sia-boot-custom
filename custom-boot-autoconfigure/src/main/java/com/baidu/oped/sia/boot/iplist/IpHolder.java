@@ -1,5 +1,6 @@
 package com.baidu.oped.sia.boot.iplist;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,8 +8,8 @@ import java.util.List;
  * Created by mason on 10/29/15.
  */
 public class IpHolder {
-    private List<String> deny;
-    private List<String> allow;
+    private List<String> deny = new ArrayList<>();
+    private List<String> allow = new ArrayList<>();
 
     public List<String> getDeny() {
         return deny;

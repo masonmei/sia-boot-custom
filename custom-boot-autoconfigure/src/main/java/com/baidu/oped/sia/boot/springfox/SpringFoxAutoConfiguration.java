@@ -20,7 +20,6 @@ import java.util.Set;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.SPRING_FOX_PREFIX;
-import static java.util.stream.Collectors.toSet;
 
 /**
  * Spring Fox AutoConfiguration
@@ -31,7 +30,7 @@ import static java.util.stream.Collectors.toSet;
 @ConditionalOnClass({Docket.class})
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(SpringFoxProperties.class)
-@ConditionalOnProperty(prefix = SPRING_FOX_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = SPRING_FOX_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
 @EnableSwagger2
 public class SpringFoxAutoConfiguration {
     @Autowired

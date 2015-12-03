@@ -14,10 +14,6 @@ public class ResolvableHandlerMethodArgumentResolver implements HandlerMethodArg
     private ResolvableResolver resolver;
 
     public ResolvableHandlerMethodArgumentResolver(ResolvableResolver resolver) {
-        this(resolver, null);
-    }
-
-    public ResolvableHandlerMethodArgumentResolver(ResolvableResolver resolver, String currentAttributeName) {
         this.resolver = resolver;
     }
 
