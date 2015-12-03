@@ -1,0 +1,9 @@
+server:
+  port: 28888
+
+custom:
+  boot:
+    iplist:
+      config-path:
+      config-file: iplist.yaml
+      refresh-interval: 10

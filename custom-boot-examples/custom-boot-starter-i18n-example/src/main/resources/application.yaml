@@ -1,0 +1,8 @@
+server:
+  port: 28888
+
+custom:
+  boot:
+    i18n:
+      enabled: true
+      resolver-type: SESSION

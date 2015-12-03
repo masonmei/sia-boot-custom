@@ -1,0 +1,8 @@
+spring:
+  application:
+    admin:
+      enabled: true
+  jmx:
+    enabled: true
+    default-domain: spring-boot-jmx-example
+    server:

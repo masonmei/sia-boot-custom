@@ -1,0 +1,13 @@
+server:
+  port: 28888
+management:
+  context-path: /admin
+custom:
+  boot:
+    profiling:
+      enabled: true
+      log-frequency: 10
+      warning-threshold: 1000
+spring:
+  aop:
+    proxy-target-class: true

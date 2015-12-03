@@ -1,0 +1,14 @@
+server:
+  port: 8443
+  ssl:
+    key-store: /Users/mason/Workspaces/github/boot-custom/custom-boot-examples/custom-boot-starter-dualssl-example/src/main/resources/igitras.jks
+    key-store-password: igitras
+    key-password: igitras
+
+custom:
+  boot:
+    ssl:
+      dual:
+        enabled: true
+        http-port: 28888
+        redirect-ssl: false

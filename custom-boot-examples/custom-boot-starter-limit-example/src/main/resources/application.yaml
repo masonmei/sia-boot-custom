@@ -1,0 +1,14 @@
+server:
+  port: 28888
+
+custom:
+  boot:
+    limit:
+      enabled: true
+      config-path:
+      config-file: whiteList.yaml
+      refresh-interval: 10
+      max-requests-per-period: 100
+      period: 10
+      band-time: 60
+

@@ -1,0 +1,25 @@
+package com.baidu.oped.sia.boot.common;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Created by mason on 12/3/15.
+ */
+public abstract class FilterOrder {
+    public static final String IP_LIST = "ip_list";
+    public static final String IP_LIMIT = "ip_limit";
+    public static final String IAM = "iam";
+    public static final String LOG_HEADER = "log_header";
+
+    private static final List<String> KEYS = Arrays.asList(
+            IP_LIST,
+            IP_LIMIT,
+            IAM,
+            LOG_HEADER
+    );
+
+    public static int getOrder(String key) {
+        return KEYS.indexOf(key) + 1;
+    }
+}

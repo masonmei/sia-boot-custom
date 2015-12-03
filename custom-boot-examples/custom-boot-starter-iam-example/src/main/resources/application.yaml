@@ -1,0 +1,49 @@
+server:
+  port: 28888
+  context-path: /json-api/v1
+custom:
+  boot:
+    iam:
+      enabled: true
+      host: nmg02-bce-test6.nmg02.baidu.com
+      port: 35357
+      protocol: http
+      username: bcm
+      password: bcm
+      domain: default
+      cache-ttl: 300
+      max-cache-size: 10000
+      token-discard-ttl: 30
+      ignores:
+        - /json-api/site/**
+        - /swagger/**
+      service-accounts:
+        - user-id: d050b9077caa413a989fbad1ed2e0a21
+          scope: BCE_BCC;
+        - user-id: 9674521b108449938ec017f0e4dcee71
+          scope: BCE_SCS;
+        - user-id: 812ad9069cae48618e89112e2c415e06
+          scope: BCE_RDS;
+        - user-id: 86b623b48913459f8316f359d7a1e663
+          scope: BCE_BOS;
+        - user-id: db6fea977fca4674b8c5f00e836aa0b8
+          scope: BCE_CDS;
+        - user-id: 8cf68471383940af8e14a09296ed53dc
+          scope: BCE_BLB;
+        - user-id: e8b028edc51b4ace9eca0c9fd6d449e5
+          scope: BCE_BMR;
+        - user-id: 9697566fac4a43f3ace1c79e6a366625
+          scope: BCE_CDN;
+        - user-id: 7d651b2a0b524a52aa53953c84dc12d2
+          scope: BCE_SMS;
+        - user-id: 7fa780e866fc4a039dcb40e342775629
+          scope: BCE_SES;
+        - user-id: 4ef683a3c61c4e14b76883432ea52775
+          scope: BCE_LSS;
+        - user-id: 7e710785cfe04e2494c23974ff065ff5
+          scope: bcm_test_iam_monitor;
+        - user-id: 0298875cac414b9da18c8ead045751e3
+          scope: BCE_BS
+
+
+

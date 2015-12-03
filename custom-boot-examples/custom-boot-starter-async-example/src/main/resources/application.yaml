@@ -1,0 +1,11 @@
+server:
+  port: 28888
+management:
+  context-path: /admin
+custom:
+  boot:
+    async:
+      executor:
+        thread-name-prefix: async-thread
+        thread-group-name: async-thread-group
+        pool-size: 100

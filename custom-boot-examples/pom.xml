@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>boot-custom</artifactId>
+        <groupId>com.baidu.oped.sia.boot</groupId>
+        <version>0.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>custom-boot-examples</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>custom-boot-starter-springfox-example</module>
+        <module>custom-boot-starter-iplist-example</module>
+        <module>custom-boot-starter-trace-example</module>
+        <module>custom-boot-starter-async-example</module>
+        <module>custom-boot-starter-profiling-example</module>
+        <module>custom-boot-starter-limit-example</module>
+        <module>custom-boot-starter-i18n-example</module>
+        <module>custom-boot-starter-resolver-example</module>
+        <module>custom-boot-starter-dualssl-example</module>
+        <module>custom-boot-starter-rewrite-example</module>
+        <module>custom-boot-starter-iam-example</module>
+    </modules>
+
+
+</project>

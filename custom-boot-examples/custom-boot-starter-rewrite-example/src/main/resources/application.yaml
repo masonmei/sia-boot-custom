@@ -1,0 +1,14 @@
+server:
+  port: 28888
+
+custom:
+  boot:
+    rewrite:
+      enabled: true
+      resolve-param: true
+      rewrite-entries:
+        - pattern: /getUser.*
+          rewrite: /test/{name}
+        - pattern: /findUser.*
+          rewrite: /test/{name}
+
