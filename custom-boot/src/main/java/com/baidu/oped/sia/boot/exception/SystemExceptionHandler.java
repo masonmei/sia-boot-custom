@@ -5,18 +5,16 @@ import com.baidu.oped.sia.boot.common.BasicResponse;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.support.RequestContext;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INTERNAL_SYS_ERROR;
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.REQ_PARAM_MISMATCH;
@@ -26,23 +24,15 @@ public class SystemExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(SystemExceptionHandler.class);
 
-    @Autowired
-    private ReloadableResourceBundleMessageSource messageSource;
-
-    private String getRequestId() {
-        return RequestInfoHolder.getThreadTraceId();
-    }
-
     @ExceptionHandler(SystemException.class)
-    public ResponseEntity<BasicResponse> handleSystemException(HttpServletRequest request, HttpServletResponse response,
-                                                               SystemException exception) {
+    public ResponseEntity<BasicResponse> handleSystemException(SystemException exception) {
         LOG.warn("SystemException handled", exception);
         SystemCode code = exception.getCode();
         BasicResponse error = new BasicResponse();
         String requestId = getRequestId();
         error.setRequestId(requestId);
         error.setCode(code);
-        error.setMessage(buildMessage(exception, request));
+        error.setMessage(getLocalMessage(exception.getMessage()));
         LOG.info("[exception] {}", error.getCode());
         if (code == SystemCode.INTERNAL_ERROR) {
             return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -60,7 +50,6 @@ public class SystemExceptionHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<BasicResponse> handleMissingServletRequestParameterException(
-            HttpServletRequest request, HttpServletResponse response,
             MissingServletRequestParameterException exception) {
         LOG.warn("MissingServletRequestParameterException handled", exception);
         BasicResponse error = new BasicResponse();
@@ -68,41 +57,34 @@ public class SystemExceptionHandler {
         error.setRequestId(requestId);
         error.setCode(SystemCode.INVALID_PARAMETER);
         Object[] args = new Object[]{exception.getParameterName(), exception.getParameterType()};
-        error.setMessage(buildMessage(REQ_PARAM_MISMATCH, args, request));
+        error.setMessage(getLocalMessage(REQ_PARAM_MISMATCH, args));
         LOG.info("[exception] {}", error.getCode());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<BasicResponse> handleException(
-            HttpServletRequest request, HttpServletResponse response, Exception exception) {
+    public ResponseEntity<BasicResponse> handleException(Exception exception) {
         LOG.error("Exception handled", exception);
         BasicResponse error = new BasicResponse();
         String requestId = getRequestId();
         error.setRequestId(requestId);
         error.setCode(SystemCode.INTERNAL_ERROR);
-        error.setMessage(buildMessage(request));
+        error.setMessage(getLocalMessage(INTERNAL_SYS_ERROR));
         LOG.info("[exception] {}", error.getCode());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private String buildMessage(SystemException exception, HttpServletRequest request) {
-        return buildMessage(exception.getMessage(), exception.getArgs(), request);
+    private static String getRequestId() {
+        return RequestInfoHolder.getThreadTraceId();
     }
 
-    private String buildMessage(HttpServletRequest request) {
-        return buildMessage(INTERNAL_SYS_ERROR, request);
+    private static String getLocalMessage(String key) {
+        return getLocalMessage(key, null);
     }
 
-    private String buildMessage(String messageId, HttpServletRequest request) {
-        return buildMessage(messageId, null, request);
-    }
-
-    private String buildMessage(String messageId, Object[] args, HttpServletRequest request) {
-        try {
-            return messageSource.getMessage(messageId, args, LocaleContextHolder.getLocale());
-        } catch (NoSuchMessageException exception) {
-            return messageId;
-        }
+    private static String getLocalMessage(String key, Object[] args) {
+        HttpServletRequest request =  ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        RequestContext requestContext = new RequestContext(request);
+        return requestContext.getMessage(key, args);
     }
 }

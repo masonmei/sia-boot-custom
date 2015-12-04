@@ -3,7 +3,7 @@
  */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
-import com.baidu.oped.sia.boot.exception.RequestFobiddenException;
+import com.baidu.oped.sia.boot.exception.RequestForbiddenException;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -50,7 +50,7 @@ public class ClientSourceCheckingHandler {
         }
 
         if (checkSource && !isFromValidateSource()) {
-            throw new RequestFobiddenException();
+            throw new RequestForbiddenException();
         }
     }
 

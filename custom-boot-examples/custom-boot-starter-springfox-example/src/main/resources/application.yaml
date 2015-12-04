@@ -5,6 +5,7 @@ custom:
   boot:
     spring:
       fox:
+        enabled: true
         patterns:
           - /api**
           - /test**
