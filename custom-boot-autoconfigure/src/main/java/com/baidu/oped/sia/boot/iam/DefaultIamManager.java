@@ -28,11 +28,11 @@ public class DefaultIamManager implements IamManager {
 
     @Override
     public void checkUserAuth(String userId) {
-        if (RequestInfoHolder.getThreadIgnoreAuth()) {
+        if (RequestInfoHolder.ignoreAuth()) {
             return;
         }
 
-        String currentUser = RequestInfoHolder.getThreadCurrentUser();
+        String currentUser = RequestInfoHolder.currentUser();
         if (currentUser == null) {
             throw new AuthenticationFailureException(AUTH_USER_NOT_AUTHENTICATED);
         }
@@ -43,11 +43,11 @@ public class DefaultIamManager implements IamManager {
 
     @Override
     public void checkServiceAuth(String scope) {
-        if (RequestInfoHolder.getThreadIgnoreAuth()) {
+        if (RequestInfoHolder.ignoreAuth()) {
             return;
         }
 
-        String currentUser = RequestInfoHolder.getThreadCurrentUser();
+        String currentUser = RequestInfoHolder.currentUser();
         if (currentUser == null) {
             throw new AuthenticationFailureException(AUTH_SERVICE_NOT_AUTHENTICATED);
         }
@@ -60,11 +60,11 @@ public class DefaultIamManager implements IamManager {
 
     @Override
     public void checkServiceAndUserAuth(String scope, String userId) {
-        if (RequestInfoHolder.getThreadIgnoreAuth()) {
+        if (RequestInfoHolder.ignoreAuth()) {
             return;
         }
 
-        String currentUser = RequestInfoHolder.getThreadCurrentUser();
+        String currentUser = RequestInfoHolder.currentUser();
         if (currentUser == null) {
             throw new AuthenticationFailureException(AUTH_SERVICE_NOT_AUTHENTICATED);
         }

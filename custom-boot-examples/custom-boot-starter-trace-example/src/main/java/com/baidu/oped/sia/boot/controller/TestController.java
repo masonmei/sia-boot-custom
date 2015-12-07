@@ -13,7 +13,7 @@ public class TestController {
     @RequestMapping(value = {"home"}, method = RequestMethod.GET)
     public String home() {
         return String.format("Trace home with id %s start at %s",
-                RequestInfoHolder.getThreadTraceId(),
-                RequestInfoHolder.getThreadTraceTimestamp());
+                RequestInfoHolder.traceId(),
+                RequestInfoHolder.traceTimestamp());
     }
 }

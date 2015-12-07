@@ -4,18 +4,22 @@ import com.baidu.oped.sia.boot.common.FileWatcher;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 import com.baidu.oped.sia.boot.exception.RequestForbiddenException;
 import com.baidu.oped.sia.boot.utils.IpV4Utils;
+import org.omg.PortableInterceptor.RequestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by mason on 10/29/15.
  */
-public class IpFilter implements Filter {
+public class IpFilter extends OncePerRequestFilter {
     private static final Logger LOG = LoggerFactory.getLogger(IpFilter.class);
 
     private final FileWatcher<IpHolder> fileWatcher;
@@ -26,14 +30,8 @@ public class IpFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        LOG.info("Initialing IpFilter");
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        String ip = servletRequest.getRemoteAddr();
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String ip = request.getRemoteAddr();
 
         List<String> blackSet = fileWatcher.getIpListHolder().getDeny();
         List<String> whiteSet = fileWatcher.getIpListHolder().getAllow();
@@ -41,24 +39,17 @@ public class IpFilter implements Filter {
         if (blackSet != null) {
             for (String blackRange : blackSet) {
                 if (IpV4Utils.isInRange(blackRange, ip)) {
+                    LOG.debug("request with url: {} from ip: {} has been blocked", request.getRequestURI(), ip);
                     throw new RequestForbiddenException();
                 }
             }
         }
 
         if (whiteSet != null && whiteSet.contains(ip)) {
-            RequestInfoHolder.setThreadIgnoreAuth(true);
-            filterChain.doFilter(servletRequest, servletResponse);
-            RequestInfoHolder.removeThreadIgnoreAuth();
-        } else {
-            RequestInfoHolder.setThreadIgnoreAuth(false);
-            filterChain.doFilter(servletRequest, servletResponse);
-            RequestInfoHolder.removeThreadIgnoreAuth();
+            RequestInfoHolder.setInWhiteList(true);
         }
-    }
 
-    @Override
-    public void destroy() {
-        LOG.info("Destroying IpFilter");
+        filterChain.doFilter(request, response);
+        RequestInfoHolder.removeInWhiteList();
     }
 }

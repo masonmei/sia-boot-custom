@@ -40,22 +40,22 @@ public class TraceInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        if (null == RequestInfoHolder.getThreadTraceId()) {
+        if (null == RequestInfoHolder.traceId()) {
             String requestId = request.getHeader(traceHeaderName);
             if (requestId == null) {
                 requestId = UUID.randomUUID().toString();
                 log.info("{} not found in header, generate traceId: {} ", traceHeaderName, requestId);
             }
-            RequestInfoHolder.setThreadTraceId(requestId);
+            RequestInfoHolder.setTraceId(requestId);
             response.addHeader(traceHeaderName, requestId);
             MDC.put("requestId", requestId);
         }
 
-        if (null == RequestInfoHolder.getThreadTraceTimestamp()) {
+        if (null == RequestInfoHolder.traceTimestamp()) {
             String currentTimeInMillis = request.getHeader(traceTimestampHeaderName);
             if (currentTimeInMillis == null) {
                 currentTimeInMillis = String.format("%d", Calendar.getInstance().getTimeInMillis());
-                RequestInfoHolder.setThreadTraceTimestamp(currentTimeInMillis);
+                RequestInfoHolder.setTraceTimestamp(currentTimeInMillis);
                 log.info("{} not found in header, generate traceStartTimestamp: {}",
                         traceTimestampHeaderName, currentTimeInMillis);
             }
@@ -74,8 +74,8 @@ public class TraceInterceptor extends HandlerInterceptorAdapter {
         String responseTraceId = response.getHeader(traceHeaderName);
         String responseTraceTimestamp = response.getHeader(traceTimestampHeaderName);
 
-        String threadTraceId = RequestInfoHolder.getThreadTraceId();
-        String threadTraceTimestamp = RequestInfoHolder.getThreadTraceTimestamp();
+        String threadTraceId = RequestInfoHolder.traceId();
+        String threadTraceTimestamp = RequestInfoHolder.traceTimestamp();
 
         if (!threadTraceId.equals(responseTraceId)) {
             log.error("traceId changed, traceId: {}, responseTraceId: {}", threadTraceId, responseTraceId);
@@ -92,7 +92,7 @@ public class TraceInterceptor extends HandlerInterceptorAdapter {
         log.info("request afterCompletion, method: {}, url: {}, status: {}, time: {}ms", request.getMethod(),
                 request.getRequestURI(), response.getStatus(), timeUsed);
         MDC.remove("requestId");
-        RequestInfoHolder.removeThreadTraceTimestamp();
-        RequestInfoHolder.removeThreadTraceId();
+        RequestInfoHolder.removeTraceTimestamp();
+        RequestInfoHolder.removeTraceId();
     }
 }

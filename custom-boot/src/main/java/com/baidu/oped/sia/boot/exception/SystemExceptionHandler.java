@@ -75,7 +75,7 @@ public class SystemExceptionHandler {
     }
 
     private static String getRequestId() {
-        return RequestInfoHolder.getThreadTraceId();
+        return RequestInfoHolder.traceId();
     }
 
     private static String getLocalMessage(String key) {

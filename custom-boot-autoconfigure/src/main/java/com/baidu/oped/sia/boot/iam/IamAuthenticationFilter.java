@@ -14,7 +14,6 @@ import java.io.IOException;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.REMOTE_ADDRESS;
 import static com.baidu.oped.sia.boot.utils.Constrains.USER;
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 /**
@@ -41,18 +40,18 @@ public class IamAuthenticationFilter extends OncePerRequestFilter {
         MDC.put(REMOTE_ADDRESS, remoteAddress);
 
         if (!iamManager.isActive() || !accessControl.isNotIgnoredUri(request.getRequestURI())) {
-            RequestInfoHolder.setThreadIgnoreAuth(TRUE);
+            RequestInfoHolder.setIgnoreAuth(TRUE);
         }
 
         String user = "undefined";
-        if (!RequestInfoHolder.getThreadIgnoreAuth()) {
+        if (!RequestInfoHolder.ignoreAuth()) {
             user = iamManager.getUserFromIam(request);
         }
 
         MDC.put(USER, user);
-        RequestInfoHolder.setThreadCurrentUser(user);
+        RequestInfoHolder.setCurrentUser(user);
         filterChain.doFilter(request, response);
-        RequestInfoHolder.removeThreadCurrentUser();
+        RequestInfoHolder.removeCurrentUser();
         MDC.remove(USER);
 
         MDC.remove(REMOTE_ADDRESS);

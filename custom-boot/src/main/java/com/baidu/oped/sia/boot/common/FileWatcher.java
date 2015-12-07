@@ -29,6 +29,7 @@ public class FileWatcher<T> {
 
     private final Class<T> contentType;
     private T ipListHolder;
+    private boolean stop = false;
 
     public FileWatcher(File configFile, Class<T> type) {
         this(1, configFile, type);
@@ -60,6 +61,7 @@ public class FileWatcher<T> {
 
         loadingProperties();
         watchingForChanges();
+        registerShutDownHook();
     }
 
     public T getIpListHolder() {
@@ -75,7 +77,7 @@ public class FileWatcher<T> {
                     final WatchService watchService = FileSystems.getDefault().newWatchService();
                     parentPath.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
 
-                    while (true) {
+                    while (!stop) {
                         final WatchKey watchKey = watchService.poll(refreshIntervalInSecond, TimeUnit.SECONDS);
                         if (watchKey != null) {
                             for (WatchEvent<?> event : watchKey.pollEvents()) {
@@ -93,6 +95,19 @@ public class FileWatcher<T> {
                 }
             }
         }).start();
+    }
+
+    private void registerShutDownHook() {
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                stop = true;
+                            }
+                        }
+                )
+        );
     }
 
     private void loadingProperties() {
