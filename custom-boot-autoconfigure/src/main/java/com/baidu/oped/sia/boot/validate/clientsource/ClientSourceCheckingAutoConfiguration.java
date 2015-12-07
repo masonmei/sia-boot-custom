@@ -33,7 +33,7 @@ public class ClientSourceCheckingAutoConfiguration {
 
     @Bean
     @Profile({"DEV", "test"})
-    public ClientSourceWhiteLabel testWhiteLabel(){
+    public ClientSourceWhiteLabel testWhiteLabel() {
         return new ClientSourceWhiteLabel() {
             @Override
             public boolean isWhiteHost(String host) {

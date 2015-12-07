@@ -31,7 +31,7 @@ public class UriRewriteFiler extends OncePerRequestFilter {
 
         String servletPath = request.getServletPath();
         for (RewriteContext.RewriteEntry entry : rewriteContext.getRewriteEntries()) {
-            if(servletPath.matches(entry.getPattern())){
+            if (servletPath.matches(entry.getPattern())) {
                 filterChain.doFilter(new PathRewriteRequestWrapper(request, entry.getRewrite(), params), response);
                 break;
             }

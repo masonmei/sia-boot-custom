@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringArrayToPrimitiveArr;
 import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringToPrimitive;
@@ -32,12 +31,14 @@ public class ResolverUtilsTest {
                     try {
                         field.set(target, convertStringArrayToPrimitiveArr(field.getType(), new String[]{"1", "2"}));
                     } catch (IllegalAccessException e) {
+                        doNothing();
                     }
                 } else {
                     System.out.println(field.getType());
                     try {
                         field.set(target, convertStringToPrimitive(field.getType(), "1"));
                     } catch (IllegalAccessException e) {
+                        doNothing();
                     }
                 }
             }
@@ -45,6 +46,9 @@ public class ResolverUtilsTest {
         System.out.println(target);
     }
 
+    private void doNothing() {
+
+    }
 
 
     @Test

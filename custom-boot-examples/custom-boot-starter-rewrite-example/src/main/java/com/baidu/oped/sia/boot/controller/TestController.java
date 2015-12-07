@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @RequestMapping("test/{user}")
-    public String test(@PathVariable String user){
+    public String test(@PathVariable String user) {
         return "test " + user;
     }
 }

@@ -57,8 +57,9 @@ public class DualSslAutoConfiguration {
                     });
                 }
 
-                if(container instanceof UndertowEmbeddedServletContainerFactory) {
-                    UndertowEmbeddedServletContainerFactory factory = (UndertowEmbeddedServletContainerFactory) container;
+                if (container instanceof UndertowEmbeddedServletContainerFactory) {
+                    UndertowEmbeddedServletContainerFactory factory =
+                            (UndertowEmbeddedServletContainerFactory) container;
                     factory.addBuilderCustomizers(new UndertowBuilderCustomizer() {
                         @Override
                         public void customize(Undertow.Builder builder) {
@@ -71,7 +72,8 @@ public class DualSslAutoConfiguration {
     }
 
     @Configuration
-    @ConditionalOnProperty(prefix = SSL_DUAL_PREFIX, name = "redirect-ssl", havingValue = "true", matchIfMissing = false)
+    @ConditionalOnProperty(prefix = SSL_DUAL_PREFIX,
+            name = "redirect-ssl", havingValue = "true", matchIfMissing = false)
     public class WebSecurityAutoRedirectConfiguration extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {

@@ -31,7 +31,7 @@ import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
 @ConditionalOnProperty(prefix = I18N_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
 @EnableConfigurationProperties(I18nProperties.class)
 public class I18NAutoConfiguration extends WebMvcConfigurerAdapter {
-    private static final String defaultEncoding = "UTF-8";
+    private static final String DEFAULT_ENCODING = "UTF-8";
 
     @Autowired
     private I18nProperties properties;
@@ -77,7 +77,7 @@ public class I18NAutoConfiguration extends WebMvcConfigurerAdapter {
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename(properties.getMsgBaseName());
-        messageSource.setDefaultEncoding(defaultEncoding);
+        messageSource.setDefaultEncoding(DEFAULT_ENCODING);
         return messageSource;
     }
 

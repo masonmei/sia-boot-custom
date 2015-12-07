@@ -6,10 +6,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by mason on 11/10/15.
  */
 public class IpStats {
-    private ConcurrentHashMap<String, IPTracker> ipTrackerMap = new ConcurrentHashMap<>();
     private final int maxRequestsPerPeriod;
     private final int periodInMs;
     private final int bandTimeInMs;
+    private ConcurrentHashMap<String, IPTracker> ipTrackerMap = new ConcurrentHashMap<>();
 
     public IpStats(int maxRequestsPerPeriod, int periodInMs, int bandTimeInMs) {
         this.maxRequestsPerPeriod = maxRequestsPerPeriod;
@@ -21,7 +21,7 @@ public class IpStats {
         long currentTimeInMillis = System.currentTimeMillis();
         if (ipTrackerMap.containsKey(remoteAddr)) {
             IPTracker ipTracker = ipTrackerMap.get(remoteAddr);
-            if(ipTracker != null && ipTracker.hasReachedLimit(maxRequestsPerPeriod, currentTimeInMillis)){
+            if (ipTracker != null && ipTracker.hasReachedLimit(maxRequestsPerPeriod, currentTimeInMillis)) {
                 return true;
             }
         } else {

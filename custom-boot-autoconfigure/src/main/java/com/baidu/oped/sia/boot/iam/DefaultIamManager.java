@@ -11,9 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.*;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_SERVICE;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_USER;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_SERVICE_NOT_AUTHENTICATED;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_USER_NOT_AUTHENTICATED;
 import static com.baidu.oped.sia.boot.utils.Constrains.AUTHORIZATION;
 import static org.springframework.util.StringUtils.collectionToDelimitedString;
 

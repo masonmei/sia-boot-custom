@@ -98,16 +98,13 @@ public class FileWatcher<T> {
     }
 
     private void registerShutDownHook() {
-        Runtime.getRuntime().addShutdownHook(
-                new Thread(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                stop = true;
-                            }
-                        }
-                )
-        );
+        Runtime.getRuntime()
+                .addShutdownHook(new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stop = true;
+                    }
+                }));
     }
 
     private void loadingProperties() {

@@ -19,7 +19,7 @@ public abstract class ResolverUtils {
     /**
      * Cache for {@link Class#getDeclaredFields()}, allowing for fast iteration.
      */
-    private static final Map<Class<?>, Field[]> declaredFieldsCache =
+    private static final Map<Class<?>, Field[]> DECLARED_FIELDS_CACHE =
             new ConcurrentReferenceHashMap<Class<?>, Field[]>(256);
 
     /**
@@ -31,11 +31,11 @@ public abstract class ResolverUtils {
      */
     public static <T> Field[] getDeclaredFields(Class<T> clazz) throws SecurityException {
         Assert.isAssignable(Resolvable.class, clazz, "Only support sub class of Resolvable");
-        Field[] result = declaredFieldsCache.get(clazz);
+        Field[] result = DECLARED_FIELDS_CACHE.get(clazz);
         if (result == null) {
             result = clazz.getDeclaredFields();
             result = filter(result);
-            declaredFieldsCache.put(clazz, result);
+            DECLARED_FIELDS_CACHE.put(clazz, result);
         }
 
         return result;
@@ -51,9 +51,9 @@ public abstract class ResolverUtils {
      * @see java.lang.reflect.Field#setAccessible
      */
     public static void makeAccessible(Field field) {
-        if ((!Modifier.isPublic(field.getModifiers()) ||
-                !Modifier.isPublic(field.getDeclaringClass().getModifiers()) ||
-                Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
+        if ((!Modifier.isPublic(field.getModifiers())
+                || !Modifier.isPublic(field.getDeclaringClass().getModifiers())
+                || Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
             field.setAccessible(true);
         }
     }

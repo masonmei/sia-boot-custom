@@ -21,10 +21,6 @@ public enum SystemCode {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public static SystemCode getEnumItem(int value) {
         if (hash.isEmpty()) {
             initEnumHash();
@@ -36,6 +32,10 @@ public enum SystemCode {
         for (SystemCode code : SystemCode.values()) {
             hash.put(code.getValue(), code);
         }
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override

@@ -4,13 +4,13 @@ import com.baidu.oped.sia.boot.common.FileWatcher;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 import com.baidu.oped.sia.boot.exception.RequestForbiddenException;
 import com.baidu.oped.sia.boot.utils.IpV4Utils;
-import org.omg.PortableInterceptor.RequestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,7 +30,8 @@ public class IpFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         String ip = request.getRemoteAddr();
 
         List<String> blackSet = fileWatcher.getIpListHolder().getDeny();

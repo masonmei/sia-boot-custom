@@ -29,7 +29,7 @@ public class MethodArgumentResolverAutoConfiguration {
     protected static class ResolvableResolverMvcConfiguration extends WebMvcConfigurerAdapter {
 
         @Bean
-        public AnnotationResolvableResolver resolvableResolver(){
+        public AnnotationResolvableResolver resolvableResolver() {
             return new AnnotationResolvableResolver();
         }
 

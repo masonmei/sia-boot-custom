@@ -62,8 +62,16 @@ prepareParams() {
             package=${pkg}
         done
 
+        while [ "X"${module_name} == "X" ]
+        do
+            read -p "Please enter the module name: " module
+            echo "${module}"
+            module_name=${module}
+        done
+
         echo "Project Name : ${project_name}"
         echo "Base Package : ${package}"
+        echo "Module Name : ${module_name}"
         read -p "Is this correct? (Y/n) " input
         if [ "X"${input} == "XY" ] || [ "X"${input} == "Xy" ];
             then
@@ -71,6 +79,7 @@ prepareParams() {
         else
             project_name=""
             package=""
+            module_name=""
         fi
     done
     echo "Prepare params finished."
@@ -116,6 +125,7 @@ generateProject() {
         sed -i '' -e "s%demo%${project_name}%g" ${file}
     done
 
+    sed -i '' -e "s%${module_name}%com/baidu/demo%g" ./${project_name}/BCLOUD
 }
 
 removeEmptyDirectory() {
@@ -164,6 +174,7 @@ init_project_url=https://raw.githubusercontent.com/masonmei/sia-boot-custom/mast
 init_project_pkg_name=demo
 project_name=
 package=
+module_name=
 
 checkEnv
 prepareParams

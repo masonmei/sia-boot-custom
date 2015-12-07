@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -13,7 +21,7 @@
     <groupId>com.baidu.oped.sia.boot</groupId>
     <artifactId>boot-custom</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <properties>
         <java.version>1.7</java.version>
@@ -27,6 +35,8 @@
         <module>custom-boot-dependency</module>
         <module>custom-boot-examples</module>
     </modules>
+
+
 
 
     <!-- Baidu Repository Begin-->

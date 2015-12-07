@@ -1,8 +1,8 @@
 package com.baidu.oped.sia.boot.controller;
 
-import com.google.common.base.MoreObjects;
 import com.baidu.oped.sia.boot.resolver.Resolvable;
 import com.baidu.oped.sia.boot.resolver.annotation.FromQuery;
+import com.google.common.base.MoreObjects;
 
 /**
  * Created by mason on 11/18/15.

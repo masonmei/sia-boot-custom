@@ -1,0 +1,2 @@
+MODULE=op/oped/noah/sia/boot
+BUILD_SUBMITTER -x -u . -c "cd op/oped/noah/sia/boot && sh +x build.sh" -m op/oped/noah/sia/boot

@@ -12,12 +12,13 @@ import static org.junit.Assert.assertTrue;
  * Created by mason on 10/29/15.
  */
 public class IpV4UtilsTest {
-    private final String IP_IN_STRING = "192.168.1.1";
-    private final String IP_IN_STRING_OUT_RANGE = "192.168.1.5/30";
-    private final String IP_IN_STRING_IN_RANGE = "192.168.1.3/30";
-    private final String INVALID_IP_IN_STRING = "900.10.1.2";
+    private static final String IP_IN_STRING = "192.168.1.1";
+    private static final String IP_IN_STRING_OUT_RANGE = "192.168.1.5/30";
+    private static final String IP_IN_STRING_IN_RANGE = "192.168.1.3/30";
+    private static final String INVALID_IP_IN_STRING = "900.10.1.2";
 
-    private final long IP_IN_LONG = 3232235777L;
+    private static final long IP_IN_LONG = 3232235777L;
+
     @Test
     public void testLongToIp() throws Exception {
         long longIp = IpV4Utils.ipToLong(IP_IN_STRING);

@@ -18,9 +18,9 @@ public class RewriteParamResolver implements UriRewriteParameterResolver {
     public Map<String, String> resolve(HttpServletRequest request) {
         Map<String, String> result = new HashMap<>();
         String parameter = request.getParameter(KEY);
-        if(parameter != null){
+        if (parameter != null) {
             result.put(KEY, parameter);
-        } else if(request.getHeader(KEY) != null){
+        } else if (request.getHeader(KEY) != null) {
             result.put(KEY, request.getHeader(KEY));
         }
         return result;

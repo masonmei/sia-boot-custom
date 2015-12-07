@@ -67,27 +67,27 @@ public class RequestInfoHolder {
         TRACE_TIMESTAMP.remove();
     }
 
-    public static String traceSourceIp(){
+    public static String traceSourceIp() {
         return TRACE_SOURCE_IP.get();
     }
 
-    public static void setTraceSourceIp(String traceSourceIp){
+    public static void setTraceSourceIp(String traceSourceIp) {
         TRACE_SOURCE_IP.set(traceSourceIp);
     }
 
-    public static void removeTraceSourceIp(){
+    public static void removeTraceSourceIp() {
         TRACE_SOURCE_IP.remove();
     }
 
-    public static Integer traceSequence(){
+    public static Integer traceSequence() {
         return TRACE_SEQUENCE.get();
     }
 
-    public static void setTraceSequence(Integer traceSequence){
+    public static void setTraceSequence(Integer traceSequence) {
         TRACE_SEQUENCE.set(traceSequence);
     }
 
-    public static void removeTraceSequence(){
+    public static void removeTraceSequence() {
         TRACE_SEQUENCE.remove();
     }
 

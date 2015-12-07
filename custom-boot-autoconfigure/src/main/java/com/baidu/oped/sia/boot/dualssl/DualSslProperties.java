@@ -13,12 +13,12 @@ public class DualSslProperties {
     private int httpPort;
     private boolean redirectSsl;
 
-    public void setHttpPort(int httpPort) {
-        this.httpPort = httpPort;
-    }
-
     public int getHttpPort() {
         return httpPort;
+    }
+
+    public void setHttpPort(int httpPort) {
+        this.httpPort = httpPort;
     }
 
     public boolean isRedirectSsl() {
