@@ -4,7 +4,7 @@ WORK_DIR=`dirname $0`
 WORK_DIR=`cd ${WORK_DIR}; pwd`
 echo "Work dir: ${WORK_DIR}"
 
-init_project_url=
+init_project_url=https://raw.githubusercontent.com/masonmei/sia-boot-custom/master/init/dist/demo.tar.gz
 init_project_pkg_name=demo
 project_name=
 package=
@@ -26,11 +26,19 @@ checkEnv(){
 }
 
 downloadInitProject() {
-    curl -OL- ${init_project_url}
+    curl -OL ${init_project_url}
     if [ $? != 0 ];
         then
         echo "cannot download the prototype project"
         exit 1
+    fi
+}
+
+cleanDownload() {
+    echo "remove download"
+    if [ -f ${WORK_DIR}/demo.tar.gz ];
+    then
+        rm -f ${WORK_DIR}/demo.tar.gz
     fi
 }
 
@@ -65,10 +73,13 @@ prepareParams() {
 
         echo "Project Name : ${project_name}"
         echo "Base Package : ${package}"
-        read -p "Is this correct? (Y/n)" input
+        read -p "Is this correct? (Y/n) " input
         if [ "X"${input} == "XY" ] || [ "X"${input} == "Xy" ];
             then
             confirm="Y"
+        else
+            project_name=""
+            package=""
         fi
     done
     echo "Prepare params finished."
@@ -141,6 +152,7 @@ removeEmptyDirectory() {
 }
 
 buildProject() {
+    echo "Start building project"
     cd ${project_name} && mvn clean package > build.log && cd -
     if [ $? != 0 ];
     then
@@ -149,11 +161,13 @@ buildProject() {
         exit 1
     fi
     echo "Build success"
+    cd ${WORK_DIR}
 }
 
 checkEnv
-# downloadInitProject
+downloadInitProject
 prepareParams
 generateProject
+cleanDownload
 buildProject
 
