@@ -1,14 +1,5 @@
 #!/bin/bash
 
-WORK_DIR=`dirname $0`
-WORK_DIR=`cd ${WORK_DIR}; pwd`
-echo "Work dir: ${WORK_DIR}"
-
-init_project_url=https://raw.githubusercontent.com/masonmei/sia-boot-custom/master/init/dist/demo.tar.gz
-init_project_pkg_name=demo
-project_name=
-package=
-
 checkEnv(){
     if which java >/dev/null; then
         echo "Checking Java passed"
@@ -49,13 +40,13 @@ prepareParams() {
         do
             read -p "Please Enter the project name: " name
 
-            if [ -f $name ];
+            if [ -f ${name} ];
             then 
                 echo "There is a file with name ${name} exist"
                 continue
             fi
 
-            if [ -d $name ];
+            if [ -d ${name} ];
             then
                 echo "The is already exist a directory with name ${name}"
                 continue
@@ -164,9 +155,19 @@ buildProject() {
     cd ${WORK_DIR}
 }
 
+
+WORK_DIR=`dirname $0`
+WORK_DIR=`cd ${WORK_DIR}; pwd`
+echo "Work dir: ${WORK_DIR}"
+
+init_project_url=https://raw.githubusercontent.com/masonmei/sia-boot-custom/master/init/dist/demo.tar.gz
+init_project_pkg_name=demo
+project_name=
+package=
+
 checkEnv
-downloadInitProject
 prepareParams
+downloadInitProject
 generateProject
 cleanDownload
 buildProject
