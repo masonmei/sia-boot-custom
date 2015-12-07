@@ -17,7 +17,7 @@ checkEnv(){
 }
 
 downloadInitProject() {
-    curl -OL ${init_project_url}
+    curl -sOL ${init_project_url}
     if [ $? != 0 ];
         then
         echo "cannot download the prototype project"
