@@ -27,7 +27,7 @@ copyAndDistFolders(){
     echo "Copy and dist folders"
     for file in `ls ${WORK_DIR}/ |grep -v dist`
     do
-        if [ -d ${file} ];
+        if [ -d ${WORK_DIR}/${file} ];
         then
             echo "Start to process ${WORK_DIR}/${file}"
             cp -rf ${WORK_DIR}/${file} ${WORK_DIR}/dist/${file}
@@ -36,6 +36,8 @@ copyAndDistFolders(){
 
             cd ${WORK_DIR}/dist && tar zcf ${file}.tar.gz ${file}
             rm -rf ${WORK_DIR}/dist/${file}
+        else
+            echo "found ${file}, will ignored"
         fi
     done
 }
