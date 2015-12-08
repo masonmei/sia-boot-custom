@@ -2,12 +2,14 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>boot-custom</artifactId>
-        <groupId>com.baidu.oped.sia.boot</groupId>
-        <version>0.0.2-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.baidu.oped.sia.boot</groupId>
+        <artifactId>boot-custom</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
 
     <artifactId>custom-boot-dependency</artifactId>
     <packaging>pom</packaging>
@@ -24,63 +26,73 @@
         <dependencies>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
+                <artifactId>custom-boot-examples</artifactId>
+                <version>0.0.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baidu.oped.sia.boot</groupId>
+                <artifactId>custom-boot-starters</artifactId>
+                <version>0.0.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-autoconfigure</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-async</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-clientsource</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-dualssl</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-i18n</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-iam</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-iplist</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-limit</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-logheader</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-profiling</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-resolver</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
@@ -90,12 +102,12 @@
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-springfox</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baidu.oped.sia.boot</groupId>
                 <artifactId>custom-boot-starter-trace</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -114,15 +126,11 @@
                 <exclusions>
                     <exclusion>
                         <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
+                        <artifactId>*</artifactId>
                     </exclusion>
                     <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jmockit</artifactId>
                         <groupId>com.googlecode.jmockit</groupId>
+                        <artifactId>jmockit</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>

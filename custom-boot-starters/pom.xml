@@ -3,8 +3,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>custom-boot-dependency</artifactId>
         <groupId>com.baidu.oped.sia.boot</groupId>
+        <artifactId>custom-boot-dependency</artifactId>
         <version>0.0.2-SNAPSHOT</version>
         <relativePath>../custom-boot-dependency</relativePath>
     </parent>
@@ -26,6 +26,7 @@
         <module>custom-boot-starter-iam</module>
         <module>custom-boot-starter-logheader</module>
         <module>custom-boot-starter-clientsource</module>
+        <module>custom-boot-starter-parent</module>
     </modules>
 
 
