@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by mason on 12/3/15.
+ * Filter order manager.
+ *
+ * @author mason
  */
 public abstract class FilterOrder {
     public static final String IP_LIST = "ip_list";

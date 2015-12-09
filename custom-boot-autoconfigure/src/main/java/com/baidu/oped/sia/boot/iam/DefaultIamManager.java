@@ -5,7 +5,7 @@ import com.baidu.bce.iam.IamException;
 import com.baidu.bce.iam.SignatureAuthentication;
 import com.baidu.bce.iam.internal.Token;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
-import com.baidu.oped.sia.boot.exception.AuthenticationFailureException;
+import com.baidu.oped.sia.boot.exception.AuthenticationFailedException;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,10 +42,10 @@ public class DefaultIamManager implements IamManager {
 
         String currentUser = RequestInfoHolder.currentUser();
         if (currentUser == null) {
-            throw new AuthenticationFailureException(AUTH_USER_NOT_AUTHENTICATED);
+            throw new AuthenticationFailedException(AUTH_USER_NOT_AUTHENTICATED);
         }
         if (!currentUser.equals(userId)) {
-            throw new AuthenticationFailureException(AUTH_INVALID_USER);
+            throw new AuthenticationFailedException(AUTH_INVALID_USER);
         }
     }
 
@@ -57,12 +57,12 @@ public class DefaultIamManager implements IamManager {
 
         String currentUser = RequestInfoHolder.currentUser();
         if (currentUser == null) {
-            throw new AuthenticationFailureException(AUTH_SERVICE_NOT_AUTHENTICATED);
+            throw new AuthenticationFailedException(AUTH_SERVICE_NOT_AUTHENTICATED);
         }
 
         String userScope = getServiceScope(currentUser);
         if (userScope == null || !userScope.equals(scope)) {
-            throw new AuthenticationFailureException(AUTH_INVALID_SERVICE);
+            throw new AuthenticationFailedException(AUTH_INVALID_SERVICE);
         }
     }
 
@@ -74,7 +74,7 @@ public class DefaultIamManager implements IamManager {
 
         String currentUser = RequestInfoHolder.currentUser();
         if (currentUser == null) {
-            throw new AuthenticationFailureException(AUTH_SERVICE_NOT_AUTHENTICATED);
+            throw new AuthenticationFailedException(AUTH_SERVICE_NOT_AUTHENTICATED);
         }
 
         if (currentUser.equals(userId)) {
@@ -83,7 +83,7 @@ public class DefaultIamManager implements IamManager {
 
         String userScope = getServiceScope(currentUser);
         if (userScope == null || !userScope.equals(scope)) {
-            throw new AuthenticationFailureException(AUTH_INVALID_SERVICE);
+            throw new AuthenticationFailedException(AUTH_INVALID_SERVICE);
         }
     }
 

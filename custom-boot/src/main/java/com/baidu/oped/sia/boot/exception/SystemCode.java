@@ -12,7 +12,8 @@ public enum SystemCode {
     EXCEED_MAX_QUERY_DATA_POINTS(6),
     AUTHENTICATION_ERROR(7),
     AUTHORIZATION_ERROR(8),
-    ACCESS_DENIED(9);
+    ACCESS_DENIED(9),
+    RESOURCE_NOT_EXIST(10);
 
     private static Map<Integer, SystemCode> hash = new HashMap<>();
     private final int value;

@@ -56,7 +56,7 @@ public class SimpleLimiterFilter implements Filter {
     }
 
     private boolean inWhiteList(String remoteAddr) {
-        List<String> whiteSet = fileWatcher.getIpListHolder().getAllow();
+        List<String> whiteSet = fileWatcher.getHolder().getAllow();
         return whiteSet != null && whiteSet.contains(remoteAddr);
     }
 

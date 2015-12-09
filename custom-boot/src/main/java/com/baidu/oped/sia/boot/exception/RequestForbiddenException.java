@@ -4,7 +4,9 @@ import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.IP_ADDRESS_
 import static com.baidu.oped.sia.boot.exception.SystemCode.ACCESS_DENIED;
 
 /**
- * Created by mason on 12/3/15.
+ * Access denied while the client ip is in the black list
+ *
+ * @author mason
  */
 public class RequestForbiddenException extends AccessDeniedException {
     public RequestForbiddenException() {

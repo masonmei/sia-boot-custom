@@ -1,7 +1,9 @@
 package com.baidu.oped.sia.boot.exception;
 
 /**
- * Created by mason on 12/3/15.
+ * Base exception for user not allow to visit the resource.
+ *
+ * @author mason
  */
 public class AccessDeniedException extends SystemException {
 

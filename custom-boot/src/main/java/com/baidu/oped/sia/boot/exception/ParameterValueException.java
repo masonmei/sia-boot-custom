@@ -3,7 +3,7 @@ package com.baidu.oped.sia.boot.exception;
 import static com.baidu.oped.sia.boot.exception.SystemCode.INVALID_PARAMETER_VALUE;
 
 /**
- * Parameter Exception when param value is invalid.
+ * Base Exception of invalid param value.
  *
  * @author mason
  */

@@ -9,17 +9,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
+import java.nio.file.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by mason on 10/29/15.
+ * Watch file for content changing and convert the file to POJO object.
+ *
+ * @author mason
  */
 public class FileWatcher<T> {
     private static final Logger LOG = LoggerFactory.getLogger(FileWatcher.class);
@@ -28,7 +24,7 @@ public class FileWatcher<T> {
     private final File configFile;
 
     private final Class<T> contentType;
-    private T ipListHolder;
+    private T holder;
     private boolean stop = false;
 
     public FileWatcher(File configFile, Class<T> type) {
@@ -64,8 +60,8 @@ public class FileWatcher<T> {
         registerShutDownHook();
     }
 
-    public T getIpListHolder() {
-        return ipListHolder;
+    public T getHolder() {
+        return holder;
     }
 
     private void watchingForChanges() {
@@ -112,7 +108,7 @@ public class FileWatcher<T> {
 
         try (InputStream inputStream = new FileInputStream(configFile)) {
             Yaml yaml = new Yaml();
-            ipListHolder = yaml.loadAs(inputStream, contentType);
+            holder = yaml.loadAs(inputStream, contentType);
         } catch (IOException e) {
             LOG.warn("Cannot reading configurations");
         }

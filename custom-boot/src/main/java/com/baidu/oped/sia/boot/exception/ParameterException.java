@@ -3,7 +3,9 @@ package com.baidu.oped.sia.boot.exception;
 import static com.baidu.oped.sia.boot.exception.SystemCode.INVALID_PARAMETER;
 
 /**
- * Created by mason on 12/3/15.
+ * Base Exception of parameter exception.
+ *
+ * @author mason
  */
 public abstract class ParameterException extends SystemException {
     public ParameterException(String message, Object[] args) {

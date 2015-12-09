@@ -3,7 +3,9 @@ package com.baidu.oped.sia.boot.common;
 import org.springframework.core.NamedInheritableThreadLocal;
 
 /**
- * Created by mason on 10/29/15.
+ * Thread local request info holder.
+ *
+ * @author mason
  */
 public class RequestInfoHolder {
     private static final ThreadLocal<Boolean> IN_WHITE_LIST = new NamedInheritableThreadLocal<>("White List");

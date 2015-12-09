@@ -3,7 +3,7 @@ package com.baidu.oped.sia.boot.exception;
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.PARAM_CONFLICT;
 
 /**
- * Parameter exception when conflict.
+ * Exception when parameter cannot exist together.
  * <p>
  *
  * @author mason

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 /**
  * Basic Response for all request.
  *
- * @author: cloudwatch@baidu.com
+ * @author mason
  */
 public class BasicResponse {
     @JsonInclude(JsonInclude.Include.NON_NULL)
