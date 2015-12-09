@@ -26,6 +26,8 @@ public abstract class ExceptionKeyProvider {
     public static final String PARAM_VALUE_OUT_OF_RANGE = "invalid.param.value.out-of-range";
     public static final String PARAM_VALUE_MISSING = "invalid.param.value.missing";
     public static final String PARAM_VALUE_UNMODIFIABLE = "invalid.param.value.unmodifiable";
-    public static final String PARAM_VALUE_FORMAT = "invalid.param.value.unmodifiable";
+    public static final String PARAM_VALUE_FORMAT = "invalid.param.value.format";
+    public static final String PARAM_VALUE_COMBINATION_INVALID = "invalid.param.value.invalid.combination";
+    public static final String PARAM_VALUE_INCOMPATIBLE = "invalid.param.value.incompatible";
 
 }

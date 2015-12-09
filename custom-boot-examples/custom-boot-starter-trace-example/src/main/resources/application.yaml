@@ -3,5 +3,6 @@ server:
 custom:
   boot:
     trace:
+      enabled: true
       trace-header-name: X-IGITRAS-TRACE-ID
       trace-start-time-header-name: X-IGITRAS-TRACE-TIMESTAMP

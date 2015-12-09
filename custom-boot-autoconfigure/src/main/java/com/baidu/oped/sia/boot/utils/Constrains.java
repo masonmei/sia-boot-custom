@@ -42,4 +42,6 @@ public abstract class Constrains {
     public static final String LOG_HEADER_PREFIX = CUSTOMER_BOOT_BASE + "log-header";
 
     public static final String VALIDATE_PREFIX = CUSTOMER_BOOT_BASE + "client-source";
+
+    public static final String DECODE_URI_PREFIX = COMPRESSION_PREFIX + "decode-uri";
 }

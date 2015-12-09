@@ -13,10 +13,12 @@ public abstract class FilterOrder {
     public static final String IP_LIMIT = "ip_limit";
     public static final String IAM = "iam";
     public static final String LOG_HEADER = "log_header";
+    public static final String DECODE = "decode";
 
     private static final List<String> KEYS = Arrays.asList(
             IP_LIST,
             IP_LIMIT,
+            DECODE,
             IAM,
             LOG_HEADER
     );

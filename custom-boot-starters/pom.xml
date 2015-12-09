@@ -27,6 +27,7 @@
         <module>custom-boot-starter-logheader</module>
         <module>custom-boot-starter-clientsource</module>
         <module>custom-boot-starter-parent</module>
+        <module>custom-boot-starter-decodeuri</module>
     </modules>
 
 

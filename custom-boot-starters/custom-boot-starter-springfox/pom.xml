@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.baidu.oped.sia.boot</groupId>
+            <artifactId>custom-boot</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
         </dependency>

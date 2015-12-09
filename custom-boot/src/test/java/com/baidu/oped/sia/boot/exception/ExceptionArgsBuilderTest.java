@@ -81,6 +81,26 @@ public class ExceptionArgsBuilderTest {
     }
 
     @org.junit.Test
+    public void testRange() throws Exception {
+        Object[] args = ExceptionArgsBuilder.get().range(null, null).args();
+        assertEquals(1, args.length);
+        assertEquals("(-∞, +∞)", args[0]);
+
+        args = ExceptionArgsBuilder.get().range(null, 5).args();
+        assertEquals(1, args.length);
+        assertEquals("(-∞, 5]", args[0]);
+
+        args = ExceptionArgsBuilder.get().range(4, null).args();
+        assertEquals(1, args.length);
+        assertEquals("[4, +∞)", args[0]);
+
+        args = ExceptionArgsBuilder.get().range(4, 5).args();
+        assertEquals(1, args.length);
+        assertEquals("[4, 5]", args[0]);
+    }
+
+
+    @org.junit.Test
     public void testJoin() throws Exception {
         String join = ExceptionArgsBuilder.get().join("and", "test");
         assertEquals("test", join);

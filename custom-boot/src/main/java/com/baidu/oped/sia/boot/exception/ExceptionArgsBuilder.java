@@ -2,6 +2,7 @@ package com.baidu.oped.sia.boot.exception;
 
 import org.springframework.util.StringUtils;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,19 +42,32 @@ public class ExceptionArgsBuilder {
         return this;
     }
 
-    public <T> ExceptionArgsBuilder and(List<T> params) {
+    public <T> ExceptionArgsBuilder and(Collection<T> params) {
         this.params.add(join("and", params));
         return this;
     }
-
 
     public <T> ExceptionArgsBuilder or(T... params) {
         this.params.add(join("or", params));
         return this;
     }
 
-    public <T> ExceptionArgsBuilder or(List<T> params) {
+    public <T> ExceptionArgsBuilder or(Collection<T> params) {
         this.params.add(join("or", params));
+        return this;
+    }
+
+    public <T> ExceptionArgsBuilder range(T from, T to) {
+        String fromString = "(-∞";
+        String toString = "+∞)";
+
+        if (from != null) {
+            fromString = "[" + from.toString();
+        }
+        if (to != null) {
+            toString = to.toString() + "]";
+        }
+        this.params.add(String.format("%s, %s", fromString, toString));
         return this;
     }
 
@@ -70,11 +84,11 @@ public class ExceptionArgsBuilder {
         }
     }
 
-    public <T> String join(String decimeter, List<T> params) {
+    public <T> String join(String decimeter, Collection<T> params) {
         if (params == null || params.size() == 0) {
             return "";
         } else if (params.size() == 1) {
-            return params.get(0).toString();
+            return params.iterator().next().toString();
         } else {
             String result = StringUtils.collectionToDelimitedString(params, ", ");
             int lastIndex = result.lastIndexOf(", ");

@@ -24,17 +24,14 @@
         <dependency>
             <groupId>com.baidu.oped.sia.boot</groupId>
             <artifactId>custom-boot-autoconfigure</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.baidu.oped.sia.boot</groupId>
             <artifactId>custom-boot-starter-resolver</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
         </dependency>
     </dependencies>
 

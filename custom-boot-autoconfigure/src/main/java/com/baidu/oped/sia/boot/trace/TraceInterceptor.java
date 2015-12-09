@@ -5,6 +5,7 @@ import com.baidu.oped.sia.boot.utils.Constrains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.core.Ordered;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
  * <p>
  * Created by mason on 10/30/15.
  */
-public class TraceInterceptor extends HandlerInterceptorAdapter {
+public class TraceInterceptor extends HandlerInterceptorAdapter implements Ordered {
     private static final Logger log = LoggerFactory.getLogger(TraceInterceptor.class);
 
     private final String traceHeaderName;
@@ -60,6 +61,7 @@ public class TraceInterceptor extends HandlerInterceptorAdapter {
                         traceTimestampHeaderName, currentTimeInMillis);
             }
             response.addHeader(traceTimestampHeaderName, currentTimeInMillis);
+            MDC.put("traceTimestamp", currentTimeInMillis);
         }
 
 
@@ -94,5 +96,10 @@ public class TraceInterceptor extends HandlerInterceptorAdapter {
         MDC.remove("requestId");
         RequestInfoHolder.removeTraceTimestamp();
         RequestInfoHolder.removeTraceId();
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }
