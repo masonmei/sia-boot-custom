@@ -10,7 +10,7 @@ import java.util.List;
  * Created by mason on 12/3/15.
  */
 public class IamAccessControl {
-    private static final Logger LOG = LoggerFactory.getLogger(DefaultIamManager.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IamAccessControl.class);
 
     private List<String> ignoredUrls = new ArrayList<>();
 
