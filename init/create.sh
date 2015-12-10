@@ -95,7 +95,7 @@ generateProject() {
     mv ${init_project_pkg_name} ${project_name}
 
     echo "start initializing project structure"
-    package_path=${package/./\/}
+    package_path=${package//./\/}
     mkdir -p ${project_name}/src/main/java/${package_path} 
     mkdir -p ${project_name}/src/test/java/${package_path} 
 
