@@ -1,5 +1,14 @@
 #!/bin/bash
 
+checkOs(){
+    cygwin=false
+    darwin=false
+    case "`uname`" in
+    Linux*) linux=true;;
+    Darwin*) darwin=true;;
+    esac
+}
+
 checkEnv(){
     if which java >/dev/null; then
         echo "Checking Java passed"
@@ -14,6 +23,8 @@ checkEnv(){
         echo "Maven not found in you machine, please instance it first."
         exit 1
     fi
+
+    checkOs
 }
 
 downloadInitProject() {
@@ -95,7 +106,7 @@ generateProject() {
     mv ${init_project_pkg_name} ${project_name}
 
     echo "start initializing project structure"
-    package_path=${package/./\/}
+    package_path=${package//./\/}
     mkdir -p ${project_name}/src/main/java/${package_path} 
     mkdir -p ${project_name}/src/test/java/${package_path} 
 
@@ -115,17 +126,32 @@ generateProject() {
     for file in `find ./${project_name} -type f | grep -v build/bin/babysitter`
     do
         echo "process file ${file}"
-        sed -i '' -e "s%com.baidu.oped.sia.business%${package}%g" ${file}
+        if ${darwin}; then
+            sed -i '' -e "s%com.baidu.oped.sia.business%${package}%g" ${file}
+        fi
+        if ${linux}; then
+            sed -i -e "s%com.baidu.oped.sia.business%${package}%g" ${file}
+        fi
     done
 
     echo "Rename project name"
     for file in `find ./${project_name} -type f | grep -v build/bin/babysitter`
     do
         echo "process file ${file}"
-        sed -i '' -e "s%demo%${project_name}%g" ${file}
+        if ${darwin}; then
+            sed -i '' -e "s%demo%${project_name}%g" ${file}
+        fi
+        if ${linux}; then
+            sed -i -e "s%demo%${project_name}%g" ${file}
+        fi
     done
 
-    sed -i '' -e "s%${module_name}%com/baidu/demo%g" ./${project_name}/BCLOUD
+    if ${darwin}; then
+        sed -i '' -e "s%${module_name}%com/baidu/demo%g" ./${project_name}/BCLOUD
+    fi
+    if ${linux}; then
+        sed -i -e "s%${module_name}%com/baidu/demo%g" ./${project_name}/BCLOUD
+    fi
 }
 
 removeEmptyDirectory() {
