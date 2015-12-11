@@ -1,7 +1,7 @@
 #!/bin/bash
 
 checkOs(){
-    cygwin=false
+    linux=false
     darwin=false
     case "`uname`" in
     Linux*) linux=true;;
@@ -52,7 +52,7 @@ prepareParams() {
             read -p "Please Enter the project name: " name
 
             if [ -f ${name} ];
-            then 
+            then
                 echo "There is a file with name ${name} exist"
                 continue
             fi
@@ -107,19 +107,27 @@ generateProject() {
 
     echo "start initializing project structure"
     package_path=${package//./\/}
-    mkdir -p ${project_name}/src/main/java/${package_path} 
-    mkdir -p ${project_name}/src/test/java/${package_path} 
+    mkdir -p ${project_name}/src/main/java/${package_path}
+    mkdir -p ${project_name}/src/test/java/${package_path}
 
     if [ -d ${project_name}/src/main/java/com/baidu/oped/sia/business/ ];
     then
-        mv ${project_name}/src/main/java/com/baidu/oped/sia/business/* ${project_name}/src/main/java/${package_path} 
+        mv ${project_name}/src/main/java/com/baidu/oped/sia/business/* ${project_name}/src/main/java/${package_path}
         removeEmptyDirectory ${project_name}/src/main/java/com/baidu/oped/sia/business/
     fi
-    
+
     if [ -d ${project_name}/src/main/test/com/baidu/oped/sia/business/ ];
         then
-        mv ${project_name}/src/main/test/com/baidu/oped/sia/business/* ${project_name}/test/main/java/${package_path} 
+        mv ${project_name}/src/main/test/com/baidu/oped/sia/business/* ${project_name}/test/main/java/${package_path}
         removeEmptyDirectory ${project_name}/src/main/test/com/baidu/oped/sia/business/
+    fi
+
+
+    if ${darwin}; then
+        sed -i "" -e "s%com/baidu/demo%${module_name}%g" ./${project_name}/BCLOUD
+    fi
+    if ${linux}; then
+        sed -i -e "s%com/baidu/demo%${module_name}%g" ./${project_name}/BCLOUD
     fi
 
     echo "Rename package name"
@@ -127,9 +135,10 @@ generateProject() {
     do
         echo "process file ${file}"
         if ${darwin}; then
-            sed -i '' -e "s%com.baidu.oped.sia.business%${package}%g" ${file}
+            sed -i "" -e "s%com.baidu.oped.sia.business%${package}%g" ${file}
         fi
         if ${linux}; then
+            echo "linux"
             sed -i -e "s%com.baidu.oped.sia.business%${package}%g" ${file}
         fi
     done
@@ -139,19 +148,12 @@ generateProject() {
     do
         echo "process file ${file}"
         if ${darwin}; then
-            sed -i '' -e "s%demo%${project_name}%g" ${file}
+            sed -i "" -e "s%demo%${project_name}%g" ${file}
         fi
         if ${linux}; then
             sed -i -e "s%demo%${project_name}%g" ${file}
         fi
     done
-
-    if ${darwin}; then
-        sed -i '' -e "s%${module_name}%com/baidu/demo%g" ./${project_name}/BCLOUD
-    fi
-    if ${linux}; then
-        sed -i -e "s%${module_name}%com/baidu/demo%g" ./${project_name}/BCLOUD
-    fi
 }
 
 removeEmptyDirectory() {
@@ -188,6 +190,7 @@ buildProject() {
         exit 1
     fi
     echo "Build success"
+    rm -f build.log
     cd ${WORK_DIR}
 }
 
