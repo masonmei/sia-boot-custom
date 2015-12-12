@@ -1,23 +1,27 @@
 package com.baidu.oped.sia.boot.iplist;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.List;
+
 import com.baidu.oped.sia.boot.common.FileWatcher;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 import com.baidu.oped.sia.boot.exception.RequestForbiddenException;
 import com.baidu.oped.sia.boot.utils.IpV4Utils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-
 /**
- * Created by mason on 10/29/15.
+ * Ip Filter to limit only the not in black list request to be continue.
+ *
+ * @author mason
  */
 public class IpFilter extends OncePerRequestFilter {
     private static final Logger LOG = LoggerFactory.getLogger(IpFilter.class);
@@ -33,7 +37,7 @@ public class IpFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String ip = request.getRemoteAddr();
-
+        LOG.debug("filter request: {} from {} with IpFilter", request.getRequestURI(), ip);
         List<String> blackSet = fileWatcher.getHolder().getDeny();
         List<String> whiteSet = fileWatcher.getHolder().getAllow();
 
@@ -47,6 +51,7 @@ public class IpFilter extends OncePerRequestFilter {
         }
 
         if (whiteSet != null && whiteSet.contains(ip)) {
+            LOG.debug("request: {} from {} has in the white list.", request.getRequestURI(), ip);
             RequestInfoHolder.setInWhiteList(true);
         }
 

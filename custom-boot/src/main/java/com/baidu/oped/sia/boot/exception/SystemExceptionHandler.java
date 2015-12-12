@@ -1,8 +1,15 @@
 package com.baidu.oped.sia.boot.exception;
 
 
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INTERNAL_SYS_ERROR;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.REQ_PARAM_MISMATCH;
+
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.baidu.oped.sia.boot.common.BasicResponse;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,11 +21,11 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.RequestContext;
 
-import javax.servlet.http.HttpServletRequest;
-
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INTERNAL_SYS_ERROR;
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.REQ_PARAM_MISMATCH;
-
+/**
+ * System Exception Handler.
+ *
+ * @author mason
+ */
 @ControllerAdvice
 public class SystemExceptionHandler {
 

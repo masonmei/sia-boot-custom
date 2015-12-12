@@ -1,16 +1,17 @@
 package com.baidu.oped.sia.boot.resolver;
 
+import java.lang.reflect.Field;
+
 import com.baidu.oped.sia.boot.resolver.annotation.FromHeader;
 import com.baidu.oped.sia.boot.resolver.annotation.FromQuery;
 import com.baidu.oped.sia.boot.utils.ArrayUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.ModelAndViewContainer;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by mason on 11/16/15.

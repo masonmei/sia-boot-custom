@@ -1,7 +1,8 @@
 package com.baidu.oped.sia.boot.resolver;
 
-import org.springframework.util.Assert;
-import org.springframework.util.ConcurrentReferenceHashMap;
+import static java.lang.reflect.Modifier.isFinal;
+import static java.lang.reflect.Modifier.isStatic;
+
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -9,21 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.reflect.Modifier.isFinal;
-import static java.lang.reflect.Modifier.isStatic;
+import org.springframework.util.Assert;
+import org.springframework.util.ConcurrentReferenceHashMap;
 
 /**
- * Created by mason on 11/18/15.
+ * Resolver Utils.
+ *
+ * @author mason
  */
 public abstract class ResolverUtils {
     /**
      * Cache for {@link Class#getDeclaredFields()}, allowing for fast iteration.
      */
-    private static final Map<Class<?>, Field[]> DECLARED_FIELDS_CACHE =
-            new ConcurrentReferenceHashMap<Class<?>, Field[]>(256);
+    private static final Map<Class<?>, Field[]> DECLARED_FIELDS_CACHE = new ConcurrentReferenceHashMap<>(256);
 
     /**
-     * Get all the modifiable fields of the given
+     * Get all the modifiable fields of the given.
      *
      * @param clazz the given Resolvable class
      * @return the modifiable fields

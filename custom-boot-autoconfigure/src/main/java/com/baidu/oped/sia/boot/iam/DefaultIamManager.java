@@ -1,16 +1,16 @@
 package com.baidu.oped.sia.boot.iam;
 
-import com.baidu.bce.iam.IamClient;
-import com.baidu.bce.iam.IamException;
-import com.baidu.bce.iam.SignatureAuthentication;
-import com.baidu.bce.iam.internal.Token;
-import com.baidu.oped.sia.boot.common.RequestInfoHolder;
-import com.baidu.oped.sia.boot.exception.AuthenticationFailedException;
-import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_SERVICE;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_USER;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_SERVICE_NOT_AUTHENTICATED;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_USER_NOT_AUTHENTICATED;
+import static com.baidu.oped.sia.boot.utils.Constrains.AUTHORIZATION;
+
+import static org.springframework.util.StringUtils.collectionToDelimitedString;
+
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -18,12 +18,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_SERVICE;
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_USER;
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_SERVICE_NOT_AUTHENTICATED;
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_USER_NOT_AUTHENTICATED;
-import static com.baidu.oped.sia.boot.utils.Constrains.AUTHORIZATION;
-import static org.springframework.util.StringUtils.collectionToDelimitedString;
+import com.baidu.bce.iam.IamClient;
+import com.baidu.bce.iam.IamException;
+import com.baidu.bce.iam.SignatureAuthentication;
+import com.baidu.bce.iam.internal.Token;
+import com.baidu.oped.sia.boot.common.RequestInfoHolder;
+import com.baidu.oped.sia.boot.exception.AuthenticationFailedException;
+import com.google.gson.Gson;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by mason on 12/2/15.

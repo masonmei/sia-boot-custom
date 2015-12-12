@@ -3,23 +3,26 @@
  */
 package com.baidu.oped.sia.boot.logheader;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
- * Created by mason on 7/17/15.
+ * Log Header Request Filter.
+ *
+ * @author mason
  */
 public class LogHeaderRequestFilter extends OncePerRequestFilter {
 
@@ -36,6 +39,8 @@ public class LogHeaderRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         if (!CollectionUtils.isEmpty(headerNames)) {
+            LOG.debug("log headers {} of request {} from {}.", headerNames, request.getRequestURI(),
+                    request.getRemoteAddr());
             logHeaders(request);
         }
         filterChain.doFilter(request, response);

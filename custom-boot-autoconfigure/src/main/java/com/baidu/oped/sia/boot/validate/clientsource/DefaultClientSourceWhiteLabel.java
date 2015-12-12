@@ -1,20 +1,20 @@
-/*
- * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
- */
 package com.baidu.oped.sia.boot.validate.clientsource;
-
-import com.baidu.noah.naming.BNSClient;
-import com.baidu.noah.naming.BNSException;
-import com.baidu.noah.naming.BNSInstance;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.baidu.noah.naming.BNSClient;
+import com.baidu.noah.naming.BNSException;
+import com.baidu.noah.naming.BNSInstance;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
+
 /**
- * Created by mason on 7/14/15.
+ * Default implementation of client source white label.
+ *
+ * @author mason
  */
 public class DefaultClientSourceWhiteLabel implements ClientSourceWhiteLabel, Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(ClientSourceWhiteLabel.class);

@@ -1,10 +1,13 @@
 package com.baidu.oped.sia.boot.iplist;
 
 import com.baidu.oped.sia.boot.utils.Constrains;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Created by mason on 10/29/15.
+ * Ip List Configuration Properties.
+ *
+ * @author mason
  */
 @ConfigurationProperties(prefix = Constrains.IP_PERMISSION_PREFIX)
 public class IpListProperties {

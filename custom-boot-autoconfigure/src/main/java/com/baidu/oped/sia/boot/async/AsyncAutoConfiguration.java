@@ -1,5 +1,11 @@
 package com.baidu.oped.sia.boot.async;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.ASYNC_PREFIX;
+import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
+
+
+import java.util.concurrent.Executor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -13,13 +19,10 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.concurrent.Executor;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.ASYNC_PREFIX;
-import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
-
 /**
- * Created by mason on 11/5/15.
+ * Async Auto Configuration.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnWebApplication

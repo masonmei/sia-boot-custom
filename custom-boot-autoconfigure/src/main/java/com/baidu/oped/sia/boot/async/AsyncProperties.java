@@ -1,6 +1,7 @@
 package com.baidu.oped.sia.boot.async;
 
 import com.baidu.oped.sia.boot.utils.Constrains;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

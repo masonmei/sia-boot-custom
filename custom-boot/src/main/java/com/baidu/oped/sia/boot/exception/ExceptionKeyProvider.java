@@ -1,7 +1,9 @@
 package com.baidu.oped.sia.boot.exception;
 
 /**
- * Created by mason on 10/15/15.
+ * Exception Key Provider.
+ *
+ * @author mason
  */
 public abstract class ExceptionKeyProvider {
     public static final String INTERNAL_SYS_ERROR = "system.internal.error";
@@ -30,4 +32,6 @@ public abstract class ExceptionKeyProvider {
     public static final String PARAM_VALUE_COMBINATION_INVALID = "invalid.param.value.invalid.combination";
     public static final String PARAM_VALUE_INCOMPATIBLE = "invalid.param.value.incompatible";
 
+    public static final String INVALID_CONFIGURATION_FILE_PATH = "config.file.invalid.path";
+    public static final String CONFIGURATION_FILE_NOT_FOUND = "config.file.not-found";
 }

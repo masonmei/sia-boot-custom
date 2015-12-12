@@ -1,7 +1,15 @@
 package com.baidu.oped.sia.boot.springfox;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
+import static com.baidu.oped.sia.boot.utils.Constrains.SPRING_FOX_PREFIX;
+
+
+import java.util.HashSet;
+import java.util.Set;
+
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,22 +17,18 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
-import static com.baidu.oped.sia.boot.utils.Constrains.SPRING_FOX_PREFIX;
-
 /**
- * Spring Fox AutoConfiguration
+ * Spring Fox AutoConfiguration.
  * <p>
- * Created by mason on 10/29/15.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnClass({Docket.class})

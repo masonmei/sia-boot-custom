@@ -3,6 +3,10 @@
  */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
+import static com.baidu.oped.sia.boot.utils.Constrains.VALIDATE_PREFIX;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -10,9 +14,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
-import static com.baidu.oped.sia.boot.utils.Constrains.VALIDATE_PREFIX;
 
 /**
  * Created by mason on 7/14/15.

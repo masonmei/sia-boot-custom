@@ -1,10 +1,10 @@
 package com.baidu.oped.sia.boot.iam;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by mason on 12/3/15.

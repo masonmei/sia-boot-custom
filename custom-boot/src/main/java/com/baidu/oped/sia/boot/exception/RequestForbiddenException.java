@@ -4,7 +4,7 @@ import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.IP_ADDRESS_
 import static com.baidu.oped.sia.boot.exception.SystemCode.ACCESS_DENIED;
 
 /**
- * Access denied while the client ip is in the black list
+ * Access denied while the client ip is in the black list.
  *
  * @author mason
  */

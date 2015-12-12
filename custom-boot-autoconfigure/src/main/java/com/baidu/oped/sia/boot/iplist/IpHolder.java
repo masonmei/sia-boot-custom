@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by mason on 10/29/15.
+ * Ip List Holder.
+ *
+ * @author mason
  */
 public class IpHolder {
     private List<String> deny = new ArrayList<>();

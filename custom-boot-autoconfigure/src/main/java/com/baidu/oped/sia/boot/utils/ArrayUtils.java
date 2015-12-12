@@ -1,10 +1,10 @@
 package com.baidu.oped.sia.boot.utils;
 
-import org.springframework.util.Assert;
-
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.util.Assert;
 
 /**
  * Created by mason on 11/18/15.
@@ -23,7 +23,7 @@ public abstract class ArrayUtils {
     );
 
     /**
-     * Convert String array to the primitive array
+     * Convert String array to the primitive array.
      *
      * @param type   array type
      * @param values values in String
@@ -43,7 +43,7 @@ public abstract class ArrayUtils {
     }
 
     /**
-     * Convert String to the primitive types
+     * Convert String to the primitive types.
      *
      * @param type  the primitive class type
      * @param value the value in string
@@ -94,7 +94,7 @@ public abstract class ArrayUtils {
     }
 
     /**
-     * Check if the class is String
+     * Check if the class is String.
      *
      * @param type the class type to check
      * @return
@@ -105,7 +105,7 @@ public abstract class ArrayUtils {
     }
 
     /**
-     * Check if the class is a primitive or wrapper type
+     * Check if the class is a primitive or wrapper type.
      *
      * @param type
      * @return
@@ -116,7 +116,7 @@ public abstract class ArrayUtils {
     }
 
     /**
-     * Check if the given type is an wrapper class
+     * Check if the given type is an wrapper class.
      *
      * @param type
      * @return

@@ -1,8 +1,18 @@
 package com.baidu.oped.sia.boot.iplist;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
+import static com.baidu.oped.sia.boot.utils.Constrains.IP_PERMISSION_PREFIX;
+
+
+import javax.servlet.Filter;
+import javax.servlet.Servlet;
+
 import com.baidu.oped.sia.boot.common.FileWatcher;
 import com.baidu.oped.sia.boot.common.FilterOrder;
 import com.baidu.oped.sia.boot.utils.FileUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -12,14 +22,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
-import javax.servlet.Servlet;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
-import static com.baidu.oped.sia.boot.utils.Constrains.IP_PERMISSION_PREFIX;
-
 /**
- * Created by mason on 10/29/15.
+ * Ip List Auto Configuration.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnClass({Servlet.class, Filter.class})
@@ -27,12 +33,14 @@ import static com.baidu.oped.sia.boot.utils.Constrains.IP_PERMISSION_PREFIX;
 @ConditionalOnProperty(prefix = IP_PERMISSION_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
 @EnableConfigurationProperties(IpListProperties.class)
 public class IpListAutoConfiguration {
+    private static final Logger LOG = LoggerFactory.getLogger(IpListAutoConfiguration.class);
 
     @Autowired
-    private IpListProperties properties;
+    private IpListProperties ipListProperties;
 
     @Bean
     public FilterRegistrationBean ipListFilterRegistrationBean() {
+        LOG.info("register ipList filter.");
         IpFilter filter = new IpFilter(buildFileWatcher());
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(filter);
@@ -41,9 +49,9 @@ public class IpListAutoConfiguration {
     }
 
     private FileWatcher<IpHolder> buildFileWatcher() {
-        int refreshInterval = properties.getRefreshInterval();
+        int refreshInterval = ipListProperties.getRefreshInterval();
         return new FileWatcher<>(refreshInterval,
-                FileUtils.resolveConfigFile(properties.getConfigPath(), properties.getConfigFile()),
+                FileUtils.resolveConfigFile(ipListProperties.getConfigPath(), ipListProperties.getConfigFile()),
                 IpHolder.class);
     }
 

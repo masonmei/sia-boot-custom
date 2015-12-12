@@ -1,5 +1,14 @@
 package com.baidu.oped.sia.boot.rewrite;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
+import static com.baidu.oped.sia.boot.utils.Constrains.REWRITE_PREFIX;
+
+
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.Collections;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -8,13 +17,6 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.Map;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
-import static com.baidu.oped.sia.boot.utils.Constrains.REWRITE_PREFIX;
 
 /**
  * Created by mason on 12/2/15.

@@ -6,10 +6,11 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.baidu.oped.sia.boot.async.AsyncAutoConfiguration,\
   com.baidu.oped.sia.boot.profiling.ProfilingAutoConfiguration,\
   com.baidu.oped.sia.boot.limit.LimiterAutoConfiguration,\
-  com.baidu.oped.sia.boot.i18n.I18NAutoConfiguration,\
+  com.baidu.oped.sia.boot.i18n.I18nAutoConfiguration,\
   com.baidu.oped.sia.boot.resolver.MethodArgumentResolverAutoConfiguration,\
   com.baidu.oped.sia.boot.dualssl.DualSslAutoConfiguration,\
   com.baidu.oped.sia.boot.rewrite.RewriteAutoConfiguration,\
   com.baidu.oped.sia.boot.iam.IamAutoConfiguration,\
   com.baidu.oped.sia.boot.logheader.LogHeaderAutoConfiguration,\
-  com.baidu.oped.sia.boot.validate.clientsource.ClientSourceCheckingAutoConfiguration
+  com.baidu.oped.sia.boot.validate.clientsource.ClientSourceCheckingAutoConfiguration,\
+  com.baidu.oped.sia.boot.accesslog.AccessLogAutoConfiguration

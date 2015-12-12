@@ -1,11 +1,14 @@
 package com.baidu.oped.sia.boot.dualssl;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import static com.baidu.oped.sia.boot.utils.Constrains.SSL_DUAL_PREFIX;
 
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /**
- * Created by mason on 11/19/15.
+ * Dual ssl properties.
+ *
+ * @author mason
  */
 @ConfigurationProperties(prefix = SSL_DUAL_PREFIX)
 public class DualSslProperties {

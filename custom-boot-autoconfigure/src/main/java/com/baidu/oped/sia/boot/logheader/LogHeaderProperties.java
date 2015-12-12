@@ -3,14 +3,17 @@
  */
 package com.baidu.oped.sia.boot.logheader;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import static com.baidu.oped.sia.boot.utils.Constrains.LOG_HEADER_PREFIX;
+
 
 import java.util.List;
 
-import static com.baidu.oped.sia.boot.utils.Constrains.LOG_HEADER_PREFIX;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Created by meidongxu on 7/2/15.
+ * LogHeader Configuration properties.
+ *
+ * @author mason
  */
 @ConfigurationProperties(prefix = LOG_HEADER_PREFIX)
 public class LogHeaderProperties {

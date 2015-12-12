@@ -1,8 +1,15 @@
 package com.baidu.oped.sia.boot.iam;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
+import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
+
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.baidu.bce.iam.IamClient;
 import com.baidu.bce.iam.IamClientConfiguration;
 import com.baidu.oped.sia.boot.common.FilterOrder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -11,11 +18,6 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.servlet.http.HttpServletRequest;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
-import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
 
 /**
  * Created by mason on 12/2/15.

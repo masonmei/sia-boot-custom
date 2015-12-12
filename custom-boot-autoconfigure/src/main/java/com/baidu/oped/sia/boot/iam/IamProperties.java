@@ -1,14 +1,17 @@
 package com.baidu.oped.sia.boot.iam;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Created by mason on 12/2/15.
+ * Iam configuration properties.
+ *
+ * @author mason
  */
 @ConfigurationProperties(prefix = IAM_PREFIX)
 public class IamProperties {
@@ -123,6 +126,11 @@ public class IamProperties {
         this.serviceAccounts = serviceAccounts;
     }
 
+    /**
+     * Service Account.
+     *
+     * @author mason
+     */
     public static class ServiceAccount {
         private String userId;
         private String scope;

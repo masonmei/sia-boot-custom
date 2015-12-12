@@ -1,10 +1,5 @@
 package com.baidu.oped.sia.boot.common;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
-import org.yaml.snakeyaml.Yaml;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,9 +13,15 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
+import org.yaml.snakeyaml.Yaml;
+
 /**
  * Watch file for content changing and convert the file to POJO object.
  *
+ * @param <T> The POJO Object from configuration file.
  * @author mason
  */
 public class FileWatcher<T> {

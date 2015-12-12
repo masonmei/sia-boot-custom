@@ -1,11 +1,12 @@
 package com.baidu.oped.sia.boot.utils;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * Created by mason on 12/2/15.

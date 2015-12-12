@@ -1,9 +1,9 @@
 package com.baidu.oped.sia.boot.utils;
 
-import org.springframework.util.Assert;
-
 import java.util.List;
 import java.util.regex.Pattern;
+
+import org.springframework.util.Assert;
 
 /**
  * Ip Utils

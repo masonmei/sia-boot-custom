@@ -1,8 +1,13 @@
 package com.baidu.oped.sia.boot.dualssl;
 
-import io.undertow.Undertow;
+import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
+import static com.baidu.oped.sia.boot.utils.Constrains.SSL_DUAL_PREFIX;
+
+
 import org.apache.catalina.connector.Connector;
 import org.eclipse.jetty.server.NetworkTrafficServerConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -18,22 +23,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
-import static com.baidu.oped.sia.boot.utils.Constrains.SSL_DUAL_PREFIX;
+import io.undertow.Undertow;
 
 /**
- * Created by mason on 11/19/15.
+ * Dual ssl auto configuration.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnProperty(prefix = SSL_DUAL_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
 @EnableConfigurationProperties(DualSslProperties.class)
 public class DualSslAutoConfiguration {
+    private static final Logger LOG = LoggerFactory.getLogger(DualSslAutoConfiguration.class);
 
     @Autowired
     private DualSslProperties properties;
 
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
+        LOG.info("enable dual ssl port.");
         return new EmbeddedServletContainerCustomizer() {
             @Override
             public void customize(ConfigurableEmbeddedServletContainer container) {
@@ -71,12 +79,19 @@ public class DualSslAutoConfiguration {
         };
     }
 
+    /**
+     * Enable force redirect to ssl.
+     *
+     * @author mason
+     */
     @Configuration
     @ConditionalOnProperty(prefix = SSL_DUAL_PREFIX,
             name = "redirect-ssl", havingValue = "true", matchIfMissing = false)
     public class WebSecurityAutoRedirectConfiguration extends WebSecurityConfigurerAdapter {
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            LOG.info("enable force redirect to ssl");
             http.requiresChannel().anyRequest().requiresSecure();
         }
     }

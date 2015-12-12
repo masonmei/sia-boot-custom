@@ -1,32 +1,83 @@
 package com.baidu.oped.sia.boot.utils;
 
-import org.springframework.util.StringUtils;
+import static com.baidu.oped.sia.boot.exception.ExceptionArgsBuilder.get;
+
 
 import java.io.File;
+import java.io.IOException;
+
+import com.baidu.oped.sia.boot.exception.internal.ConfigFileNotFoundException;
+import com.baidu.oped.sia.boot.exception.internal.InvalidConfigFilePathException;
+
+import org.springframework.util.Assert;
+import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 
 /**
- * Created by mason on 11/10/15.
+ * File Utils for resolve file.
+ *
+ * @author mason
  */
 public abstract class FileUtils {
+
+    public static final String FILE_PREFIX = "file:";
+    public static final String CLASSPATH_PREFIX = "classpath:";
+    private static final String[] SEARCH_PATH = new String[]{FILE_PREFIX, CLASSPATH_PREFIX};
+
     /**
-     * Get file with the given fileName and parent directory
+     * Get file with the given fileName and parent directory.
      *
      * @param parentDirectory parent directory
      * @param fileName        file name
      * @return
      */
     public static File resolveConfigFile(String parentDirectory, String fileName) {
-        File configFile;
+        String filePath = "";
         if (StringUtils.hasText(parentDirectory)) {
-            configFile = new File(parentDirectory.concat(fileName));
-        } else {
-            String configFilePath = FileUtils.class.getClassLoader().getResource(fileName).getFile();
-            configFile = new File(configFilePath);
+            filePath = filePath.concat(parentDirectory);
+
+            if (!filePath.endsWith(File.separator)) {
+                filePath = filePath.concat(File.separator);
+            }
         }
 
-        if (!configFile.exists()) {
-            configFile = null;
+        filePath = filePath.concat(fileName);
+
+        return resolveFile(filePath);
+    }
+
+    /**
+     * Resolve file with file Path.
+     *
+     * @param filePath
+     * @return
+     */
+    public static File resolveFile(String filePath) {
+        Assert.hasLength(filePath, "File Path must not be null while resolving file.");
+        if (filePath.startsWith(FILE_PREFIX) || filePath.startsWith(CLASSPATH_PREFIX)) {
+            File configFile;
+            try {
+                configFile = ResourceUtils.getFile(filePath);
+                if (configFile.exists()) {
+                    return configFile.getCanonicalFile();
+                }
+            } catch (IOException e) {
+                throw new InvalidConfigFilePathException(get().with(filePath).args());
+            }
+        } else {
+            for (String path : SEARCH_PATH) {
+                File configFile;
+                try {
+                    configFile = ResourceUtils.getFile(String.format("%s%s", path, filePath));
+                    if (configFile.exists()) {
+                        return configFile.getCanonicalFile();
+                    }
+                } catch (IOException e) {
+                    throw new InvalidConfigFilePathException(get().with(filePath).args());
+                }
+            }
         }
-        return configFile;
+
+        throw new ConfigFileNotFoundException(get().with(filePath).args());
     }
 }

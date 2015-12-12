@@ -1,8 +1,9 @@
 package com.baidu.oped.sia.boot.resolver;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import static com.baidu.oped.sia.boot.utils.Constrains.ARGS_PREFIX;
+
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Created by mason on 11/18/15.

@@ -1,8 +1,9 @@
 package com.baidu.oped.sia.boot.exception;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.assertEquals;
+
+
+import java.util.Arrays;
 
 /**
  * Created by mason on 12/8/15.

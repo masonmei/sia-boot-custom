@@ -4,6 +4,15 @@ server:
 custom:
   boot:
     iplist:
-      config-path:
+      enabled: true
       config-file: iplist.yaml
       refresh-interval: 10
+    access-log:
+      enabled: true
+      config-file: logback-access.xml
+    trace:
+      enabled: true
+
+logging:
+  level:
+    com.baidu.oped.sia.boot: DEBUG

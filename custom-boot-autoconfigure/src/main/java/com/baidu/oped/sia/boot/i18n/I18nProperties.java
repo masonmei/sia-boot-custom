@@ -1,12 +1,16 @@
 package com.baidu.oped.sia.boot.i18n;
 
-import com.google.common.base.MoreObjects;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
 
+
+import com.google.common.base.MoreObjects;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /**
- * Created by mason on 11/17/15.
+ * I18n Auto configuration properties.
+ *
+ * @author mason
  */
 @ConfigurationProperties(prefix = I18N_PREFIX)
 public class I18nProperties {

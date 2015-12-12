@@ -1,9 +1,9 @@
 package com.baidu.oped.sia.boot.resolver;
 
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * Created by mason on 11/16/15.

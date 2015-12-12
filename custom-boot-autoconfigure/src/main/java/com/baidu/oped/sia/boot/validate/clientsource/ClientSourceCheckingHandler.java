@@ -3,12 +3,13 @@
  */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.baidu.oped.sia.boot.exception.RequestForbiddenException;
+
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by mason on 7/14/15.

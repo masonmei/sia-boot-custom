@@ -1,5 +1,13 @@
 package com.baidu.oped.sia.boot.i18n;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
+import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
+
+
+import java.util.Locale;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -16,21 +24,20 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import java.util.Locale;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
-import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
-
 /**
- * Enable I18N support configuration
+ * Enable I18N support configuration.
  * <p>
- * Created by mason on 10/15/15.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = I18N_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
 @EnableConfigurationProperties(I18nProperties.class)
-public class I18NAutoConfiguration extends WebMvcConfigurerAdapter {
+public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(I18nAutoConfiguration.class);
+
     private static final String DEFAULT_ENCODING = "UTF-8";
 
     @Autowired
@@ -38,6 +45,7 @@ public class I18NAutoConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
     public LocaleResolver localResolver() {
+        LOG.info("enable i18n resolver. Resolver type: {}", properties.getResolverType());
         LocaleResolver resolver = null;
         switch (properties.getResolverType()) {
             case COOKIE:
@@ -83,6 +91,7 @@ public class I18NAutoConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        LOG.info("add i18n LocaleChangeInterceptor.");
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName(properties.getLocalParam());
         registry.addInterceptor(interceptor);

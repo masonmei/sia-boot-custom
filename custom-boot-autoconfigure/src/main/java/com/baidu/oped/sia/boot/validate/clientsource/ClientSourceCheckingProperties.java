@@ -3,12 +3,13 @@
  */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import static com.baidu.oped.sia.boot.utils.Constrains.VALIDATE_PREFIX;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.baidu.oped.sia.boot.utils.Constrains.VALIDATE_PREFIX;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Created by mason on 7/14/15.

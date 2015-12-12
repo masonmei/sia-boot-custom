@@ -1,14 +1,16 @@
 package com.baidu.oped.sia.boot.springfox;
 
-import com.baidu.oped.sia.boot.utils.Constrains;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.List;
 
+import com.baidu.oped.sia.boot.utils.Constrains;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /**
- * Configuration for web application to enable swagger
+ * Configuration for web application to enable swagger.
  * <p>
- * Created by mason on 10/29/15.
+ *
+ * @author mason
  */
 @ConfigurationProperties(prefix = Constrains.SPRING_FOX_PREFIX)
 public class SpringFoxProperties {
@@ -50,6 +52,11 @@ public class SpringFoxProperties {
         this.apiInfo = apiInfo;
     }
 
+    /**
+     * Api Info.
+     *
+     * @author mason
+     */
     public static class ApiInfo {
         private String version;
         private String title;

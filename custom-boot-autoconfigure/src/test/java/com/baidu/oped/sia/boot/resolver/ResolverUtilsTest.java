@@ -1,13 +1,15 @@
 package com.baidu.oped.sia.boot.resolver;
 
-import com.baidu.oped.sia.boot.resolver.annotation.FromQuery;
-import org.junit.Test;
-import org.springframework.util.StringUtils;
+import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringArrayToPrimitiveArr;
+import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringToPrimitive;
+
 
 import java.lang.reflect.Field;
 
-import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringArrayToPrimitiveArr;
-import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringToPrimitive;
+import com.baidu.oped.sia.boot.resolver.annotation.FromQuery;
+
+import org.junit.Test;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by mason on 11/18/15.

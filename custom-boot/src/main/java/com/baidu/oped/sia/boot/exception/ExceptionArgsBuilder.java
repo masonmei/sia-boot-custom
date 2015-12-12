@@ -1,12 +1,13 @@
 package com.baidu.oped.sia.boot.exception;
 
-import org.springframework.util.StringUtils;
+import static java.lang.String.format;
+
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import static java.lang.String.format;
+import org.springframework.util.StringUtils;
 
 /**
  * Exception Arguments builder.

@@ -1,14 +1,15 @@
 package com.baidu.oped.sia.boot.rewrite;
 
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
+
+import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * Created by mason on 12/2/15.

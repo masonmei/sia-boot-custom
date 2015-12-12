@@ -1,5 +1,7 @@
 package com.baidu.oped.sia.boot.profiling;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -7,8 +9,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Aspect for profiling purpose.

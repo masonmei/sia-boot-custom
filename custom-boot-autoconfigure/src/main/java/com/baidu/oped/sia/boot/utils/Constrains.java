@@ -20,6 +20,10 @@ public abstract class Constrains {
     public static final String TRACE_PREFIX = CUSTOMER_BOOT_BASE + "trace";
     public static final String TRACE_HEADER_NAME = "x-trace-header-name";
     public static final String TRACE_TIMESTAMP_HEADER_NAME = "x-trace-timestamp-header-name";
+    public static final String TRACE_SOURCE_HEADER_NAME = "x-trace-source-header-name";
+    public static final String TRACE_SOURCE_SEQUENCE_HEADER_NAME = "x-trace-source-seq-header-name";
+
+    public static final String ACCESS_LOG_PREFIX = CUSTOMER_BOOT_BASE + "access-log";
 
     public static final String ASYNC_PREFIX = CUSTOMER_BOOT_BASE + "async";
 
