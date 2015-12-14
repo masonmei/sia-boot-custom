@@ -1,26 +1,24 @@
 package com.baidu.oped.sia.boot.trace;
 
-import static java.lang.String.format;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_SOURCE_HEADER_NAME;
-import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_SOURCE_SEQUENCE_HEADER_NAME;
-import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_TIMESTAMP_HEADER_NAME;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.util.Calendar;
-import java.util.UUID;
-
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 import com.baidu.oped.sia.boot.utils.Constrains;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.core.Ordered;
 import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.UUID;
+
+import static com.baidu.oped.sia.boot.utils.Constrains.*;
+import static java.lang.String.format;
 
 /**
  * Trace Interceptor for tracing web transactions.
@@ -28,16 +26,16 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  *
  * @author mason
  */
-public class TraceInterceptor extends HandlerInterceptorAdapter implements Ordered {
-    private static final Logger LOG = LoggerFactory.getLogger(TraceInterceptor.class);
+public class TraceFilter extends OncePerRequestFilter implements Ordered {
+    private static final Logger LOG = LoggerFactory.getLogger(TraceFilter.class);
 
     private final String traceHeaderName;
     private final String traceTimestampHeaderName;
     private final String traceSourceIpHeaderName;
     private final String traceSourceSeqHeaderName;
 
-    public TraceInterceptor(String traceHeaderName, String traceTimestampHeaderName, String traceSourceIpHeaderName,
-                            String traceSourceSeqHeaderName) {
+    public TraceFilter(String traceHeaderName, String traceTimestampHeaderName, String traceSourceIpHeaderName,
+                       String traceSourceSeqHeaderName) {
         if (StringUtils.isEmpty(traceHeaderName)) {
             traceHeaderName = Constrains.TRACE_HEADER_NAME;
         }
@@ -65,9 +63,7 @@ public class TraceInterceptor extends HandlerInterceptorAdapter implements Order
         return Ordered.HIGHEST_PRECEDENCE;
     }
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public void preProcess(HttpServletRequest request, HttpServletResponse response) {
         if (null == RequestInfoHolder.traceId()) {
             String requestId = request.getHeader(traceHeaderName);
             if (requestId == null) {
@@ -107,13 +103,9 @@ public class TraceInterceptor extends HandlerInterceptorAdapter implements Order
         }
 
         LOG.info("request preHandle, method: {}, url: {}", request.getMethod(), request.getRequestURI());
-        return true;
     }
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
-
+    public void postProcess(HttpServletRequest request, HttpServletResponse response) {
         String responseTraceId = response.getHeader(traceHeaderName);
         String responseTraceTimestamp = response.getHeader(traceTimestampHeaderName);
 
@@ -137,5 +129,13 @@ public class TraceInterceptor extends HandlerInterceptorAdapter implements Order
         MDC.remove("requestId");
         RequestInfoHolder.removeTraceTimestamp();
         RequestInfoHolder.removeTraceId();
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        preProcess(request, response);
+        filterChain.doFilter(request, response);
+        postProcess(request, response);
     }
 }

@@ -45,32 +45,6 @@ public class SystemExceptionHandler {
         return RequestInfoHolder.traceId();
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<BasicResponse> handleException(Exception exception) {
-        LOG.error("Exception handled", exception);
-        BasicResponse error = new BasicResponse();
-        String requestId = getRequestId();
-        error.setRequestId(requestId);
-        error.setCode(SystemCode.INTERNAL_ERROR);
-        error.setMessage(getLocalMessage(INTERNAL_SYS_ERROR));
-        LOG.info("[exception] {}", error.getCode());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<BasicResponse> handleMissingServletRequestParameterException(
-            MissingServletRequestParameterException exception) {
-        LOG.warn("MissingServletRequestParameterException handled", exception);
-        BasicResponse error = new BasicResponse();
-        String requestId = getRequestId();
-        error.setRequestId(requestId);
-        error.setCode(SystemCode.INVALID_PARAMETER);
-        Object[] args = new Object[]{exception.getParameterName(), exception.getParameterType()};
-        error.setMessage(getLocalMessage(REQ_PARAM_MISMATCH, args));
-        LOG.info("[exception] {}", error.getCode());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(SystemException.class)
     public ResponseEntity<BasicResponse> handleSystemException(SystemException exception) {
         LOG.warn("SystemException handled", exception);
@@ -92,6 +66,32 @@ public class SystemExceptionHandler {
         if (code == SystemCode.AUTHENTICATION_ERROR || code == SystemCode.AUTHORIZATION_ERROR) {
             return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
         }
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<BasicResponse> handleMissingServletRequestParameterException(
+            MissingServletRequestParameterException exception) {
+        LOG.warn("MissingServletRequestParameterException handled", exception);
+        BasicResponse error = new BasicResponse();
+        String requestId = getRequestId();
+        error.setRequestId(requestId);
+        error.setCode(SystemCode.INVALID_PARAMETER);
+        Object[] args = new Object[]{exception.getParameterName(), exception.getParameterType()};
+        error.setMessage(getLocalMessage(REQ_PARAM_MISMATCH, args));
+        LOG.info("[exception] {}", error.getCode());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<BasicResponse> handleException(Exception exception) {
+        LOG.error("Exception handled", exception);
+        BasicResponse error = new BasicResponse();
+        String requestId = getRequestId();
+        error.setRequestId(requestId);
+        error.setCode(SystemCode.INTERNAL_ERROR);
+        error.setMessage(getLocalMessage(INTERNAL_SYS_ERROR));
+        LOG.info("[exception] {}", error.getCode());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
