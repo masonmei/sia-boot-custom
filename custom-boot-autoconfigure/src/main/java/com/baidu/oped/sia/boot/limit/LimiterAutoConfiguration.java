@@ -34,19 +34,12 @@ public class LimiterAutoConfiguration {
 
     @Bean
     public FilterRegistrationBean ipListFilterRegistrationBean() {
-        SimpleLimiterFilter filter = new SimpleLimiterFilter(buildFileWatcher(), buildLimiterConfig());
+        SimpleLimiterFilter filter = new SimpleLimiterFilter(buildLimiterConfig());
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(filter);
         registrationBean.setOrder(FilterOrder.getOrder(FilterOrder.IP_LIMIT));
 
         return registrationBean;
-    }
-
-    private FileWatcher<WhiteListIpHolder> buildFileWatcher() {
-        int refreshInterval = properties.getRefreshInterval();
-        return new FileWatcher<>(refreshInterval,
-                FileUtils.resolveConfigFile(properties.getConfigPath(), properties.getConfigFile()),
-                WhiteListIpHolder.class);
     }
 
     private LimiterConfig buildLimiterConfig() {

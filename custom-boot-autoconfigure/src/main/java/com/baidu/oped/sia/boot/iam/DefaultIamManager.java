@@ -35,7 +35,7 @@ public class DefaultIamManager implements IamManager {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultIamManager.class);
 
     private IamClient iamClient;
-    private Map<String, IamProperties.ServiceAccount> serviceAccountMap = new HashMap();
+    private Map<String, IamProperties.ServiceAccount> serviceAccountMap = new HashMap<>();
 
     @Override
     public void checkServiceAndUserAuth(String scope, String userId) {

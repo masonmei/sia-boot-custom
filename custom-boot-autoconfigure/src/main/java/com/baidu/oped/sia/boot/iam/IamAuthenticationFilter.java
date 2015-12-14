@@ -42,7 +42,9 @@ public class IamAuthenticationFilter extends OncePerRequestFilter {
 
         MDC.put(REMOTE_ADDRESS, remoteAddress);
 
-        if (!iamManager.isActive() || !accessControl.isNotIgnoredUri(request.getRequestURI())) {
+        if (RequestInfoHolder.inWhiteList()
+                || !iamManager.isActive()
+                || !accessControl.isNotIgnoredUri(request.getRequestURI())) {
             RequestInfoHolder.setIgnoreAuth(TRUE);
         }
 
