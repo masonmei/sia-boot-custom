@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.iam;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.baidu.bce.iam.IamClient;
@@ -30,6 +29,15 @@ public class IamAutoConfiguration {
     @Autowired
     private IamProperties properties;
 
+    @Bean
+    @ConditionalOnProperty(prefix = IAM_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+    public IamManager iamManager() {
+        DefaultIamManager iamManager = new DefaultIamManager();
+        iamManager.setIamClient(iamClient());
+        iamManager.setServiceAccounts(properties.getServiceAccounts());
+        return iamManager;
+    }
+
     public IamClient iamClient() {
         if (properties.isEnabled()) {
             IamClientConfiguration configuration = new IamClientConfiguration();
@@ -44,15 +52,6 @@ public class IamAutoConfiguration {
             return new IamClient(configuration);
         }
         return null;
-    }
-
-    @Bean
-    @ConditionalOnProperty(prefix = IAM_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
-    public IamManager iamManager() {
-        DefaultIamManager iamManager = new DefaultIamManager();
-        iamManager.setIamClient(iamClient());
-        iamManager.setServiceAccounts(properties.getServiceAccounts());
-        return iamManager;
     }
 
     @Bean

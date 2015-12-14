@@ -2,7 +2,6 @@ package com.baidu.oped.sia.boot.accesslog;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.ACCESS_LOG_PREFIX;
 
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

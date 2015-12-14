@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.dualssl;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.SSL_DUAL_PREFIX;
 
-
 import org.apache.catalina.connector.Connector;
 import org.eclipse.jetty.server.NetworkTrafficServerConnector;
 import org.slf4j.Logger;

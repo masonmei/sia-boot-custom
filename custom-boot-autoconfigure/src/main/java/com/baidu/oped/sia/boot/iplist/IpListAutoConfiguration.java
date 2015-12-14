@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.iplist;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.IP_PERMISSION_PREFIX;
 
-
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 

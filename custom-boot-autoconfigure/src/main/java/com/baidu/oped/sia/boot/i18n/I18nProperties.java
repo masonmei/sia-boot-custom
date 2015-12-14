@@ -2,7 +2,6 @@ package com.baidu.oped.sia.boot.i18n;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
 
-
 import com.google.common.base.MoreObjects;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

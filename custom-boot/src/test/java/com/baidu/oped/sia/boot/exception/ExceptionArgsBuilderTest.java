@@ -2,7 +2,6 @@ package com.baidu.oped.sia.boot.exception;
 
 import static org.junit.Assert.assertEquals;
 
-
 import java.util.Arrays;
 
 /**

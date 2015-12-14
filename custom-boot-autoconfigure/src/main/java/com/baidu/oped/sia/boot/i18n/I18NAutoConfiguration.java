@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.i18n;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
 
-
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -63,12 +62,6 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
-    private LocaleResolver buildSessionResolver() {
-        SessionLocaleResolver resolver = new SessionLocaleResolver();
-        resolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
-        return resolver;
-    }
-
     private LocaleResolver buildCookieResolver(I18nProperties.CookieConfig config) {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setCookieMaxAge(config.getMaxAge());
@@ -79,6 +72,12 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
 
         localeResolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
         return localeResolver;
+    }
+
+    private LocaleResolver buildSessionResolver() {
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
+        resolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
+        return resolver;
     }
 
     @Bean

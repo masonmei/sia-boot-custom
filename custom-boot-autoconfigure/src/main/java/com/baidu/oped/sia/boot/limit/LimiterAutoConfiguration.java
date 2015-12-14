@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.limit;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.LIMIT_PREFIX;
 
-
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
@@ -43,19 +42,19 @@ public class LimiterAutoConfiguration {
         return registrationBean;
     }
 
+    private FileWatcher<WhiteListIpHolder> buildFileWatcher() {
+        int refreshInterval = properties.getRefreshInterval();
+        return new FileWatcher<>(refreshInterval,
+                FileUtils.resolveConfigFile(properties.getConfigPath(), properties.getConfigFile()),
+                WhiteListIpHolder.class);
+    }
+
     private LimiterConfig buildLimiterConfig() {
         LimiterConfig limiterConfig = new LimiterConfig();
         limiterConfig.setMaxRequestsPerPeriod(properties.getMaxRequestsPerPeriod());
         limiterConfig.setPeriodInMs(properties.getPeriod() * 1000);
         limiterConfig.setBandTimeInMs(properties.getBandTime() * 1000);
         return limiterConfig;
-    }
-
-    private FileWatcher<WhiteListIpHolder> buildFileWatcher() {
-        int refreshInterval = properties.getRefreshInterval();
-        return new FileWatcher<>(refreshInterval,
-                FileUtils.resolveConfigFile(properties.getConfigPath(), properties.getConfigFile()),
-                WhiteListIpHolder.class);
     }
 
 }

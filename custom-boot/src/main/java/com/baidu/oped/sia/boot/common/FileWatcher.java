@@ -67,8 +67,17 @@ public class FileWatcher<T> {
         registerShutDownHook();
     }
 
-    public T getHolder() {
-        return holder;
+    private void loadingProperties() {
+        LOG.debug("start to load properties with path {}", configFile.getName());
+
+        try (InputStream inputStream = new FileInputStream(configFile)) {
+            Yaml yaml = new Yaml();
+            holder = yaml.loadAs(inputStream, contentType);
+        } catch (IOException e) {
+            LOG.warn("Cannot reading configurations");
+        }
+
+        LOG.info("reload properties finished.");
     }
 
     private void watchingForChanges() {
@@ -110,17 +119,8 @@ public class FileWatcher<T> {
                 }));
     }
 
-    private void loadingProperties() {
-        LOG.debug("start to load properties with path {}", configFile.getName());
-
-        try (InputStream inputStream = new FileInputStream(configFile)) {
-            Yaml yaml = new Yaml();
-            holder = yaml.loadAs(inputStream, contentType);
-        } catch (IOException e) {
-            LOG.warn("Cannot reading configurations");
-        }
-
-        LOG.info("reload properties finished.");
+    public T getHolder() {
+        return holder;
     }
 
 }

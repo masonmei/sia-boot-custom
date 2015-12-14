@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.resolver;
 import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringArrayToPrimitiveArr;
 import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringToPrimitive;
 
-
 import java.lang.reflect.Field;
 
 import com.baidu.oped.sia.boot.resolver.annotation.FromQuery;

@@ -8,7 +8,6 @@ import static com.baidu.oped.sia.boot.utils.Constrains.AUTHORIZATION;
 
 import static org.springframework.util.StringUtils.collectionToDelimitedString;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
@@ -91,14 +90,6 @@ public class DefaultIamManager implements IamManager {
         }
     }
 
-    private String getServiceScope(String serviceUserId) {
-        IamProperties.ServiceAccount serviceAccount = serviceAccountMap.get(serviceUserId);
-        if (serviceAccount == null) {
-            return null;
-        }
-        return serviceAccount.getScope();
-    }
-
     @Override
     public String getUserFromIam(HttpServletRequest servletRequest) {
 
@@ -177,6 +168,14 @@ public class DefaultIamManager implements IamManager {
     @Override
     public boolean isActive() {
         return true;
+    }
+
+    private String getServiceScope(String serviceUserId) {
+        IamProperties.ServiceAccount serviceAccount = serviceAccountMap.get(serviceUserId);
+        if (serviceAccount == null) {
+            return null;
+        }
+        return serviceAccount.getScope();
     }
 
     public void setIamClient(IamClient iamClient) {

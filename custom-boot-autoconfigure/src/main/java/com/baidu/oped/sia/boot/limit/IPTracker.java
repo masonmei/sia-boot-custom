@@ -23,21 +23,6 @@ public class IPTracker {
         this.bandUntilTime = currentTimeInMillis - bandTimeInMillis;
     }
 
-
-    public boolean hasReachedLimit(int maxRequestsPerPeriod, long currentTimeInMillis) {
-        if (currentTimeInMillis < bandUntilTime) {
-            return true;
-        }
-
-        addEntry(currentTimeInMillis);
-        if (timestamps.size() >= maxRequestsPerPeriod) {
-            this.bandUntilTime = bandTimeInMillis + currentTimeInMillis;
-            return true;
-        }
-
-        return false;
-    }
-
     private void addEntry(long currentTimeInMillis) {
         fixRange(currentTimeInMillis);
         timestamps.add(currentTimeInMillis);
@@ -54,5 +39,19 @@ public class IPTracker {
         if (toRemove.size() > 0) {
             timestamps.removeAll(toRemove);
         }
+    }
+
+    public boolean hasReachedLimit(int maxRequestsPerPeriod, long currentTimeInMillis) {
+        if (currentTimeInMillis < bandUntilTime) {
+            return true;
+        }
+
+        addEntry(currentTimeInMillis);
+        if (timestamps.size() >= maxRequestsPerPeriod) {
+            this.bandUntilTime = bandTimeInMillis + currentTimeInMillis;
+            return true;
+        }
+
+        return false;
     }
 }

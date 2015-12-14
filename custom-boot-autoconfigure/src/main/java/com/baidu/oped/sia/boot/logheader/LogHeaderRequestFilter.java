@@ -36,6 +36,11 @@ public class LogHeaderRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
+    public void destroy() {
+
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         if (!CollectionUtils.isEmpty(headerNames)) {
@@ -50,10 +55,5 @@ public class LogHeaderRequestFilter extends OncePerRequestFilter {
         for (String headerName : headerNames) {
             LOG.info(request.getHeader(headerName));
         }
-    }
-
-    @Override
-    public void destroy() {
-
     }
 }

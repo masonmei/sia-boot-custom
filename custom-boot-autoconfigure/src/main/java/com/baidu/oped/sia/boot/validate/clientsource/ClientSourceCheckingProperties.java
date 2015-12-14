@@ -5,7 +5,6 @@ package com.baidu.oped.sia.boot.validate.clientsource;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.VALIDATE_PREFIX;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

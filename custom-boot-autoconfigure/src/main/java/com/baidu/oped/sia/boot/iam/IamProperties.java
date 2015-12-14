@@ -2,7 +2,6 @@ package com.baidu.oped.sia.boot.iam;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

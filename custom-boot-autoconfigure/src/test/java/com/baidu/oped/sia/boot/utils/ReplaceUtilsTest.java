@@ -2,7 +2,6 @@ package com.baidu.oped.sia.boot.utils;
 
 import static org.junit.Assert.assertEquals;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

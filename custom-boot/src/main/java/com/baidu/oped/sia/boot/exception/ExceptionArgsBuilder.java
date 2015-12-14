@@ -2,7 +2,6 @@ package com.baidu.oped.sia.boot.exception;
 
 import static java.lang.String.format;
 
-
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,9 +42,33 @@ public class ExceptionArgsBuilder {
         return this;
     }
 
+    public <T> String join(String decimeter, T... params) {
+        if (params == null || params.length == 0) {
+            return "";
+        } else if (params.length == 1) {
+            return params[0].toString();
+        } else {
+            String result = StringUtils.arrayToDelimitedString(params, ", ");
+            int lastIndex = result.lastIndexOf(", ");
+            return format("%s %s %s", result.substring(0, lastIndex), decimeter, result.substring(lastIndex + 2));
+        }
+    }
+
     public <T> ExceptionArgsBuilder and(Collection<T> params) {
         this.params.add(join("and", params));
         return this;
+    }
+
+    public <T> String join(String decimeter, Collection<T> params) {
+        if (params == null || params.size() == 0) {
+            return "";
+        } else if (params.size() == 1) {
+            return params.iterator().next().toString();
+        } else {
+            String result = StringUtils.collectionToDelimitedString(params, ", ");
+            int lastIndex = result.lastIndexOf(", ");
+            return format("%s %s %s", result.substring(0, lastIndex), decimeter, result.substring(lastIndex + 2));
+        }
     }
 
     public <T> ExceptionArgsBuilder or(T... params) {
@@ -70,31 +93,6 @@ public class ExceptionArgsBuilder {
         }
         this.params.add(String.format("%s, %s", fromString, toString));
         return this;
-    }
-
-
-    public <T> String join(String decimeter, T... params) {
-        if (params == null || params.length == 0) {
-            return "";
-        } else if (params.length == 1) {
-            return params[0].toString();
-        } else {
-            String result = StringUtils.arrayToDelimitedString(params, ", ");
-            int lastIndex = result.lastIndexOf(", ");
-            return format("%s %s %s", result.substring(0, lastIndex), decimeter, result.substring(lastIndex + 2));
-        }
-    }
-
-    public <T> String join(String decimeter, Collection<T> params) {
-        if (params == null || params.size() == 0) {
-            return "";
-        } else if (params.size() == 1) {
-            return params.iterator().next().toString();
-        } else {
-            String result = StringUtils.collectionToDelimitedString(params, ", ");
-            int lastIndex = result.lastIndexOf(", ");
-            return format("%s %s %s", result.substring(0, lastIndex), decimeter, result.substring(lastIndex + 2));
-        }
     }
 
     public Object[] args() {

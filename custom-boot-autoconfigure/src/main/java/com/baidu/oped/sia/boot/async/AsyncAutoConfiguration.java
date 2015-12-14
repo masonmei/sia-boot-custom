@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.async;
 import static com.baidu.oped.sia.boot.utils.Constrains.ASYNC_PREFIX;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 
-
 import java.util.concurrent.Executor;
 
 import org.slf4j.Logger;

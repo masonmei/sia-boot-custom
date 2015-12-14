@@ -5,7 +5,6 @@ import static java.lang.Boolean.TRUE;
 import static com.baidu.oped.sia.boot.utils.Constrains.REMOTE_ADDRESS;
 import static com.baidu.oped.sia.boot.utils.Constrains.USER;
 
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

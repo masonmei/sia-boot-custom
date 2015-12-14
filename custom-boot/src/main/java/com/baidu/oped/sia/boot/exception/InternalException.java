@@ -10,11 +10,11 @@ import static com.baidu.oped.sia.boot.exception.SystemCode.INTERNAL_ERROR;
  */
 public class InternalException extends SystemException {
 
-    public InternalException(String message, Object[] args) {
-        super(INTERNAL_ERROR, message, args);
-    }
-
     public InternalException() {
         this(INTERNAL_SYS_ERROR, null);
+    }
+
+    public InternalException(String message, Object[] args) {
+        super(INTERNAL_ERROR, message, args);
     }
 }

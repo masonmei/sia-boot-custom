@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.decode;
 import static com.baidu.oped.sia.boot.utils.Constrains.DECODE_URI_PREFIX;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 
-
 import com.baidu.oped.sia.boot.common.FilterOrder;
 
 import org.slf4j.Logger;

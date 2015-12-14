@@ -23,17 +23,17 @@ public abstract class IpV4Utils {
         return String.format("%d.%d.%d.%d", octet3, octet2, octet1, octet0);
     }
 
-    public static long ipToLong(String ip) {
-        String[] octets = ip.split("\\.");
-        return (Long.parseLong(octets[0]) << 24) + (Integer.parseInt(octets[1]) << 16)
-                + (Integer.parseInt(octets[2]) << 8) + Integer.parseInt(octets[3]);
-    }
-
     public static boolean isPrivate(String ip) {
         long longIp = ipToLong(ip);
         return (longIp >= ipToLong("10.0.0.0") && longIp <= ipToLong("10.255.255.255"))
                 || (longIp >= ipToLong("172.16.0.0") && longIp <= ipToLong("172.31.255.255"))
                 || longIp >= ipToLong("192.168.0.0") && longIp <= ipToLong("192.168.255.255");
+    }
+
+    public static long ipToLong(String ip) {
+        String[] octets = ip.split("\\.");
+        return (Long.parseLong(octets[0]) << 24) + (Integer.parseInt(octets[1]) << 16)
+                + (Integer.parseInt(octets[2]) << 8) + Integer.parseInt(octets[3]);
     }
 
     public static boolean isValid(String ip) {

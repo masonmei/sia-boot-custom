@@ -2,7 +2,6 @@ package com.baidu.oped.sia.boot.dualssl;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.SSL_DUAL_PREFIX;
 
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

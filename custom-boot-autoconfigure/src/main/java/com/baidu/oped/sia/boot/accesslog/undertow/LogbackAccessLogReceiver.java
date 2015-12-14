@@ -35,13 +35,12 @@ import io.undertow.servlet.spec.HttpServletResponseImpl;
 public class LogbackAccessLogReceiver extends ContextBase implements AccessLogReceiver,
         AppenderAttachable<IAccessEvent>, FilterAttachable<IAccessEvent> {
     public static final String DEFAULT_CONFIG_FILE = "conf" + File.separatorChar + "logback-access.xml";
-
+    boolean started = false;
+    boolean quiet = false;
     private AppenderAttachableImpl<IAccessEvent> aai = new AppenderAttachableImpl<>();
     private FilterAttachableImpl<IAccessEvent> fai = new FilterAttachableImpl<>();
     private String fileName;
     private String resource;
-    boolean started = false;
-    boolean quiet = false;
 
     public String getFileName() {
         return fileName;
@@ -59,6 +58,20 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         this.resource = resource;
     }
 
+    public void start() {
+        configure();
+        if (!isQuiet()) {
+            StatusPrinter.print(getStatusManager());
+        }
+        started = true;
+        registerShutdownHook();
+    }
+
+    public void stop() {
+        aai.detachAndStopAllAppenders();
+        started = false;
+    }
+
     @Override
     public boolean isStarted() {
         return started;
@@ -66,6 +79,15 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
 
     public void setStarted(boolean started) {
         this.started = started;
+    }
+
+    protected void configure() {
+        URL configURL = getConfigurationFileURL();
+        if (configURL != null) {
+            runJoranOnFile(configURL);
+        } else {
+            addError("Could not find configuration file for logback-access");
+        }
     }
 
     public boolean isQuiet() {
@@ -76,15 +98,6 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         this.quiet = quiet;
     }
 
-    public void start() {
-        configure();
-        if (!isQuiet()) {
-            StatusPrinter.print(getStatusManager());
-        }
-        started = true;
-        registerShutdownHook();
-    }
-
     private void registerShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override
@@ -92,28 +105,6 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
                 stop();
             }
         }));
-    }
-
-    public void stop() {
-        aai.detachAndStopAllAppenders();
-        started = false;
-    }
-
-    private void addInfo(String msg) {
-        getStatusManager().add(new InfoStatus(msg, this));
-    }
-
-    private void addError(String msg) {
-        getStatusManager().add(new ErrorStatus(msg, this));
-    }
-
-    protected void configure() {
-        URL configURL = getConfigurationFileURL();
-        if (configURL != null) {
-            runJoranOnFile(configURL);
-        } else {
-            addError("Could not find configuration file for logback-access");
-        }
     }
 
     protected URL getConfigurationFileURL() {
@@ -145,7 +136,6 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         return FileUtil.fileToURL(file);
     }
 
-
     private void runJoranOnFile(URL configURL) {
         try {
             JoranConfigurator jc = new JoranConfigurator();
@@ -157,6 +147,14 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         } catch (JoranException e) {
             // errors have been registered as status messages
         }
+    }
+
+    private void addError(String msg) {
+        getStatusManager().add(new ErrorStatus(msg, this));
+    }
+
+    private void addInfo(String msg) {
+        getStatusManager().add(new InfoStatus(msg, this));
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.baidu.oped.sia.boot.rewrite;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.REWRITE_PREFIX;
 
-
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -29,15 +29,6 @@ public class ClientSourceCheckingHandler {
         this.clientSourceChecker = new ActionClientSourceChecker(properties.getPattern());
     }
 
-    /**
-     * Provide the ability to get HttpServletRequest.
-     *
-     * @return
-     */
-    private HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-    }
-
     public void validate(Object... targets) {
         boolean checkSource = false;
         for (Object target : targets) {
@@ -63,6 +54,15 @@ public class ClientSourceCheckingHandler {
 
         String remoteHost = getRequest().getRemoteHost();
         return clientSourceWhiteLabel.isWhiteHost(remoteHost);
+    }
+
+    /**
+     * Provide the ability to get HttpServletRequest.
+     *
+     * @return
+     */
+    private HttpServletRequest getRequest() {
+        return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
     }
 
     private ClientSourceCheckingProperties getProperties() {

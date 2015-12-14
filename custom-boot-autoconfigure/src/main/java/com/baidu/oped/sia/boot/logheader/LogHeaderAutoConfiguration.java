@@ -6,7 +6,6 @@ package com.baidu.oped.sia.boot.logheader;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.LOG_HEADER_PREFIX;
 
-
 import com.baidu.oped.sia.boot.common.FilterOrder;
 
 import org.slf4j.Logger;

@@ -20,6 +20,14 @@ public class UriRewriteFiler extends OncePerRequestFilter {
 
     private RewriteContext rewriteContext;
 
+    public void setParameterResolver(UriRewriteParameterResolver parameterResolver) {
+        this.parameterResolver = parameterResolver;
+    }
+
+    public void setRewriteContext(RewriteContext rewriteContext) {
+        this.rewriteContext = rewriteContext;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -37,13 +45,5 @@ public class UriRewriteFiler extends OncePerRequestFilter {
                 break;
             }
         }
-    }
-
-    public void setParameterResolver(UriRewriteParameterResolver parameterResolver) {
-        this.parameterResolver = parameterResolver;
-    }
-
-    public void setRewriteContext(RewriteContext rewriteContext) {
-        this.rewriteContext = rewriteContext;
     }
 }

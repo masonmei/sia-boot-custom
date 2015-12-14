@@ -4,7 +4,6 @@ package com.baidu.oped.sia.boot.exception;
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INTERNAL_SYS_ERROR;
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.REQ_PARAM_MISMATCH;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.baidu.oped.sia.boot.common.BasicResponse;
@@ -31,21 +30,6 @@ public class SystemExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(SystemExceptionHandler.class);
 
-    private static String getRequestId() {
-        return RequestInfoHolder.traceId();
-    }
-
-    private static String getLocalMessage(String key) {
-        return getLocalMessage(key, null);
-    }
-
-    private static String getLocalMessage(String key, Object[] args) {
-        HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        RequestContext requestContext = new RequestContext(request);
-        return requestContext.getMessage(key, args);
-    }
-
     @ExceptionHandler(SystemException.class)
     public ResponseEntity<BasicResponse> handleSystemException(SystemException exception) {
         LOG.warn("SystemException handled", exception);
@@ -68,6 +52,21 @@ public class SystemExceptionHandler {
             return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private static String getRequestId() {
+        return RequestInfoHolder.traceId();
+    }
+
+    private static String getLocalMessage(String key) {
+        return getLocalMessage(key, null);
+    }
+
+    private static String getLocalMessage(String key, Object[] args) {
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        RequestContext requestContext = new RequestContext(request);
+        return requestContext.getMessage(key, args);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)

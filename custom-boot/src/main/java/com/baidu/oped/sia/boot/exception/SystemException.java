@@ -10,14 +10,14 @@ public abstract class SystemException extends RuntimeException {
     private final SystemCode code;
     private Object[] args;
 
+    public SystemException(SystemCode code, String message) {
+        this(code, message, null);
+    }
+
     public SystemException(SystemCode code, String message, Object[] args) {
         super(message);
         this.code = code;
         this.args = args;
-    }
-
-    public SystemException(SystemCode code, String message) {
-        this(code, message, null);
     }
 
     public SystemCode getCode() {

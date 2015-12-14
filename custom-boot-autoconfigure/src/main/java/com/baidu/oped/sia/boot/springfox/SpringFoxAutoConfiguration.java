@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.springfox;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.SPRING_FOX_PREFIX;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,15 +50,6 @@ public class SpringFoxAutoConfiguration {
         return docket;
     }
 
-    private Predicate<String> buildPaths() {
-        Set<Predicate<String>> predicates = new HashSet<>();
-        for (String pattern : properties.getPatterns()) {
-            Predicate<String> ant = PathSelectors.ant(pattern);
-            predicates.add(ant);
-        }
-        return Predicates.or(predicates);
-    }
-
     private ApiInfo buildApiInfo() {
         return new ApiInfo(properties.getApiInfo().getTitle(),
                 properties.getApiInfo().getDescription(),
@@ -68,5 +58,14 @@ public class SpringFoxAutoConfiguration {
                 properties.getApiInfo().getContact(),
                 properties.getApiInfo().getLicense(),
                 properties.getApiInfo().getLicenseUrl());
+    }
+
+    private Predicate<String> buildPaths() {
+        Set<Predicate<String>> predicates = new HashSet<>();
+        for (String pattern : properties.getPatterns()) {
+            Predicate<String> ant = PathSelectors.ant(pattern);
+            predicates.add(ant);
+        }
+        return Predicates.or(predicates);
     }
 }

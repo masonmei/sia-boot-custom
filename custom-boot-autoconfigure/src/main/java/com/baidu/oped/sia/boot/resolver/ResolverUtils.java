@@ -3,7 +3,6 @@ package com.baidu.oped.sia.boot.resolver;
 import static java.lang.reflect.Modifier.isFinal;
 import static java.lang.reflect.Modifier.isStatic;
 
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -43,6 +42,22 @@ public abstract class ResolverUtils {
         return result;
     }
 
+    private static Field[] filter(Field[] fields) {
+        if (fields == null) {
+            return new Field[0];
+        }
+
+        List<Field> fieldList = new ArrayList<>(fields.length);
+        for (Field field : fields) {
+            int modifiers = field.getModifiers();
+            if (isFinal(field.getModifiers()) || isStatic(modifiers)) {
+                continue;
+            }
+            fieldList.add(field);
+        }
+        return fieldList.toArray(new Field[fieldList.size()]);
+    }
+
     /**
      * Make the given field accessible, explicitly setting it accessible if
      * necessary. The {@code setAccessible(true)} method is only called
@@ -58,22 +73,6 @@ public abstract class ResolverUtils {
                 || Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
             field.setAccessible(true);
         }
-    }
-
-    private static Field[] filter(Field[] fields) {
-        if (fields == null) {
-            return new Field[0];
-        }
-
-        List<Field> fieldList = new ArrayList<>(fields.length);
-        for (Field field : fields) {
-            int modifiers = field.getModifiers();
-            if (isFinal(field.getModifiers()) || isStatic(modifiers)) {
-                continue;
-            }
-            fieldList.add(field);
-        }
-        return fieldList.toArray(new Field[fieldList.size()]);
     }
 
 }

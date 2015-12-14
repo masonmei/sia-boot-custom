@@ -25,14 +25,14 @@ public class TestController {
         };
     }
 
-    @RequestMapping(value = "async/result", method = RequestMethod.GET)
-    public AsyncResult<String> asyncResult() {
-        return new AsyncResult<>(printCurrentTimestamp());
-    }
-
     @Profiling
     public String printCurrentTimestamp() {
         return String.format("current time is : %d", System.currentTimeMillis());
+    }
+
+    @RequestMapping(value = "async/result", method = RequestMethod.GET)
+    public AsyncResult<String> asyncResult() {
+        return new AsyncResult<>(printCurrentTimestamp());
     }
 
     @RequestMapping(value = "sync/future", method = RequestMethod.GET)
