@@ -17,20 +17,12 @@ public class LimiterProperties {
     private int period = 10;
     private int bandTime = 60;
 
-    public boolean isEnabled() {
-        return enabled;
+    public int getBandTime() {
+        return bandTime;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getConfigPath() {
-        return configPath;
-    }
-
-    public void setConfigPath(String configPath) {
-        this.configPath = configPath;
+    public void setBandTime(int bandTime) {
+        this.bandTime = bandTime;
     }
 
     public String getConfigFile() {
@@ -41,12 +33,12 @@ public class LimiterProperties {
         this.configFile = configFile;
     }
 
-    public int getRefreshInterval() {
-        return refreshInterval;
+    public String getConfigPath() {
+        return configPath;
     }
 
-    public void setRefreshInterval(int refreshInterval) {
-        this.refreshInterval = refreshInterval;
+    public void setConfigPath(String configPath) {
+        this.configPath = configPath;
     }
 
     public int getMaxRequestsPerPeriod() {
@@ -65,11 +57,19 @@ public class LimiterProperties {
         this.period = period;
     }
 
-    public int getBandTime() {
-        return bandTime;
+    public int getRefreshInterval() {
+        return refreshInterval;
     }
 
-    public void setBandTime(int bandTime) {
-        this.bandTime = bandTime;
+    public void setRefreshInterval(int refreshInterval) {
+        this.refreshInterval = refreshInterval;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -16,12 +16,12 @@ public class IpListProperties {
     private String configFile = "iplist.yaml";
     private int refreshInterval = 10;
 
-    public boolean isEnabled() {
-        return enabled;
+    public String getConfigFile() {
+        return configFile;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setConfigFile(String configFile) {
+        this.configFile = configFile;
     }
 
     public String getConfigPath() {
@@ -32,19 +32,19 @@ public class IpListProperties {
         this.configPath = configPath;
     }
 
-    public String getConfigFile() {
-        return configFile;
-    }
-
-    public void setConfigFile(String configFile) {
-        this.configFile = configFile;
-    }
-
     public int getRefreshInterval() {
         return refreshInterval;
     }
 
     public void setRefreshInterval(int refreshInterval) {
         this.refreshInterval = refreshInterval;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

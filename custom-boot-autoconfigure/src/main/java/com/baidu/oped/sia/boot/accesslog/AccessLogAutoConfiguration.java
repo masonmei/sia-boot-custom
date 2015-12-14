@@ -50,13 +50,6 @@ public class AccessLogAutoConfiguration {
     private AccessLogProperties properties;
 
     @Bean
-    public FilterRegistrationBean teeFilter() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new TeeFilter());
-        return registrationBean;
-    }
-
-    @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         LOG.info("enable access log.");
         final File file = FileUtils.resolveFile(properties.getConfigFile());
@@ -111,5 +104,12 @@ public class AccessLogAutoConfiguration {
                 }
             }
         };
+    }
+
+    @Bean
+    public FilterRegistrationBean teeFilter() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new TeeFilter());
+        return registrationBean;
     }
 }

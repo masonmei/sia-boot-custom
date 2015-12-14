@@ -14,12 +14,12 @@ public class ProfilingProperties {
     private long warningThreshold = 1000;
     private long logFrequency = 100;
 
-    public boolean isEnabled() {
-        return enabled;
+    public long getLogFrequency() {
+        return logFrequency;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setLogFrequency(long logFrequency) {
+        this.logFrequency = logFrequency;
     }
 
     public long getWarningThreshold() {
@@ -30,11 +30,11 @@ public class ProfilingProperties {
         this.warningThreshold = warningThreshold;
     }
 
-    public long getLogFrequency() {
-        return logFrequency;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setLogFrequency(long logFrequency) {
-        this.logFrequency = logFrequency;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

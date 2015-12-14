@@ -20,15 +20,23 @@ public class IpV4UtilsTest {
     private static final long IP_IN_LONG = 3232235777L;
 
     @Test
-    public void testLongToIp() throws Exception {
-        long longIp = IpV4Utils.ipToLong(IP_IN_STRING);
-        assertEquals(IP_IN_LONG, longIp);
-    }
-
-    @Test
     public void testIpToLong() throws Exception {
         String ipString = IpV4Utils.longToIp(IP_IN_LONG);
         assertEquals(IP_IN_STRING, ipString);
+    }
+
+    @Test
+    public void testIsInRange() throws Exception {
+        boolean ipInRange = IpV4Utils.isInRange(IP_IN_STRING_OUT_RANGE, IP_IN_STRING);
+        assertFalse(ipInRange);
+        ipInRange = IpV4Utils.isInRange(IP_IN_STRING_IN_RANGE, IP_IN_STRING);
+        assertTrue(ipInRange);
+    }
+
+    @Test
+    public void testIsInRanges() throws Exception {
+        boolean res = IpV4Utils.isInRanges(Arrays.asList(IP_IN_STRING_IN_RANGE, IP_IN_STRING_OUT_RANGE), IP_IN_STRING);
+        assertTrue(res);
     }
 
     @Test
@@ -46,16 +54,8 @@ public class IpV4UtilsTest {
     }
 
     @Test
-    public void testIsInRange() throws Exception {
-        boolean ipInRange = IpV4Utils.isInRange(IP_IN_STRING_OUT_RANGE, IP_IN_STRING);
-        assertFalse(ipInRange);
-        ipInRange = IpV4Utils.isInRange(IP_IN_STRING_IN_RANGE, IP_IN_STRING);
-        assertTrue(ipInRange);
-    }
-
-    @Test
-    public void testIsInRanges() throws Exception {
-        boolean res = IpV4Utils.isInRanges(Arrays.asList(IP_IN_STRING_IN_RANGE, IP_IN_STRING_OUT_RANGE), IP_IN_STRING);
-        assertTrue(res);
+    public void testLongToIp() throws Exception {
+        long longIp = IpV4Utils.ipToLong(IP_IN_STRING);
+        assertEquals(IP_IN_LONG, longIp);
     }
 }

@@ -18,14 +18,6 @@ public class BasicResponse {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message = "";
 
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
-
     public SystemCode getCode() {
         return code;
     }
@@ -40,5 +32,13 @@ public class BasicResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 }

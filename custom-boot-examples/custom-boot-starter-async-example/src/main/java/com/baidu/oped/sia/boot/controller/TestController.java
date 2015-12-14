@@ -26,6 +26,11 @@ public class TestController {
         };
     }
 
+    @RequestMapping(value = "async/result", method = RequestMethod.GET)
+    public AsyncResult<String> asyncResult() {
+        return new AsyncResult<>(printCurrentTimestamp());
+    }
+
     private String printCurrentTimestamp() {
         try {
             Thread.sleep(1000L);
@@ -33,11 +38,6 @@ public class TestController {
             LOG.warn("sleep failed.");
         }
         return String.format("current time is : %d", System.currentTimeMillis());
-    }
-
-    @RequestMapping(value = "async/result", method = RequestMethod.GET)
-    public AsyncResult<String> asyncResult() {
-        return new AsyncResult<>(printCurrentTimestamp());
     }
 
 }

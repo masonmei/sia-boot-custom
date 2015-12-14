@@ -8,8 +8,8 @@ package com.baidu.oped.sia.boot.validate.clientsource;
  */
 public interface ClientSourceChecker {
 
-    boolean supports(Class<?> clazz);
-
     boolean needValidateSource(Object target);
+
+    boolean supports(Class<?> clazz);
 
 }

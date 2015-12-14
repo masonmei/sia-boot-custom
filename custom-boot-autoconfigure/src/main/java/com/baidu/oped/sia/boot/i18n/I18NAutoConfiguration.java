@@ -42,6 +42,14 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
     @Autowired
     private I18nProperties properties;
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        LOG.info("add i18n LocaleChangeInterceptor.");
+        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+        interceptor.setParamName(properties.getLocalParam());
+        registry.addInterceptor(interceptor);
+    }
+
     @Bean
     public LocaleResolver localResolver() {
         LOG.info("enable i18n resolver. Resolver type: {}", properties.getResolverType());
@@ -62,6 +70,14 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename(properties.getMsgBaseName());
+        messageSource.setDefaultEncoding(DEFAULT_ENCODING);
+        return messageSource;
+    }
+
     private LocaleResolver buildCookieResolver(I18nProperties.CookieConfig config) {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setCookieMaxAge(config.getMaxAge());
@@ -78,21 +94,5 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         SessionLocaleResolver resolver = new SessionLocaleResolver();
         resolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
         return resolver;
-    }
-
-    @Bean
-    public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename(properties.getMsgBaseName());
-        messageSource.setDefaultEncoding(DEFAULT_ENCODING);
-        return messageSource;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        LOG.info("add i18n LocaleChangeInterceptor.");
-        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName(properties.getLocalParam());
-        registry.addInterceptor(interceptor);
     }
 }

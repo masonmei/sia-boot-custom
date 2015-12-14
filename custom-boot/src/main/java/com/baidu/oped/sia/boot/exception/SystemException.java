@@ -20,15 +20,15 @@ public abstract class SystemException extends RuntimeException {
         this.args = args;
     }
 
-    public SystemCode getCode() {
-        return code;
-    }
-
     public Object[] getArgs() {
         return args;
     }
 
     public void setArgs(Object[] args) {
         this.args = args;
+    }
+
+    public SystemCode getCode() {
+        return code;
     }
 }

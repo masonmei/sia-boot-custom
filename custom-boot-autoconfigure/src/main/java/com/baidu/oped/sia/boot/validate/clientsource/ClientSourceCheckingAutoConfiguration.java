@@ -26,9 +26,8 @@ public class ClientSourceCheckingAutoConfiguration {
     private ClientSourceCheckingProperties properties;
 
     @Bean
-    @Profile({"default", "PROD"})
-    public ClientSourceWhiteLabel whiteLabel() {
-        return new DefaultClientSourceWhiteLabel(properties);
+    public ClientSourceCheckingHandler sourceCheckingHandler(ClientSourceWhiteLabel clientSourceWhiteLabel) {
+        return new ClientSourceCheckingHandler(properties, clientSourceWhiteLabel);
     }
 
     @Bean
@@ -36,19 +35,20 @@ public class ClientSourceCheckingAutoConfiguration {
     public ClientSourceWhiteLabel testWhiteLabel() {
         return new ClientSourceWhiteLabel() {
             @Override
-            public boolean isWhiteHost(String host) {
-                return true;
+            public boolean isWhiteAddress(String address) {
+                return false;
             }
 
             @Override
-            public boolean isWhiteAddress(String address) {
-                return false;
+            public boolean isWhiteHost(String host) {
+                return true;
             }
         };
     }
 
     @Bean
-    public ClientSourceCheckingHandler sourceCheckingHandler(ClientSourceWhiteLabel clientSourceWhiteLabel) {
-        return new ClientSourceCheckingHandler(properties, clientSourceWhiteLabel);
+    @Profile({"default", "PROD"})
+    public ClientSourceWhiteLabel whiteLabel() {
+        return new DefaultClientSourceWhiteLabel(properties);
     }
 }

@@ -20,28 +20,12 @@ public class TraceProperties {
     private String traceSourceHeaderName = Constrains.TRACE_SOURCE_HEADER_NAME;
     private String traceSourceSeqHeaderName = Constrains.TRACE_SOURCE_SEQUENCE_HEADER_NAME;
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public String getTraceHeaderName() {
         return traceHeaderName;
     }
 
     public void setTraceHeaderName(String traceHeaderName) {
         this.traceHeaderName = traceHeaderName;
-    }
-
-    public String getTraceStartTimeHeaderName() {
-        return traceStartTimeHeaderName;
-    }
-
-    public void setTraceStartTimeHeaderName(String traceStartTimeHeaderName) {
-        this.traceStartTimeHeaderName = traceStartTimeHeaderName;
     }
 
     public String getTraceSourceHeaderName() {
@@ -58,5 +42,21 @@ public class TraceProperties {
 
     public void setTraceSourceSeqHeaderName(String traceSourceSeqHeaderName) {
         this.traceSourceSeqHeaderName = traceSourceSeqHeaderName;
+    }
+
+    public String getTraceStartTimeHeaderName() {
+        return traceStartTimeHeaderName;
+    }
+
+    public void setTraceStartTimeHeaderName(String traceStartTimeHeaderName) {
+        this.traceStartTimeHeaderName = traceStartTimeHeaderName;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

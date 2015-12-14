@@ -40,17 +40,12 @@ public class ProfilingAspect {
         this.logFrequency = logFrequency;
     }
 
-
-    @Pointcut("execution(public * *(..))")
-    public void publicMethod() {
+    @Pointcut("@annotation(com.baidu.oped.sia.boot.profiling.Profiling)")
+    public void annotatedProfiling() {
     }
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
     public void controller() {
-    }
-
-    @Pointcut("@annotation(com.baidu.oped.sia.boot.profiling.Profiling)")
-    public void annotatedProfiling() {
     }
 
     @Around("(publicMethod() && annotatedProfiling()) || controller()")
@@ -70,6 +65,17 @@ public class ProfilingAspect {
 
             updateStat(methodName, stopWatch.getTotalTimeMillis());
         }
+    }
+
+    @Pointcut("execution(public * *(..))")
+    public void publicMethod() {
+    }
+
+    private void logStats(MethodStat stat) {
+        long avgTime = stat.totalTime / stat.count;
+        log.info("MethodStat: [methodName: {}, totalTime: {}ms, execution:{}, averageTime: {}ms, min:{}ms, max:{}ms]",
+                stat.methodName, stat.totalTime, stat.count, avgTime, stat.minTime, stat.maxTime);
+        stat.reset();
     }
 
     private void updateStat(String methodName, long elapsedInMillis) {
@@ -94,13 +100,6 @@ public class ProfilingAspect {
         }
     }
 
-    private void logStats(MethodStat stat) {
-        long avgTime = stat.totalTime / stat.count;
-        log.info("MethodStat: [methodName: {}, totalTime: {}ms, execution:{}, averageTime: {}ms, min:{}ms, max:{}ms]",
-                stat.methodName, stat.totalTime, stat.count, avgTime, stat.minTime, stat.maxTime);
-        stat.reset();
-    }
-
     static class MethodStat {
         private final String methodName;
         private long count;
@@ -112,24 +111,12 @@ public class ProfilingAspect {
             this.methodName = methodName;
         }
 
-        public String getMethodName() {
-            return methodName;
-        }
-
         public long getCount() {
             return count;
         }
 
         public void setCount(long count) {
             this.count = count;
-        }
-
-        public long getTotalTime() {
-            return totalTime;
-        }
-
-        public void setTotalTime(long totalTime) {
-            this.totalTime = totalTime;
         }
 
         public long getMaxTime() {
@@ -140,12 +127,24 @@ public class ProfilingAspect {
             this.maxTime = maxTime;
         }
 
+        public String getMethodName() {
+            return methodName;
+        }
+
         public long getMinTime() {
             return minTime;
         }
 
         public void setMinTime(long minTime) {
             this.minTime = minTime;
+        }
+
+        public long getTotalTime() {
+            return totalTime;
+        }
+
+        public void setTotalTime(long totalTime) {
+            this.totalTime = totalTime;
         }
 
         public void reset() {

@@ -23,35 +23,9 @@ public class ExceptionArgsBuilder {
         return new ExceptionArgsBuilder();
     }
 
-    public <T> ExceptionArgsBuilder with(T... params) {
-        for (T param : params) {
-            this.params.add(param);
-        }
-        return this;
-    }
-
-    public <T> ExceptionArgsBuilder with(List<T> params) {
-        for (T param : params) {
-            this.params.add(param);
-        }
-        return this;
-    }
-
     public <T> ExceptionArgsBuilder and(T... params) {
         this.params.add(join("and", params));
         return this;
-    }
-
-    public <T> String join(String decimeter, T... params) {
-        if (params == null || params.length == 0) {
-            return "";
-        } else if (params.length == 1) {
-            return params[0].toString();
-        } else {
-            String result = StringUtils.arrayToDelimitedString(params, ", ");
-            int lastIndex = result.lastIndexOf(", ");
-            return format("%s %s %s", result.substring(0, lastIndex), decimeter, result.substring(lastIndex + 2));
-        }
     }
 
     public <T> ExceptionArgsBuilder and(Collection<T> params) {
@@ -59,24 +33,20 @@ public class ExceptionArgsBuilder {
         return this;
     }
 
-    public <T> String join(String decimeter, Collection<T> params) {
-        if (params == null || params.size() == 0) {
-            return "";
-        } else if (params.size() == 1) {
-            return params.iterator().next().toString();
-        } else {
-            String result = StringUtils.collectionToDelimitedString(params, ", ");
-            int lastIndex = result.lastIndexOf(", ");
-            return format("%s %s %s", result.substring(0, lastIndex), decimeter, result.substring(lastIndex + 2));
+    public Object[] args() {
+        Object[] args = new Object[params.size()];
+        for (int i = 0; i < params.size(); i++) {
+            args[i] = params.get(i);
         }
+        return args;
     }
 
-    public <T> ExceptionArgsBuilder or(T... params) {
+    public <T> ExceptionArgsBuilder or(Collection<T> params) {
         this.params.add(join("or", params));
         return this;
     }
 
-    public <T> ExceptionArgsBuilder or(Collection<T> params) {
+    public <T> ExceptionArgsBuilder or(T... params) {
         this.params.add(join("or", params));
         return this;
     }
@@ -95,11 +65,41 @@ public class ExceptionArgsBuilder {
         return this;
     }
 
-    public Object[] args() {
-        Object[] args = new Object[params.size()];
-        for (int i = 0; i < params.size(); i++) {
-            args[i] = params.get(i);
+    public <T> ExceptionArgsBuilder with(T... params) {
+        for (T param : params) {
+            this.params.add(param);
         }
-        return args;
+        return this;
+    }
+
+    public <T> ExceptionArgsBuilder with(List<T> params) {
+        for (T param : params) {
+            this.params.add(param);
+        }
+        return this;
+    }
+
+    protected <T> String join(String decimeter, T... params) {
+        if (params == null || params.length == 0) {
+            return "";
+        } else if (params.length == 1) {
+            return params[0].toString();
+        } else {
+            String result = StringUtils.arrayToDelimitedString(params, ", ");
+            int lastIndex = result.lastIndexOf(", ");
+            return format("%s %s %s", result.substring(0, lastIndex), decimeter, result.substring(lastIndex + 2));
+        }
+    }
+
+    protected <T> String join(String decimeter, Collection<T> params) {
+        if (params == null || params.size() == 0) {
+            return "";
+        } else if (params.size() == 1) {
+            return params.iterator().next().toString();
+        } else {
+            String result = StringUtils.collectionToDelimitedString(params, ", ");
+            int lastIndex = result.lastIndexOf(", ");
+            return format("%s %s %s", result.substring(0, lastIndex), decimeter, result.substring(lastIndex + 2));
+        }
     }
 }

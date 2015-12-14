@@ -94,17 +94,6 @@ public abstract class ArrayUtils {
     }
 
     /**
-     * Check if the class is String.
-     *
-     * @param type the class type to check
-     * @return
-     */
-    public static boolean isString(Class<?> type) {
-        Assert.notNull(type, "type must not be null while checking is String");
-        return type == String.class;
-    }
-
-    /**
      * Check if the class is a primitive or wrapper type.
      *
      * @param type
@@ -113,6 +102,17 @@ public abstract class ArrayUtils {
     public static boolean isPrimitiveOrWrapperClass(Class<?> type) {
         Assert.notNull(type, "type must not be null while checking is Primitive or Wrapper");
         return type.isPrimitive() || isWrapperClass(type);
+    }
+
+    /**
+     * Check if the class is String.
+     *
+     * @param type the class type to check
+     * @return
+     */
+    public static boolean isString(Class<?> type) {
+        Assert.notNull(type, "type must not be null while checking is String");
+        return type == String.class;
     }
 
     /**

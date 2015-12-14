@@ -10,17 +10,6 @@ import java.util.Arrays;
 public class ExceptionArgsBuilderTest {
 
     @org.junit.Test
-    public void testWith() throws Exception {
-        Object[] args = ExceptionArgsBuilder.get().with("test").args();
-        assertEquals(1, args.length);
-        assertEquals("test", args[0]);
-
-        args = ExceptionArgsBuilder.get().with("test", "tes").args();
-        assertEquals(2, args.length);
-        assertEquals("test", args[0]);
-    }
-
-    @org.junit.Test
     public void testAnd() throws Exception {
         Object[] args = ExceptionArgsBuilder.get().and("test").args();
         assertEquals(1, args.length);
@@ -48,6 +37,40 @@ public class ExceptionArgsBuilderTest {
         args = ExceptionArgsBuilder.get().and(Arrays.asList("test", "test", "test")).args();
         assertEquals(1, args.length);
         assertEquals("test, test and test", args[0]);
+    }
+
+    @org.junit.Test
+    public void testArgs() throws Exception {
+        Object[] args = ExceptionArgsBuilder.get().args();
+        assertEquals(0, args.length);
+
+        args = ExceptionArgsBuilder.get().and("test").args();
+        assertEquals(1, args.length);
+        assertEquals("test", args[0]);
+    }
+
+    @org.junit.Test
+    public void testJoin() throws Exception {
+        String join = ExceptionArgsBuilder.get().join("and", "test");
+        assertEquals("test", join);
+
+        join = ExceptionArgsBuilder.get().join("and", "test", "test");
+        assertEquals("test and test", join);
+
+        join = ExceptionArgsBuilder.get().join("and", "test", "test", "test");
+        assertEquals("test, test and test", join);
+    }
+
+    @org.junit.Test
+    public void testJoin2() throws Exception {
+        String join = ExceptionArgsBuilder.get().join("and", Arrays.asList("test"));
+        assertEquals("test", join);
+
+        join = ExceptionArgsBuilder.get().join("and", Arrays.asList("test", "test"));
+        assertEquals("test and test", join);
+
+        join = ExceptionArgsBuilder.get().join("and", Arrays.asList("test", "test", "test"));
+        assertEquals("test, test and test", join);
     }
 
     @org.junit.Test
@@ -99,38 +122,14 @@ public class ExceptionArgsBuilderTest {
         assertEquals("[4, 5]", args[0]);
     }
 
-
     @org.junit.Test
-    public void testJoin() throws Exception {
-        String join = ExceptionArgsBuilder.get().join("and", "test");
-        assertEquals("test", join);
-
-        join = ExceptionArgsBuilder.get().join("and", "test", "test");
-        assertEquals("test and test", join);
-
-        join = ExceptionArgsBuilder.get().join("and", "test", "test", "test");
-        assertEquals("test, test and test", join);
-    }
-
-    @org.junit.Test
-    public void testJoin2() throws Exception {
-        String join = ExceptionArgsBuilder.get().join("and", Arrays.asList("test"));
-        assertEquals("test", join);
-
-        join = ExceptionArgsBuilder.get().join("and", Arrays.asList("test", "test"));
-        assertEquals("test and test", join);
-
-        join = ExceptionArgsBuilder.get().join("and", Arrays.asList("test", "test", "test"));
-        assertEquals("test, test and test", join);
-    }
-
-    @org.junit.Test
-    public void testArgs() throws Exception {
-        Object[] args = ExceptionArgsBuilder.get().args();
-        assertEquals(0, args.length);
-
-        args = ExceptionArgsBuilder.get().and("test").args();
+    public void testWith() throws Exception {
+        Object[] args = ExceptionArgsBuilder.get().with("test").args();
         assertEquals(1, args.length);
+        assertEquals("test", args[0]);
+
+        args = ExceptionArgsBuilder.get().with("test", "tes").args();
+        assertEquals(2, args.length);
         assertEquals("test", args[0]);
     }
 

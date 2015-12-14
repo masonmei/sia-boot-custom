@@ -8,6 +8,14 @@ public class LimiterConfig {
     private int periodInMs;
     private int bandTimeInMs;
 
+    public int getBandTimeInMs() {
+        return bandTimeInMs;
+    }
+
+    public void setBandTimeInMs(int bandTimeInMs) {
+        this.bandTimeInMs = bandTimeInMs;
+    }
+
     public int getMaxRequestsPerPeriod() {
         return maxRequestsPerPeriod;
     }
@@ -22,13 +30,5 @@ public class LimiterConfig {
 
     public void setPeriodInMs(int periodInMs) {
         this.periodInMs = periodInMs;
-    }
-
-    public int getBandTimeInMs() {
-        return bandTimeInMs;
-    }
-
-    public void setBandTimeInMs(int bandTimeInMs) {
-        this.bandTimeInMs = bandTimeInMs;
     }
 }

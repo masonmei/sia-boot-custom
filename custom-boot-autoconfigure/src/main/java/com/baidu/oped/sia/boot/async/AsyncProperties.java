@@ -12,14 +12,6 @@ public class AsyncProperties {
     private boolean enabled = false;
     private Executor executor;
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public Executor getExecutor() {
         return executor;
     }
@@ -28,20 +20,27 @@ public class AsyncProperties {
         this.executor = executor;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     static class Executor {
 
         private String threadNamePrefix;
         private String threadGroupName;
         private int poolSize;
 
-        public String getThreadNamePrefix() {
-            return threadNamePrefix;
+        public int getPoolSize() {
+            return poolSize;
         }
 
-        public void setThreadNamePrefix(String threadNamePrefix) {
-            this.threadNamePrefix = threadNamePrefix;
+        public void setPoolSize(int poolSize) {
+            this.poolSize = poolSize;
         }
-
 
         public String getThreadGroupName() {
             return threadGroupName;
@@ -51,12 +50,12 @@ public class AsyncProperties {
             this.threadGroupName = threadGroupName;
         }
 
-        public int getPoolSize() {
-            return poolSize;
+        public String getThreadNamePrefix() {
+            return threadNamePrefix;
         }
 
-        public void setPoolSize(int poolSize) {
-            this.poolSize = poolSize;
+        public void setThreadNamePrefix(String threadNamePrefix) {
+            this.threadNamePrefix = threadNamePrefix;
         }
     }
 }

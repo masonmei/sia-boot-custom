@@ -23,36 +23,12 @@ public class ClientSourceCheckingProperties {
     private List<String> bnsNames = new ArrayList<>();
     private int refreshInterval = 5;
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
-
     public List<String> getAddresses() {
         return addresses;
     }
 
     public void setAddresses(List<String> addresses) {
         this.addresses = addresses;
-    }
-
-    public List<String> getHosts() {
-        return hosts;
-    }
-
-    public void setHosts(List<String> hosts) {
-        this.hosts = hosts;
     }
 
     public List<String> getBnsNames() {
@@ -63,11 +39,35 @@ public class ClientSourceCheckingProperties {
         this.bnsNames = bnsNames;
     }
 
+    public List<String> getHosts() {
+        return hosts;
+    }
+
+    public void setHosts(List<String> hosts) {
+        this.hosts = hosts;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
     public int getRefreshInterval() {
         return refreshInterval;
     }
 
     public void setRefreshInterval(int refreshInterval) {
         this.refreshInterval = refreshInterval;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

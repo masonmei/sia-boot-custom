@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
+    @RequestMapping("exception")
+    public String exception() {
+        throw new RequestForbiddenException();
+    }
+
     @Autowired
 
     @RequestMapping("test")
     public String test() {
         LOG.debug("test to test");
         return "test";
-    }
-
-    @RequestMapping("exception")
-    public String exception() {
-        throw new RequestForbiddenException();
     }
 }

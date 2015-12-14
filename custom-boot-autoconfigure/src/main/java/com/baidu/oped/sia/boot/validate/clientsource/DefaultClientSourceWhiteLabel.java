@@ -33,6 +33,16 @@ public class DefaultClientSourceWhiteLabel implements ClientSourceWhiteLabel, Ru
     }
 
     @Override
+    public boolean isWhiteAddress(String address) {
+        return addressList.contains(address);
+    }
+
+    @Override
+    public boolean isWhiteHost(String host) {
+        return hostList.contains(host);
+    }
+
+    @Override
     public void run() {
         while (true) {
             List<String> collect = new ArrayList<>();
@@ -60,15 +70,5 @@ public class DefaultClientSourceWhiteLabel implements ClientSourceWhiteLabel, Ru
                 LOG.debug("waiting {} minutes for refresh bns names failed.", properties.getRefreshInterval());
             }
         }
-    }
-
-    @Override
-    public boolean isWhiteHost(String host) {
-        return hostList.contains(host);
-    }
-
-    @Override
-    public boolean isWhiteAddress(String address) {
-        return addressList.contains(address);
     }
 }

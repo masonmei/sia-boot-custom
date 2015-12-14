@@ -29,12 +29,20 @@ public class IamProperties {
     private List<String> ignores = new ArrayList<>();
     private List<ServiceAccount> serviceAccounts = new ArrayList<>();
 
-    public boolean isEnabled() {
-        return enabled;
+    public int getCacheTtl() {
+        return cacheTtl;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setCacheTtl(int cacheTtl) {
+        this.cacheTtl = cacheTtl;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
     public String getHost() {
@@ -43,6 +51,30 @@ public class IamProperties {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public List<String> getIgnores() {
+        return ignores;
+    }
+
+    public void setIgnores(List<String> ignores) {
+        this.ignores = ignores;
+    }
+
+    public int getMaxCacheSize() {
+        return maxCacheSize;
+    }
+
+    public void setMaxCacheSize(int maxCacheSize) {
+        this.maxCacheSize = maxCacheSize;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPort() {
@@ -61,28 +93,12 @@ public class IamProperties {
         this.protocol = protocol;
     }
 
-    public String getUsername() {
-        return username;
+    public List<ServiceAccount> getServiceAccounts() {
+        return serviceAccounts;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
+    public void setServiceAccounts(List<ServiceAccount> serviceAccounts) {
+        this.serviceAccounts = serviceAccounts;
     }
 
     public int getTokenDiscardTtl() {
@@ -93,36 +109,20 @@ public class IamProperties {
         this.tokenDiscardTtl = tokenDiscardTtl;
     }
 
-    public int getMaxCacheSize() {
-        return maxCacheSize;
+    public String getUsername() {
+        return username;
     }
 
-    public void setMaxCacheSize(int maxCacheSize) {
-        this.maxCacheSize = maxCacheSize;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getCacheTtl() {
-        return cacheTtl;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setCacheTtl(int cacheTtl) {
-        this.cacheTtl = cacheTtl;
-    }
-
-    public List<String> getIgnores() {
-        return ignores;
-    }
-
-    public void setIgnores(List<String> ignores) {
-        this.ignores = ignores;
-    }
-
-    public List<ServiceAccount> getServiceAccounts() {
-        return serviceAccounts;
-    }
-
-    public void setServiceAccounts(List<ServiceAccount> serviceAccounts) {
-        this.serviceAccounts = serviceAccounts;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     /**
@@ -134,20 +134,20 @@ public class IamProperties {
         private String userId;
         private String scope;
 
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
         public String getScope() {
             return scope;
         }
 
         public void setScope(String scope) {
             this.scope = scope;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
         }
     }
 }

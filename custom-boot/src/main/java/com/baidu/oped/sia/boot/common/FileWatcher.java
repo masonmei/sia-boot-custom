@@ -67,6 +67,10 @@ public class FileWatcher<T> {
         registerShutDownHook();
     }
 
+    public T getHolder() {
+        return holder;
+    }
+
     private void loadingProperties() {
         LOG.debug("start to load properties with path {}", configFile.getName());
 
@@ -78,6 +82,16 @@ public class FileWatcher<T> {
         }
 
         LOG.info("reload properties finished.");
+    }
+
+    private void registerShutDownHook() {
+        Runtime.getRuntime()
+                .addShutdownHook(new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stop = true;
+                    }
+                }));
     }
 
     private void watchingForChanges() {
@@ -107,20 +121,6 @@ public class FileWatcher<T> {
                 }
             }
         }).start();
-    }
-
-    private void registerShutDownHook() {
-        Runtime.getRuntime()
-                .addShutdownHook(new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        stop = true;
-                    }
-                }));
-    }
-
-    public T getHolder() {
-        return holder;
     }
 
 }

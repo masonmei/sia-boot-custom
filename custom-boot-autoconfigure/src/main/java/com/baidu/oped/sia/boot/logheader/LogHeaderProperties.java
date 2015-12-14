@@ -20,19 +20,19 @@ public class LogHeaderProperties {
     private boolean enabled = false;
     private List<String> headerNames;
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public List<String> getHeaderNames() {
         return headerNames;
     }
 
     public void setHeaderNames(List<String> headerNames) {
         this.headerNames = headerNames;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

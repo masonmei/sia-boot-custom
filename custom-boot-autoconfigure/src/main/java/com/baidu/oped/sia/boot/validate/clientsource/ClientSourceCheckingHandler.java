@@ -46,14 +46,8 @@ public class ClientSourceCheckingHandler {
         }
     }
 
-    private boolean isFromValidateSource() {
-        String remoteAddr = getRequest().getRemoteAddr();
-        if (clientSourceWhiteLabel.isWhiteAddress(remoteAddr)) {
-            return true;
-        }
-
-        String remoteHost = getRequest().getRemoteHost();
-        return clientSourceWhiteLabel.isWhiteHost(remoteHost);
+    private ClientSourceCheckingProperties getProperties() {
+        return properties;
     }
 
     /**
@@ -65,7 +59,13 @@ public class ClientSourceCheckingHandler {
         return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
     }
 
-    private ClientSourceCheckingProperties getProperties() {
-        return properties;
+    private boolean isFromValidateSource() {
+        String remoteAddr = getRequest().getRemoteAddr();
+        if (clientSourceWhiteLabel.isWhiteAddress(remoteAddr)) {
+            return true;
+        }
+
+        String remoteHost = getRequest().getRemoteHost();
+        return clientSourceWhiteLabel.isWhiteHost(remoteHost);
     }
 }

@@ -38,17 +38,23 @@ public class DefaultIamManager implements IamManager {
     private Map<String, IamProperties.ServiceAccount> serviceAccountMap = new HashMap();
 
     @Override
-    public void checkUserAuth(String userId) {
+    public void checkServiceAndUserAuth(String scope, String userId) {
         if (RequestInfoHolder.ignoreAuth()) {
             return;
         }
 
         String currentUser = RequestInfoHolder.currentUser();
         if (currentUser == null) {
-            throw new AuthenticationFailedException(AUTH_USER_NOT_AUTHENTICATED);
+            throw new AuthenticationFailedException(AUTH_SERVICE_NOT_AUTHENTICATED);
         }
-        if (!currentUser.equals(userId)) {
-            throw new AuthenticationFailedException(AUTH_INVALID_USER);
+
+        if (currentUser.equals(userId)) {
+            return;
+        }
+
+        String userScope = getServiceScope(currentUser);
+        if (userScope == null || !userScope.equals(scope)) {
+            throw new AuthenticationFailedException(AUTH_INVALID_SERVICE);
         }
     }
 
@@ -70,23 +76,17 @@ public class DefaultIamManager implements IamManager {
     }
 
     @Override
-    public void checkServiceAndUserAuth(String scope, String userId) {
+    public void checkUserAuth(String userId) {
         if (RequestInfoHolder.ignoreAuth()) {
             return;
         }
 
         String currentUser = RequestInfoHolder.currentUser();
         if (currentUser == null) {
-            throw new AuthenticationFailedException(AUTH_SERVICE_NOT_AUTHENTICATED);
+            throw new AuthenticationFailedException(AUTH_USER_NOT_AUTHENTICATED);
         }
-
-        if (currentUser.equals(userId)) {
-            return;
-        }
-
-        String userScope = getServiceScope(currentUser);
-        if (userScope == null || !userScope.equals(scope)) {
-            throw new AuthenticationFailedException(AUTH_INVALID_SERVICE);
+        if (!currentUser.equals(userId)) {
+            throw new AuthenticationFailedException(AUTH_INVALID_USER);
         }
     }
 
@@ -110,6 +110,22 @@ public class DefaultIamManager implements IamManager {
             LOG.warn("iam authenticate fail,url:{},errorCode:{},errorMsg:{}", requestURI, ex.getErrorCode(),
                     ex.getErrMsg());
             return null;
+        }
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
+    }
+
+    public void setIamClient(IamClient iamClient) {
+        this.iamClient = iamClient;
+    }
+
+    public void setServiceAccounts(List<IamProperties.ServiceAccount> serviceAccounts) {
+        this.serviceAccountMap.clear();
+        for (IamProperties.ServiceAccount serviceAccount : serviceAccounts) {
+            this.serviceAccountMap.put(serviceAccount.getUserId(), serviceAccount);
         }
     }
 
@@ -165,27 +181,11 @@ public class DefaultIamManager implements IamManager {
         return userRequest;
     }
 
-    @Override
-    public boolean isActive() {
-        return true;
-    }
-
     private String getServiceScope(String serviceUserId) {
         IamProperties.ServiceAccount serviceAccount = serviceAccountMap.get(serviceUserId);
         if (serviceAccount == null) {
             return null;
         }
         return serviceAccount.getScope();
-    }
-
-    public void setIamClient(IamClient iamClient) {
-        this.iamClient = iamClient;
-    }
-
-    public void setServiceAccounts(List<IamProperties.ServiceAccount> serviceAccounts) {
-        this.serviceAccountMap.clear();
-        for (IamProperties.ServiceAccount serviceAccount : serviceAccounts) {
-            this.serviceAccountMap.put(serviceAccount.getUserId(), serviceAccount);
-        }
     }
 }

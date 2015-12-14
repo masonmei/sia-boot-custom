@@ -27,12 +27,12 @@ public class IamAuthenticationFilter extends OncePerRequestFilter {
     private IamManager iamManager;
     private IamAccessControl accessControl;
 
-    public void setIamManager(IamManager iamManager) {
-        this.iamManager = iamManager;
-    }
-
     public void setAccessControl(IamAccessControl accessControl) {
         this.accessControl = accessControl;
+    }
+
+    public void setIamManager(IamManager iamManager) {
+        this.iamManager = iamManager;
     }
 
     @Override

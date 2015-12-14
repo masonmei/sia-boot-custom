@@ -42,133 +42,6 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
     private String fileName;
     private String resource;
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getResource() {
-        return resource;
-    }
-
-    public void setResource(String resource) {
-        this.resource = resource;
-    }
-
-    public void start() {
-        configure();
-        if (!isQuiet()) {
-            StatusPrinter.print(getStatusManager());
-        }
-        started = true;
-        registerShutdownHook();
-    }
-
-    public void stop() {
-        aai.detachAndStopAllAppenders();
-        started = false;
-    }
-
-    @Override
-    public boolean isStarted() {
-        return started;
-    }
-
-    public void setStarted(boolean started) {
-        this.started = started;
-    }
-
-    protected void configure() {
-        URL configURL = getConfigurationFileURL();
-        if (configURL != null) {
-            runJoranOnFile(configURL);
-        } else {
-            addError("Could not find configuration file for logback-access");
-        }
-    }
-
-    public boolean isQuiet() {
-        return quiet;
-    }
-
-    public void setQuiet(boolean quiet) {
-        this.quiet = quiet;
-    }
-
-    private void registerShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                stop();
-            }
-        }));
-    }
-
-    protected URL getConfigurationFileURL() {
-        if (fileName != null) {
-            addInfo("Will use configuration file [" + fileName + "]");
-            File file = new File(fileName);
-            if (!file.exists()) {
-                return null;
-            }
-            return FileUtil.fileToURL(file);
-        }
-        if (resource != null) {
-            addInfo("Will use configuration resource [" + resource + "]");
-            return this.getClass().getResource(resource);
-        }
-
-        String jettyHomeProperty = OptionHelper.getSystemProperty("undertow.home");
-        String defaultConfigFile = DEFAULT_CONFIG_FILE;
-        if (!OptionHelper.isEmpty(jettyHomeProperty)) {
-            defaultConfigFile = jettyHomeProperty + File.separatorChar + DEFAULT_CONFIG_FILE;
-        } else {
-            addInfo("[undertow.home] system property not set.");
-        }
-        File file = new File(defaultConfigFile);
-        addInfo("Assuming default configuration file [" + defaultConfigFile + "]");
-        if (!file.exists()) {
-            return null;
-        }
-        return FileUtil.fileToURL(file);
-    }
-
-    private void runJoranOnFile(URL configURL) {
-        try {
-            JoranConfigurator jc = new JoranConfigurator();
-            jc.setContext(this);
-            jc.doConfigure(configURL);
-            if (getName() == null) {
-                setName("LogbackRequestLog");
-            }
-        } catch (JoranException e) {
-            // errors have been registered as status messages
-        }
-    }
-
-    private void addError(String msg) {
-        getStatusManager().add(new ErrorStatus(msg, this));
-    }
-
-    private void addInfo(String msg) {
-        getStatusManager().add(new InfoStatus(msg, this));
-    }
-
-    @Override
-    public void logMessage(String message) {
-        HttpServletRequestImpl request = ServletRequestContext.current().getOriginalRequest();
-        HttpServletResponseImpl response = ServletRequestContext.current().getOriginalResponse();
-        UndertowServerAdapter adapter = new UndertowServerAdapter(request, response);
-        IAccessEvent accessEvent = new AccessEvent(request, response, adapter);
-        if (getFilterChainDecision(accessEvent) == FilterReply.DENY) {
-            return;
-        }
-        aai.appendLoopOnAppenders(accessEvent);
-    }
-
     @Override
     public void addAppender(Appender<IAccessEvent> newAppender) {
         aai.addAppender(newAppender);
@@ -222,6 +95,133 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
     @Override
     public FilterReply getFilterChainDecision(IAccessEvent event) {
         return fai.getFilterChainDecision(event);
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
+
+    public boolean isQuiet() {
+        return quiet;
+    }
+
+    public void setQuiet(boolean quiet) {
+        this.quiet = quiet;
+    }
+
+    @Override
+    public void logMessage(String message) {
+        HttpServletRequestImpl request = ServletRequestContext.current().getOriginalRequest();
+        HttpServletResponseImpl response = ServletRequestContext.current().getOriginalResponse();
+        UndertowServerAdapter adapter = new UndertowServerAdapter(request, response);
+        IAccessEvent accessEvent = new AccessEvent(request, response, adapter);
+        if (getFilterChainDecision(accessEvent) == FilterReply.DENY) {
+            return;
+        }
+        aai.appendLoopOnAppenders(accessEvent);
+    }
+
+    public void start() {
+        configure();
+        if (!isQuiet()) {
+            StatusPrinter.print(getStatusManager());
+        }
+        started = true;
+        registerShutdownHook();
+    }
+
+    public void stop() {
+        aai.detachAndStopAllAppenders();
+        started = false;
+    }
+
+    @Override
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    protected void configure() {
+        URL configURL = getConfigurationFileURL();
+        if (configURL != null) {
+            runJoranOnFile(configURL);
+        } else {
+            addError("Could not find configuration file for logback-access");
+        }
+    }
+
+    protected URL getConfigurationFileURL() {
+        if (fileName != null) {
+            addInfo("Will use configuration file [" + fileName + "]");
+            File file = new File(fileName);
+            if (!file.exists()) {
+                return null;
+            }
+            return FileUtil.fileToURL(file);
+        }
+        if (resource != null) {
+            addInfo("Will use configuration resource [" + resource + "]");
+            return this.getClass().getResource(resource);
+        }
+
+        String jettyHomeProperty = OptionHelper.getSystemProperty("undertow.home");
+        String defaultConfigFile = DEFAULT_CONFIG_FILE;
+        if (!OptionHelper.isEmpty(jettyHomeProperty)) {
+            defaultConfigFile = jettyHomeProperty + File.separatorChar + DEFAULT_CONFIG_FILE;
+        } else {
+            addInfo("[undertow.home] system property not set.");
+        }
+        File file = new File(defaultConfigFile);
+        addInfo("Assuming default configuration file [" + defaultConfigFile + "]");
+        if (!file.exists()) {
+            return null;
+        }
+        return FileUtil.fileToURL(file);
+    }
+
+    private void addError(String msg) {
+        getStatusManager().add(new ErrorStatus(msg, this));
+    }
+
+    private void addInfo(String msg) {
+        getStatusManager().add(new InfoStatus(msg, this));
+    }
+
+    private void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                stop();
+            }
+        }));
+    }
+
+    private void runJoranOnFile(URL configURL) {
+        try {
+            JoranConfigurator jc = new JoranConfigurator();
+            jc.setContext(this);
+            jc.doConfigure(configURL);
+            if (getName() == null) {
+                setName("LogbackRequestLog");
+            }
+        } catch (JoranException e) {
+            // errors have been registered as status messages
+        }
     }
 
 }

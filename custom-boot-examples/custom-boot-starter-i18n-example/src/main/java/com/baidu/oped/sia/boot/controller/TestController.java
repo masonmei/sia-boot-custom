@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
+    @RequestMapping("exception")
+    public String exception() {
+        throw new RequestForbiddenException();
+    }
+
     @Autowired
 
     @RequestMapping("test")
     public String test() {
         return "test" + LocaleContextHolder.getLocale().getDisplayName();
-    }
-
-    @RequestMapping("exception")
-    public String exception() {
-        throw new RequestForbiddenException();
     }
 }

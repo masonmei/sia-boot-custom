@@ -57,14 +57,14 @@ public class SimpleLimiterFilter implements Filter {
         }
     }
 
-    private boolean inWhiteList(String remoteAddr) {
-        List<String> whiteSet = fileWatcher.getHolder().getAllow();
-        return whiteSet != null && whiteSet.contains(remoteAddr);
-    }
-
     @Override
     public void destroy() {
         LOG.info("Destroying SimpleLimiterFilter");
         ipStats = null;
+    }
+
+    private boolean inWhiteList(String remoteAddr) {
+        List<String> whiteSet = fileWatcher.getHolder().getAllow();
+        return whiteSet != null && whiteSet.contains(remoteAddr);
     }
 }

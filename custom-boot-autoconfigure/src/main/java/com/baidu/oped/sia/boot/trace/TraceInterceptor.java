@@ -61,6 +61,11 @@ public class TraceInterceptor extends HandlerInterceptorAdapter implements Order
     }
 
     @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE;
+    }
+
+    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         if (null == RequestInfoHolder.traceId()) {
@@ -132,10 +137,5 @@ public class TraceInterceptor extends HandlerInterceptorAdapter implements Order
         MDC.remove("requestId");
         RequestInfoHolder.removeTraceTimestamp();
         RequestInfoHolder.removeTraceId();
-    }
-
-    @Override
-    public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
     }
 }

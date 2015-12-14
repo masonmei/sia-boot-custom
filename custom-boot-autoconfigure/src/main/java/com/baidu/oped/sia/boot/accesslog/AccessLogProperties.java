@@ -14,19 +14,19 @@ public class AccessLogProperties {
     private boolean enabled = true;
     private String configFile = "logback-access.xml";
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public String getConfigFile() {
         return configFile;
     }
 
     public void setConfigFile(String configFile) {
         this.configFile = configFile;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

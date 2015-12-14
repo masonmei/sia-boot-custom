@@ -20,20 +20,12 @@ public class SpringFoxProperties {
     private String groupName = "";
     private ApiInfo apiInfo = new ApiInfo();
 
-    public boolean isEnabled() {
-        return enabled;
+    public ApiInfo getApiInfo() {
+        return apiInfo;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public List<String> getPatterns() {
-        return patterns;
-    }
-
-    public void setPatterns(List<String> patterns) {
-        this.patterns = patterns;
+    public void setApiInfo(ApiInfo apiInfo) {
+        this.apiInfo = apiInfo;
     }
 
     public String getGroupName() {
@@ -44,12 +36,20 @@ public class SpringFoxProperties {
         this.groupName = groupName;
     }
 
-    public ApiInfo getApiInfo() {
-        return apiInfo;
+    public List<String> getPatterns() {
+        return patterns;
     }
 
-    public void setApiInfo(ApiInfo apiInfo) {
-        this.apiInfo = apiInfo;
+    public void setPatterns(List<String> patterns) {
+        this.patterns = patterns;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     /**
@@ -66,20 +66,12 @@ public class SpringFoxProperties {
         private String license;
         private String licenseUrl;
 
-        public String getVersion() {
-            return version;
+        public String getContact() {
+            return contact;
         }
 
-        public void setVersion(String version) {
-            this.version = version;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
+        public void setContact(String contact) {
+            this.contact = contact;
         }
 
         public String getDescription() {
@@ -88,22 +80,6 @@ public class SpringFoxProperties {
 
         public void setDescription(String description) {
             this.description = description;
-        }
-
-        public String getTermsOfServiceUrl() {
-            return termsOfServiceUrl;
-        }
-
-        public void setTermsOfServiceUrl(String termsOfServiceUrl) {
-            this.termsOfServiceUrl = termsOfServiceUrl;
-        }
-
-        public String getContact() {
-            return contact;
-        }
-
-        public void setContact(String contact) {
-            this.contact = contact;
         }
 
         public String getLicense() {
@@ -120,6 +96,30 @@ public class SpringFoxProperties {
 
         public void setLicenseUrl(String licenseUrl) {
             this.licenseUrl = licenseUrl;
+        }
+
+        public String getTermsOfServiceUrl() {
+            return termsOfServiceUrl;
+        }
+
+        public void setTermsOfServiceUrl(String termsOfServiceUrl) {
+            this.termsOfServiceUrl = termsOfServiceUrl;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
         }
     }
 }

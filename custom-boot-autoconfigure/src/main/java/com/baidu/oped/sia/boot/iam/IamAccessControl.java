@@ -14,13 +14,6 @@ public class IamAccessControl {
 
     private List<String> ignoredUrls = new ArrayList<>();
 
-    public void setIgnoredUrls(List<String> ignoredUrls) {
-        if (ignoredUrls != null) {
-            this.ignoredUrls.clear();
-            this.ignoredUrls.addAll(ignoredUrls);
-        }
-    }
-
     public boolean isNotIgnoredUri(String url) {
         url = url.toLowerCase();
         // check not need authentication url
@@ -32,6 +25,13 @@ public class IamAccessControl {
             }
         }
         return true;
+    }
+
+    public void setIgnoredUrls(List<String> ignoredUrls) {
+        if (ignoredUrls != null) {
+            this.ignoredUrls.clear();
+            this.ignoredUrls.addAll(ignoredUrls);
+        }
     }
 
     private boolean matchUrlPattern(String urlPattern, String url) {

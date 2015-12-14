@@ -26,28 +26,12 @@ public class I18nProperties {
 
     private CookieConfig cookie = new CookieConfig();
 
-    public boolean isEnabled() {
-        return enabled;
+    public CookieConfig getCookie() {
+        return cookie;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getMsgBaseName() {
-        return msgBaseName;
-    }
-
-    public void setMsgBaseName(String msgBaseName) {
-        this.msgBaseName = msgBaseName;
-    }
-
-    public String getLocalParam() {
-        return localParam;
-    }
-
-    public void setLocalParam(String localParam) {
-        this.localParam = localParam;
+    public void setCookie(CookieConfig cookie) {
+        this.cookie = cookie;
     }
 
     public String getDefaultLocale() {
@@ -58,6 +42,22 @@ public class I18nProperties {
         this.defaultLocale = defaultLocale;
     }
 
+    public String getLocalParam() {
+        return localParam;
+    }
+
+    public void setLocalParam(String localParam) {
+        this.localParam = localParam;
+    }
+
+    public String getMsgBaseName() {
+        return msgBaseName;
+    }
+
+    public void setMsgBaseName(String msgBaseName) {
+        this.msgBaseName = msgBaseName;
+    }
+
     public ResolverType getResolverType() {
         return resolverType;
     }
@@ -66,12 +66,12 @@ public class I18nProperties {
         this.resolverType = resolverType;
     }
 
-    public CookieConfig getCookie() {
-        return cookie;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setCookie(CookieConfig cookie) {
-        this.cookie = cookie;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     /**
@@ -85,12 +85,12 @@ public class I18nProperties {
         private int maxAge = MAX_COOKIE_AGE_IN_SECOND;
         private String domain = "";
 
-        public String getName() {
-            return name;
+        public String getDomain() {
+            return domain;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setDomain(String domain) {
+            this.domain = domain;
         }
 
         public int getMaxAge() {
@@ -101,12 +101,12 @@ public class I18nProperties {
             this.maxAge = maxAge;
         }
 
-        public String getDomain() {
-            return domain;
+        public String getName() {
+            return name;
         }
 
-        public void setDomain(String domain) {
-            this.domain = domain;
+        public void setName(String name) {
+            this.name = name;
         }
 
         @Override

@@ -19,13 +19,13 @@ public class ActionClientSourceChecker implements ClientSourceChecker {
     }
 
     @Override
-    public boolean supports(Class<?> clazz) {
-        return String.class == clazz;
+    public boolean needValidateSource(Object target) {
+        return checkPattern((String) target);
     }
 
     @Override
-    public boolean needValidateSource(Object target) {
-        return checkPattern((String) target);
+    public boolean supports(Class<?> clazz) {
+        return String.class == clazz;
     }
 
     protected boolean checkPattern(String target) {

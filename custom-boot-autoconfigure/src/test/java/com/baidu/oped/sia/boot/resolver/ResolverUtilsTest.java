@@ -47,13 +47,12 @@ public class ResolverUtilsTest {
         System.out.println(target);
     }
 
-    private void doNothing() {
+    @Test
+    public void testMakeAccessible() throws Exception {
 
     }
 
-
-    @Test
-    public void testMakeAccessible() throws Exception {
+    private void doNothing() {
 
     }
 
@@ -86,70 +85,6 @@ public class ResolverUtilsTest {
         private double[] doubleArrValue;
         private String[] stringArrValue;
 
-        public boolean isBooleanValue() {
-            return booleanValue;
-        }
-
-        public void setBooleanValue(boolean booleanValue) {
-            this.booleanValue = booleanValue;
-        }
-
-        public byte getByteValue() {
-            return byteValue;
-        }
-
-        public void setByteValue(byte byteValue) {
-            this.byteValue = byteValue;
-        }
-
-        public short getShortValue() {
-            return shortValue;
-        }
-
-        public void setShortValue(short shortValue) {
-            this.shortValue = shortValue;
-        }
-
-        public int getIntValue() {
-            return intValue;
-        }
-
-        public void setIntValue(int intValue) {
-            this.intValue = intValue;
-        }
-
-        public long getLongValue() {
-            return longValue;
-        }
-
-        public void setLongValue(long longValue) {
-            this.longValue = longValue;
-        }
-
-        public float getFloatValue() {
-            return floatValue;
-        }
-
-        public void setFloatValue(float floatValue) {
-            this.floatValue = floatValue;
-        }
-
-        public double getDoubleValue() {
-            return doubleValue;
-        }
-
-        public void setDoubleValue(double doubleValue) {
-            this.doubleValue = doubleValue;
-        }
-
-        public String getStringValue() {
-            return stringValue;
-        }
-
-        public void setStringValue(String stringValue) {
-            this.stringValue = stringValue;
-        }
-
         public boolean[] getBooleanArrValue() {
             return booleanArrValue;
         }
@@ -166,36 +101,12 @@ public class ResolverUtilsTest {
             this.byteArrValue = byteArrValue;
         }
 
-        public short[] getShortArrValue() {
-            return shortArrValue;
+        public byte getByteValue() {
+            return byteValue;
         }
 
-        public void setShortArrValue(short[] shortArrValue) {
-            this.shortArrValue = shortArrValue;
-        }
-
-        public int[] getIntArrValue() {
-            return intArrValue;
-        }
-
-        public void setIntArrValue(int[] intArrValue) {
-            this.intArrValue = intArrValue;
-        }
-
-        public long[] getLongArrValue() {
-            return longArrValue;
-        }
-
-        public void setLongArrValue(long[] longArrValue) {
-            this.longArrValue = longArrValue;
-        }
-
-        public float[] getFloatArrValue() {
-            return floatArrValue;
-        }
-
-        public void setFloatArrValue(float[] floatArrValue) {
-            this.floatArrValue = floatArrValue;
+        public void setByteValue(byte byteValue) {
+            this.byteValue = byteValue;
         }
 
         public double[] getDoubleArrValue() {
@@ -206,12 +117,100 @@ public class ResolverUtilsTest {
             this.doubleArrValue = doubleArrValue;
         }
 
+        public double getDoubleValue() {
+            return doubleValue;
+        }
+
+        public void setDoubleValue(double doubleValue) {
+            this.doubleValue = doubleValue;
+        }
+
+        public float[] getFloatArrValue() {
+            return floatArrValue;
+        }
+
+        public void setFloatArrValue(float[] floatArrValue) {
+            this.floatArrValue = floatArrValue;
+        }
+
+        public float getFloatValue() {
+            return floatValue;
+        }
+
+        public void setFloatValue(float floatValue) {
+            this.floatValue = floatValue;
+        }
+
+        public int[] getIntArrValue() {
+            return intArrValue;
+        }
+
+        public void setIntArrValue(int[] intArrValue) {
+            this.intArrValue = intArrValue;
+        }
+
+        public int getIntValue() {
+            return intValue;
+        }
+
+        public void setIntValue(int intValue) {
+            this.intValue = intValue;
+        }
+
+        public long[] getLongArrValue() {
+            return longArrValue;
+        }
+
+        public void setLongArrValue(long[] longArrValue) {
+            this.longArrValue = longArrValue;
+        }
+
+        public long getLongValue() {
+            return longValue;
+        }
+
+        public void setLongValue(long longValue) {
+            this.longValue = longValue;
+        }
+
+        public short[] getShortArrValue() {
+            return shortArrValue;
+        }
+
+        public void setShortArrValue(short[] shortArrValue) {
+            this.shortArrValue = shortArrValue;
+        }
+
+        public short getShortValue() {
+            return shortValue;
+        }
+
+        public void setShortValue(short shortValue) {
+            this.shortValue = shortValue;
+        }
+
         public String[] getStringArrValue() {
             return stringArrValue;
         }
 
         public void setStringArrValue(String[] stringArrValue) {
             this.stringArrValue = stringArrValue;
+        }
+
+        public String getStringValue() {
+            return stringValue;
+        }
+
+        public void setStringValue(String stringValue) {
+            this.stringValue = stringValue;
+        }
+
+        public boolean isBooleanValue() {
+            return booleanValue;
+        }
+
+        public void setBooleanValue(boolean booleanValue) {
+            this.booleanValue = booleanValue;
         }
     }
 }

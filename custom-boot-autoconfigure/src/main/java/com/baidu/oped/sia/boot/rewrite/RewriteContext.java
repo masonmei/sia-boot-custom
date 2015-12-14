@@ -19,6 +19,14 @@ public class RewriteContext {
     private boolean resolveParam = true;
     private List<RewriteEntry> rewriteEntries;
 
+    public List<RewriteEntry> getRewriteEntries() {
+        return rewriteEntries;
+    }
+
+    public void setRewriteEntries(List<RewriteEntry> rewriteEntries) {
+        this.rewriteEntries = rewriteEntries;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -33,14 +41,6 @@ public class RewriteContext {
 
     public void setResolveParam(boolean resolveParam) {
         this.resolveParam = resolveParam;
-    }
-
-    public List<RewriteEntry> getRewriteEntries() {
-        return rewriteEntries;
-    }
-
-    public void setRewriteEntries(List<RewriteEntry> rewriteEntries) {
-        this.rewriteEntries = rewriteEntries;
     }
 
     /**
