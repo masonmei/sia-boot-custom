@@ -5,9 +5,9 @@ package com.baidu.oped.sia.boot.logheader;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.LOG_HEADER_PREFIX;
 
-import java.util.List;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.List;
 
 /**
  * LogHeader Configuration properties.

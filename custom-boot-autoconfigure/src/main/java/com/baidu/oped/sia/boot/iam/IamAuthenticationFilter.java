@@ -1,16 +1,9 @@
 package com.baidu.oped.sia.boot.iam;
 
-import static java.lang.Boolean.TRUE;
-
 import static com.baidu.oped.sia.boot.utils.Constrains.REMOTE_ADDRESS;
 import static com.baidu.oped.sia.boot.utils.Constrains.USER;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
+import static java.lang.Boolean.TRUE;
 
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 
@@ -18,6 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by mason on 12/2/15.

@@ -2,15 +2,15 @@ package com.baidu.oped.sia.boot.utils;
 
 import static com.baidu.oped.sia.boot.exception.ExceptionArgsBuilder.get;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.baidu.oped.sia.boot.exception.internal.ConfigFileNotFoundException;
 import com.baidu.oped.sia.boot.exception.internal.InvalidConfigFilePathException;
 
 import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * File Utils for resolve file.
@@ -28,6 +28,7 @@ public abstract class FileUtils {
      *
      * @param parentDirectory parent directory
      * @param fileName        file name
+     *
      * @return
      */
     public static File resolveConfigFile(String parentDirectory, String fileName) {
@@ -49,6 +50,7 @@ public abstract class FileUtils {
      * Resolve file with file Path.
      *
      * @param filePath
+     *
      * @return
      */
     public static File resolveFile(String filePath) {

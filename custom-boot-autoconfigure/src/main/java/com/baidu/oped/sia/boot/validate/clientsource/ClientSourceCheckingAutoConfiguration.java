@@ -19,7 +19,10 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @ConditionalOnWebApplication
-@ConditionalOnProperty(prefix = VALIDATE_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = VALIDATE_PREFIX,
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 @EnableConfigurationProperties({ClientSourceCheckingProperties.class})
 public class ClientSourceCheckingAutoConfiguration {
     @Autowired

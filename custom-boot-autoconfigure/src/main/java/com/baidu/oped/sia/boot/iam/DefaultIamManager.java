@@ -8,7 +8,16 @@ import static com.baidu.oped.sia.boot.utils.Constrains.AUTHORIZATION;
 
 import static org.springframework.util.StringUtils.collectionToDelimitedString;
 
-import javax.servlet.http.HttpServletRequest;
+import com.baidu.bce.iam.IamClient;
+import com.baidu.bce.iam.IamException;
+import com.baidu.bce.iam.SignatureAuthentication;
+import com.baidu.bce.iam.internal.Token;
+import com.baidu.oped.sia.boot.common.RequestInfoHolder;
+import com.baidu.oped.sia.boot.exception.AuthenticationFailedException;
+
+import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,17 +25,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.baidu.bce.iam.IamClient;
-import com.baidu.bce.iam.IamException;
-import com.baidu.bce.iam.SignatureAuthentication;
-import com.baidu.bce.iam.internal.Token;
-import com.baidu.oped.sia.boot.common.RequestInfoHolder;
-import com.baidu.oped.sia.boot.exception.AuthenticationFailedException;
-import com.google.gson.Gson;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by mason on 12/2/15.
@@ -118,17 +117,6 @@ public class DefaultIamManager implements IamManager {
         return true;
     }
 
-    public void setIamClient(IamClient iamClient) {
-        this.iamClient = iamClient;
-    }
-
-    public void setServiceAccounts(List<IamProperties.ServiceAccount> serviceAccounts) {
-        this.serviceAccountMap.clear();
-        for (IamProperties.ServiceAccount serviceAccount : serviceAccounts) {
-            this.serviceAccountMap.put(serviceAccount.getUserId(), serviceAccount);
-        }
-    }
-
     private SignatureAuthentication.Request buildSignatureAuthenticationRequest(HttpServletRequest request) {
         SignatureAuthentication.Request userRequest = new SignatureAuthentication.Request();
         userRequest.setUri(request.getRequestURI());
@@ -187,5 +175,16 @@ public class DefaultIamManager implements IamManager {
             return null;
         }
         return serviceAccount.getScope();
+    }
+
+    public void setIamClient(IamClient iamClient) {
+        this.iamClient = iamClient;
+    }
+
+    public void setServiceAccounts(List<IamProperties.ServiceAccount> serviceAccounts) {
+        this.serviceAccountMap.clear();
+        for (IamProperties.ServiceAccount serviceAccount : serviceAccounts) {
+            this.serviceAccountMap.put(serviceAccount.getUserId(), serviceAccount);
+        }
     }
 }

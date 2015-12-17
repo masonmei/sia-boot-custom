@@ -14,6 +14,13 @@ public abstract class SystemException extends RuntimeException {
         this(code, message, null);
     }
 
+    /**
+     * Construct an system exception instance.
+     *
+     * @param code    the exception code
+     * @param message the exception msg
+     * @param args    the argument for customizer msg
+     */
     public SystemException(SystemCode code, String message, Object[] args) {
         super(message);
         this.code = code;

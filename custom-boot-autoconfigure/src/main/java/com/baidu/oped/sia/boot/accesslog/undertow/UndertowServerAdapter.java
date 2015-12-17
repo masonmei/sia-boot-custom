@@ -1,11 +1,11 @@
 package com.baidu.oped.sia.boot.accesslog.undertow;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ch.qos.logback.access.spi.ServerAdapter;
 import io.undertow.servlet.spec.HttpServletRequestImpl;
 import io.undertow.servlet.spec.HttpServletResponseImpl;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mason on 12/12/15.

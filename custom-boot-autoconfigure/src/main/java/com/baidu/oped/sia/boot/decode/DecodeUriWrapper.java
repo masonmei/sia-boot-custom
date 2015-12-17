@@ -1,17 +1,15 @@
 package com.baidu.oped.sia.boot.decode;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-
-import java.io.UnsupportedEncodingException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriUtils;
 
+import java.io.UnsupportedEncodingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+
 /**
  * HttpServlet Request Uri decode support.
- * <p>
  *
  * @author mason
  */
@@ -24,6 +22,7 @@ public class DecodeUriWrapper extends HttpServletRequestWrapper {
      * Constructs a request object wrapping the given request.
      *
      * @param request the request to be wrapped
+     *
      * @throws IllegalArgumentException if the request is null
      */
     public DecodeUriWrapper(HttpServletRequest request) {

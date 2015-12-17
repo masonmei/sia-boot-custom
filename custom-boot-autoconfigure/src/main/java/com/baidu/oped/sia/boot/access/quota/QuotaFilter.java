@@ -1,12 +1,5 @@
 package com.baidu.oped.sia.boot.access.quota;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 import com.baidu.oped.sia.boot.exception.TooManyRequestException;
 import com.baidu.oped.sia.boot.limit.IpStats;
@@ -16,6 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by mason on 11/10/15.

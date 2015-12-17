@@ -3,8 +3,6 @@ package com.baidu.oped.sia.boot.iam;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.baidu.bce.iam.IamClient;
 import com.baidu.bce.iam.IamClientConfiguration;
 import com.baidu.oped.sia.boot.common.FilterOrder;
@@ -17,6 +15,8 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by mason on 12/2/15.
@@ -37,7 +37,10 @@ public class IamAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = IAM_PREFIX, name = ENABLED, havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = IAM_PREFIX,
+                           name = ENABLED,
+                           havingValue = "false",
+                           matchIfMissing = true)
     public IamManager emptyIamManager() {
         return new IamManager() {
             @Override
@@ -75,6 +78,18 @@ public class IamAutoConfiguration {
         return registrationBean;
     }
 
+    @Bean
+    @ConditionalOnProperty(prefix = IAM_PREFIX,
+                           name = ENABLED,
+                           havingValue = "true",
+                           matchIfMissing = false)
+    public IamManager iamManager() {
+        DefaultIamManager iamManager = new DefaultIamManager();
+        iamManager.setIamClient(iamClient());
+        iamManager.setServiceAccounts(properties.getServiceAccounts());
+        return iamManager;
+    }
+
     public IamClient iamClient() {
         if (properties.isEnabled()) {
             IamClientConfiguration configuration = new IamClientConfiguration();
@@ -89,15 +104,6 @@ public class IamAutoConfiguration {
             return new IamClient(configuration);
         }
         return null;
-    }
-
-    @Bean
-    @ConditionalOnProperty(prefix = IAM_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
-    public IamManager iamManager() {
-        DefaultIamManager iamManager = new DefaultIamManager();
-        iamManager.setIamClient(iamClient());
-        iamManager.setServiceAccounts(properties.getServiceAccounts());
-        return iamManager;
     }
 
 

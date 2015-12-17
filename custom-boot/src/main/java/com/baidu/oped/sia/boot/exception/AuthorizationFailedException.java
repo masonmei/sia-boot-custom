@@ -4,7 +4,6 @@ import static com.baidu.oped.sia.boot.exception.SystemCode.AUTHORIZATION_ERROR;
 
 /**
  * Authorization Failed Exception.
- * <p>
  *
  * @author mason
  */

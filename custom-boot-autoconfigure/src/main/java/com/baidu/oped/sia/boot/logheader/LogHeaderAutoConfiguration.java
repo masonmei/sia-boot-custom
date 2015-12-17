@@ -24,7 +24,10 @@ import org.springframework.context.annotation.Configuration;
  * @author mason
  */
 @Configuration
-@ConditionalOnProperty(prefix = LOG_HEADER_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = LOG_HEADER_PREFIX,
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 @EnableConfigurationProperties(LogHeaderProperties.class)
 @ConditionalOnWebApplication
 public class LogHeaderAutoConfiguration {

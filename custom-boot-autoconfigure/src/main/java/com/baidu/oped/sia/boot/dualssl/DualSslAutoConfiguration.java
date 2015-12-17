@@ -3,6 +3,7 @@ package com.baidu.oped.sia.boot.dualssl;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.SSL_DUAL_PREFIX;
 
+import io.undertow.Undertow;
 import org.apache.catalina.connector.Connector;
 import org.eclipse.jetty.server.NetworkTrafficServerConnector;
 import org.slf4j.Logger;
@@ -22,15 +23,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import io.undertow.Undertow;
-
 /**
  * Dual ssl auto configuration.
  *
  * @author mason
  */
 @Configuration
-@ConditionalOnProperty(prefix = SSL_DUAL_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = SSL_DUAL_PREFIX,
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 @EnableConfigurationProperties(DualSslProperties.class)
 public class DualSslAutoConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(DualSslAutoConfiguration.class);
@@ -85,7 +87,9 @@ public class DualSslAutoConfiguration {
      */
     @Configuration
     @ConditionalOnProperty(prefix = SSL_DUAL_PREFIX,
-            name = "redirect-ssl", havingValue = "true", matchIfMissing = false)
+                           name = "redirect-ssl",
+                           havingValue = "true",
+                           matchIfMissing = false)
     public class WebSecurityAutoRedirectConfiguration extends WebSecurityConfigurerAdapter {
 
         @Override

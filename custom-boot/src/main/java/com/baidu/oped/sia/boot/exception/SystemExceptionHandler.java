@@ -4,8 +4,6 @@ package com.baidu.oped.sia.boot.exception;
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INTERNAL_SYS_ERROR;
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.REQ_PARAM_MISMATCH;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.baidu.oped.sia.boot.common.BasicResponse;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 
@@ -20,6 +18,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.RequestContext;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * System Exception Handler.
  *
@@ -30,21 +30,13 @@ public class SystemExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(SystemExceptionHandler.class);
 
-    private static String getLocalMessage(String key) {
-        return getLocalMessage(key, null);
-    }
-
-    private static String getLocalMessage(String key, Object[] args) {
-        HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        RequestContext requestContext = new RequestContext(request);
-        return requestContext.getMessage(key, args);
-    }
-
-    private static String getRequestId() {
-        return RequestInfoHolder.traceId();
-    }
-
+    /**
+     * Handle all the category system exception.
+     *
+     * @param exception system exception
+     *
+     * @return Entity Response
+     */
     @ExceptionHandler(SystemException.class)
     public ResponseEntity<BasicResponse> handleSystemException(SystemException exception) {
         LOG.warn("SystemException handled", exception);
@@ -69,6 +61,28 @@ public class SystemExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    private static String getRequestId() {
+        return RequestInfoHolder.traceId();
+    }
+
+    private static String getLocalMessage(String key) {
+        return getLocalMessage(key, null);
+    }
+
+    private static String getLocalMessage(String key, Object[] args) {
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        RequestContext requestContext = new RequestContext(request);
+        return requestContext.getMessage(key, args);
+    }
+
+    /**
+     * Handle parameter missing exception.
+     *
+     * @param exception parameter missing exception
+     *
+     * @return Error Response Entity
+     */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<BasicResponse> handleMissingServletRequestParameterException(
             MissingServletRequestParameterException exception) {
@@ -83,6 +97,13 @@ public class SystemExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handle All the exceptions to Server Error.
+     *
+     * @param exception un-category exception.
+     *
+     * @return Response Entity.
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BasicResponse> handleException(Exception exception) {
         LOG.error("Exception handled", exception);

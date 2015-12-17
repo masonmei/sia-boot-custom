@@ -3,13 +3,13 @@
  */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.baidu.oped.sia.boot.exception.RequestForbiddenException;
 
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by mason on 7/14/15.
@@ -46,8 +46,14 @@ public class ClientSourceCheckingHandler {
         }
     }
 
-    private ClientSourceCheckingProperties getProperties() {
-        return properties;
+    private boolean isFromValidateSource() {
+        String remoteAddr = getRequest().getRemoteAddr();
+        if (clientSourceWhiteLabel.isWhiteAddress(remoteAddr)) {
+            return true;
+        }
+
+        String remoteHost = getRequest().getRemoteHost();
+        return clientSourceWhiteLabel.isWhiteHost(remoteHost);
     }
 
     /**
@@ -59,13 +65,7 @@ public class ClientSourceCheckingHandler {
         return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
     }
 
-    private boolean isFromValidateSource() {
-        String remoteAddr = getRequest().getRemoteAddr();
-        if (clientSourceWhiteLabel.isWhiteAddress(remoteAddr)) {
-            return true;
-        }
-
-        String remoteHost = getRequest().getRemoteHost();
-        return clientSourceWhiteLabel.isWhiteHost(remoteHost);
+    private ClientSourceCheckingProperties getProperties() {
+        return properties;
     }
 }

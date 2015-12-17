@@ -1,10 +1,10 @@
 package com.baidu.oped.sia.boot.iam;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mason on 12/3/15.
@@ -27,13 +27,6 @@ public class IamAccessControl {
         return true;
     }
 
-    public void setIgnoredUrls(List<String> ignoredUrls) {
-        if (ignoredUrls != null) {
-            this.ignoredUrls.clear();
-            this.ignoredUrls.addAll(ignoredUrls);
-        }
-    }
-
     private boolean matchUrlPattern(String urlPattern, String url) {
         if (urlPattern == null) {
             return false;
@@ -54,6 +47,13 @@ public class IamAccessControl {
             }
         }
         return urlPattern.equals(url);
+    }
+
+    public void setIgnoredUrls(List<String> ignoredUrls) {
+        if (ignoredUrls != null) {
+            this.ignoredUrls.clear();
+            this.ignoredUrls.addAll(ignoredUrls);
+        }
     }
 
 }

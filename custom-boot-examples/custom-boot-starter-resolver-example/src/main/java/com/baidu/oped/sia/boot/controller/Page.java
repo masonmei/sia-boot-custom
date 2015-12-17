@@ -2,6 +2,7 @@ package com.baidu.oped.sia.boot.controller;
 
 import com.baidu.oped.sia.boot.resolver.Resolvable;
 import com.baidu.oped.sia.boot.resolver.annotation.FromQuery;
+
 import com.google.common.base.MoreObjects;
 
 /**

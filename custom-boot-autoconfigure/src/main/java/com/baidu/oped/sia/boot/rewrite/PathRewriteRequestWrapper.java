@@ -1,13 +1,12 @@
 package com.baidu.oped.sia.boot.rewrite;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-
-import java.util.Map;
-
 import com.baidu.oped.sia.boot.utils.ReplaceUtils;
 
 import org.springframework.util.Assert;
+
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * Path Rewrite Http Servlet Request Wrapper.

@@ -1,10 +1,10 @@
 package com.baidu.oped.sia.boot.springfox;
 
-import java.util.List;
-
 import com.baidu.oped.sia.boot.utils.Constrains;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.List;
 
 /**
  * Configuration for web application to enable swagger.

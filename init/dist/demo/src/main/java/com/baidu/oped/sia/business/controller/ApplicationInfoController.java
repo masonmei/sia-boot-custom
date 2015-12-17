@@ -24,7 +24,7 @@ public class ApplicationInfoController {
     private ApplicationProperties properties;
 
     @RequestMapping(value = {"info"},
-            method = RequestMethod.GET)
+                    method = RequestMethod.GET)
     public ApplicationProperties.Info getApplicationInfo() {
         LOG.debug("invoking to get application info");
         return properties.getInfo();

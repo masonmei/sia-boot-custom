@@ -28,18 +28,6 @@ public enum SystemCode {
         this.value = value;
     }
 
-    public static SystemCode getEnumItem(int value) {
-        if (hash.isEmpty()) {
-            initEnumHash();
-        }
-        return hash.get(value);
-    }
-
-    private static void initEnumHash() {
-        for (SystemCode code : SystemCode.values()) {
-            hash.put(code.getValue(), code);
-        }
-    }
 
     public int getValue() {
         return value;

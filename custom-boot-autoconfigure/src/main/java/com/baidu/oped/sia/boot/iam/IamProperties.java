@@ -2,10 +2,10 @@ package com.baidu.oped.sia.boot.iam;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Iam configuration properties.

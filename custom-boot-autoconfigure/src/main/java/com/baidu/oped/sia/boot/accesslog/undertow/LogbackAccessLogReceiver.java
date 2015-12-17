@@ -1,10 +1,5 @@
 package com.baidu.oped.sia.boot.accesslog.undertow;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
-
 import ch.qos.logback.access.joran.JoranConfigurator;
 import ch.qos.logback.access.spi.AccessEvent;
 import ch.qos.logback.access.spi.IAccessEvent;
@@ -26,6 +21,11 @@ import io.undertow.server.handlers.accesslog.AccessLogReceiver;
 import io.undertow.servlet.handlers.ServletRequestContext;
 import io.undertow.servlet.spec.HttpServletRequestImpl;
 import io.undertow.servlet.spec.HttpServletResponseImpl;
+
+import java.io.File;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Access log receiver logback implementation.
@@ -113,14 +113,6 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         this.resource = resource;
     }
 
-    public boolean isQuiet() {
-        return quiet;
-    }
-
-    public void setQuiet(boolean quiet) {
-        this.quiet = quiet;
-    }
-
     @Override
     public void logMessage(String message) {
         HttpServletRequestImpl request = ServletRequestContext.current().getOriginalRequest();
@@ -133,6 +125,9 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         aai.appendLoopOnAppenders(accessEvent);
     }
 
+    /**
+     * Start log receiver.
+     */
     public void start() {
         configure();
         if (!isQuiet()) {
@@ -142,6 +137,9 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         registerShutdownHook();
     }
 
+    /**
+     * Stop log receiver when container shouting down.
+     */
     public void stop() {
         aai.detachAndStopAllAppenders();
         started = false;
@@ -165,6 +163,28 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         }
     }
 
+    public boolean isQuiet() {
+        return quiet;
+    }
+
+    public void setQuiet(boolean quiet) {
+        this.quiet = quiet;
+    }
+
+    private void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                stop();
+            }
+        }));
+    }
+
+    /**
+     * Resolver the configuration file.
+     *
+     * @return the configuration file url
+     */
     protected URL getConfigurationFileURL() {
         if (fileName != null) {
             addInfo("Will use configuration file [" + fileName + "]");
@@ -194,23 +214,6 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         return FileUtil.fileToURL(file);
     }
 
-    private void addError(String msg) {
-        getStatusManager().add(new ErrorStatus(msg, this));
-    }
-
-    private void addInfo(String msg) {
-        getStatusManager().add(new InfoStatus(msg, this));
-    }
-
-    private void registerShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                stop();
-            }
-        }));
-    }
-
     private void runJoranOnFile(URL configURL) {
         try {
             JoranConfigurator jc = new JoranConfigurator();
@@ -222,6 +225,14 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         } catch (JoranException e) {
             // errors have been registered as status messages
         }
+    }
+
+    private void addError(String msg) {
+        getStatusManager().add(new ErrorStatus(msg, this));
+    }
+
+    private void addInfo(String msg) {
+        getStatusManager().add(new InfoStatus(msg, this));
     }
 
 }

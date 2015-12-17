@@ -1,6 +1,7 @@
 package com.baidu.oped.sia.boot.common;
 
 import com.baidu.oped.sia.boot.exception.SystemCode;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**

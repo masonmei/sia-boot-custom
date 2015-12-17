@@ -1,7 +1,14 @@
 package com.baidu.oped.sia.boot.trace;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_SOURCE_HEADER_NAME;
+import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_SOURCE_SEQUENCE_HEADER_NAME;
+import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_TIMESTAMP_HEADER_NAME;
+
+import static java.lang.String.format;
+
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 import com.baidu.oped.sia.boot.utils.Constrains;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -9,16 +16,13 @@ import org.springframework.core.Ordered;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.UUID;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.UUID;
-
-import static com.baidu.oped.sia.boot.utils.Constrains.*;
-import static java.lang.String.format;
 
 /**
  * Trace Interceptor for tracing web transactions.
@@ -61,6 +65,14 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
     @Override
     public int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        preProcess(request, response);
+        filterChain.doFilter(request, response);
+        postProcess(request, response);
     }
 
     public void preProcess(HttpServletRequest request, HttpServletResponse response) {
@@ -129,13 +141,5 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
         MDC.remove("requestId");
         RequestInfoHolder.removeTraceTimestamp();
         RequestInfoHolder.removeTraceId();
-    }
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        preProcess(request, response);
-        filterChain.doFilter(request, response);
-        postProcess(request, response);
     }
 }

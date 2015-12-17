@@ -4,7 +4,6 @@ import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.DATA_SERVIC
 
 /**
  * Data Service Exception.
- * <p>
  *
  * @author mason
  */

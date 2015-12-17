@@ -1,8 +1,5 @@
 package com.baidu.oped.sia.boot.validate.clientsource;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.baidu.noah.naming.BNSClient;
 import com.baidu.noah.naming.BNSException;
 import com.baidu.noah.naming.BNSInstance;
@@ -10,6 +7,9 @@ import com.baidu.noah.naming.BNSInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Default implementation of client source white label.

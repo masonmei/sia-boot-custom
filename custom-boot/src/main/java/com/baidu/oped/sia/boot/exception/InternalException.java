@@ -4,9 +4,9 @@ import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INTERNAL_SY
 import static com.baidu.oped.sia.boot.exception.SystemCode.INTERNAL_ERROR;
 
 /**
- * Internal Exception such as external service invocation etc
- * <p>
- * Created by mason on 12/3/15.
+ * Internal Exception such as external service invocation etc.
+ *
+ * @author mason
  */
 public class InternalException extends SystemException {
 

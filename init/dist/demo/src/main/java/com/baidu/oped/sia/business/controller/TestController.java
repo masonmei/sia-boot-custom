@@ -1,9 +1,5 @@
 package com.baidu.oped.sia.business.controller;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.baidu.oped.sia.business.controller.dto.Person;
 
 import org.slf4j.Logger;
@@ -15,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Test Controllers.
  *
@@ -25,41 +25,21 @@ public class TestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
-    @RequestMapping(value = "/receiveBody", method = RequestMethod.POST)
-    public String bigRequest(@RequestBody List<Person> persons) {
+    @RequestMapping(value = "/receiveBody",
+                    method = RequestMethod.POST)
+    public String bigRequest(
+            @RequestBody
+            List<Person> persons) {
         System.out.println(persons);
         return String.valueOf(persons.size());
     }
 
     @RequestMapping(value = "/consumeCPU/{max}")
-    public String consumeCPU(@PathVariable("max") int max) {
+    public String consumeCPU(
+            @PathVariable("max")
+            int max) {
         calculateSum(max);
         return "DONE";
-    }
-
-    @RequestMapping(value = "/consumeMem/{mem}")
-    public String consumeMemory(@PathVariable("mem") int memory) {
-        prepareMemory(memory);
-        return "DONE";
-    }
-
-    @RequestMapping(value = "/consumeTime/{time}")
-    public String consumeTime(@PathVariable("time") int timeInMs) {
-        sleep(timeInMs);
-        return "DONE";
-    }
-
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public List<Person> getPersons(@RequestParam("num") int number) {
-        List<Person> persons = new ArrayList<>(number);
-        for (int i = 0; i < number; i++) {
-            Person person = new Person();
-            person.setName("mason" + i);
-            person.setAge(i);
-            person.setBrief("This is mason " + i);
-            persons.add(person);
-        }
-        return persons;
     }
 
     private void calculateSum(int to) {
@@ -70,6 +50,14 @@ public class TestController {
         System.out.println(sum);
     }
 
+    @RequestMapping(value = "/consumeMem/{mem}")
+    public String consumeMemory(
+            @PathVariable("mem")
+            int memory) {
+        prepareMemory(memory);
+        return "DONE";
+    }
+
     private void prepareMemory(int count) {
         List<WeakReference<byte[]>> references = new ArrayList<>();
 
@@ -78,11 +66,35 @@ public class TestController {
         }
     }
 
+    @RequestMapping(value = "/consumeTime/{time}")
+    public String consumeTime(
+            @PathVariable("time")
+            int timeInMs) {
+        sleep(timeInMs);
+        return "DONE";
+    }
+
     private void sleep(int ms) {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
             LOG.warn("sleep failed.");
         }
+    }
+
+    @RequestMapping(value = "/persons",
+                    method = RequestMethod.GET)
+    public List<Person> getPersons(
+            @RequestParam("num")
+            int number) {
+        List<Person> persons = new ArrayList<>(number);
+        for (int i = 0; i < number; i++) {
+            Person person = new Person();
+            person.setName("mason" + i);
+            person.setAge(i);
+            person.setBrief("This is mason " + i);
+            persons.add(person);
+        }
+        return persons;
     }
 }

@@ -16,7 +16,10 @@ import org.springframework.context.annotation.Configuration;
  * Created by meidongxu on 7/6/15.
  */
 @Configuration
-@ConditionalOnProperty(prefix = PROFILE_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = PROFILE_PREFIX,
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 @EnableConfigurationProperties(ProfilingProperties.class)
 public class ProfilingAutoConfiguration {
 

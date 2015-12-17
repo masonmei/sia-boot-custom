@@ -4,7 +4,6 @@ import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.PARAM_CONFL
 
 /**
  * Exception when parameter cannot exist together.
- * <p>
  *
  * @author mason
  */

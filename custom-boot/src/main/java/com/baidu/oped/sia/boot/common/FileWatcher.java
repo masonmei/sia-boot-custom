@@ -1,5 +1,10 @@
 package com.baidu.oped.sia.boot.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
+import org.yaml.snakeyaml.Yaml;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,15 +18,11 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
-import org.yaml.snakeyaml.Yaml;
-
 /**
  * Watch file for content changing and convert the file to POJO object.
  *
  * @param <T> The POJO Object from configuration file.
+ *
  * @author mason
  */
 public class FileWatcher<T> {
@@ -38,6 +39,13 @@ public class FileWatcher<T> {
         this(1, configFile, type);
     }
 
+    /**
+     * Construct a file watcher and convert to given type instance in the specified period.
+     *
+     * @param refreshIntervalInSecond reload interval
+     * @param configFile              reloadable configuration file
+     * @param type                    the configuration instance type
+     */
     public FileWatcher(int refreshIntervalInSecond, File configFile, Class<T> type) {
         Assert.state(refreshIntervalInSecond > 0, "The minimum refresh interval is 1 second");
         Assert.notNull(configFile, "Configuration File must not be null.");
@@ -67,10 +75,6 @@ public class FileWatcher<T> {
         registerShutDownHook();
     }
 
-    public T getHolder() {
-        return holder;
-    }
-
     private void loadingProperties() {
         LOG.debug("start to load properties with path {}", configFile.getName());
 
@@ -82,16 +86,6 @@ public class FileWatcher<T> {
         }
 
         LOG.info("reload properties finished.");
-    }
-
-    private void registerShutDownHook() {
-        Runtime.getRuntime()
-                .addShutdownHook(new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        stop = true;
-                    }
-                }));
     }
 
     private void watchingForChanges() {
@@ -121,6 +115,20 @@ public class FileWatcher<T> {
                 }
             }
         }).start();
+    }
+
+    private void registerShutDownHook() {
+        Runtime.getRuntime()
+                .addShutdownHook(new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stop = true;
+                    }
+                }));
+    }
+
+    public T getHolder() {
+        return holder;
     }
 
 }

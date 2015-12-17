@@ -3,8 +3,6 @@ package com.baidu.oped.sia.boot.async;
 import static com.baidu.oped.sia.boot.utils.Constrains.ASYNC_PREFIX;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 
-import java.util.concurrent.Executor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -18,6 +16,8 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.concurrent.Executor;
+
 /**
  * Async Auto Configuration.
  *
@@ -26,7 +26,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Configuration
 @ConditionalOnWebApplication
 @EnableAsync
-@ConditionalOnProperty(prefix = ASYNC_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = ASYNC_PREFIX,
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 @EnableConfigurationProperties(AsyncProperties.class)
 public class AsyncAutoConfiguration implements AsyncConfigurer {
     public static final Logger LOG = LoggerFactory.getLogger(AsyncAutoConfiguration.class);

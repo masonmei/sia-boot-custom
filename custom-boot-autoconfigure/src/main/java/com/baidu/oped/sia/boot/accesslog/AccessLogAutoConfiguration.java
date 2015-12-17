@@ -3,12 +3,16 @@ package com.baidu.oped.sia.boot.accesslog;
 import static com.baidu.oped.sia.boot.utils.Constrains.ACCESS_LOG_PREFIX;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 
-import java.io.File;
-
 import com.baidu.oped.sia.boot.accesslog.undertow.LogbackAccessLogReceiver;
 import com.baidu.oped.sia.boot.accesslog.undertow.LogbackHandlerWrapper;
 import com.baidu.oped.sia.boot.utils.FileUtils;
 
+import ch.qos.logback.access.jetty.RequestLogImpl;
+import ch.qos.logback.access.servlet.TeeFilter;
+import ch.qos.logback.access.tomcat.LogbackValve;
+import io.undertow.server.HandlerWrapper;
+import io.undertow.server.HttpHandler;
+import io.undertow.servlet.api.DeploymentInfo;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +31,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import ch.qos.logback.access.jetty.RequestLogImpl;
-import ch.qos.logback.access.servlet.TeeFilter;
-import ch.qos.logback.access.tomcat.LogbackValve;
-import io.undertow.server.HandlerWrapper;
-import io.undertow.server.HttpHandler;
-import io.undertow.servlet.api.DeploymentInfo;
+import java.io.File;
 
 /**
  * Access Log Auto Configuration.
@@ -41,7 +40,10 @@ import io.undertow.servlet.api.DeploymentInfo;
  */
 @Configuration
 @ConditionalOnWebApplication
-@ConditionalOnProperty(prefix = ACCESS_LOG_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = ACCESS_LOG_PREFIX,
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 @EnableConfigurationProperties(AccessLogProperties.class)
 public class AccessLogAutoConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(AccessLogAutoConfiguration.class);
@@ -49,6 +51,11 @@ public class AccessLogAutoConfiguration {
     @Autowired
     private AccessLogProperties properties;
 
+    /**
+     * Custom the container with access log enabled.
+     *
+     * @return container customizer
+     */
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         LOG.info("enable access log.");
@@ -106,6 +113,11 @@ public class AccessLogAutoConfiguration {
         };
     }
 
+    /**
+     * Tee filter.
+     *
+     * @return tee filter
+     */
     @Bean
     public FilterRegistrationBean teeFilter() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();

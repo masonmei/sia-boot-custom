@@ -6,7 +6,7 @@
         <artifactId>custom-boot-dependency</artifactId>
         <groupId>com.baidu.oped.sia.boot</groupId>
         <version>0.0.2-SNAPSHOT</version>
-        <relativePath>../custom-boot-dependency</relativePath>
+        <relativePath>../custom-boot-dependency/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

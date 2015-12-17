@@ -5,7 +5,6 @@ import static com.baidu.oped.sia.boot.exception.SystemCode.ACCESS_DENIED;
 
 /**
  * Exception for user requests meet the maximum limitation.
- * <p>
  *
  * @author mason
  */

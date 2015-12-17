@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class TestController {
-    @RequestMapping(value = {"home"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"home"},
+                    method = RequestMethod.GET)
     public String home() {
         return String.format("Trace home with id %s start at %s",
                 RequestInfoHolder.traceId(),

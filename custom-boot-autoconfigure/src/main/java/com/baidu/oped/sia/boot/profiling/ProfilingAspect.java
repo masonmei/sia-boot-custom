@@ -1,7 +1,5 @@
 package com.baidu.oped.sia.boot.profiling;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,6 +7,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Aspect for profiling purpose.
@@ -67,17 +67,6 @@ public class ProfilingAspect {
         }
     }
 
-    @Pointcut("execution(public * *(..))")
-    public void publicMethod() {
-    }
-
-    private void logStats(MethodStat stat) {
-        long avgTime = stat.totalTime / stat.count;
-        log.info("MethodStat: [methodName: {}, totalTime: {}ms, execution:{}, averageTime: {}ms, min:{}ms, max:{}ms]",
-                stat.methodName, stat.totalTime, stat.count, avgTime, stat.minTime, stat.maxTime);
-        stat.reset();
-    }
-
     private void updateStat(String methodName, long elapsedInMillis) {
         MethodStat methodStat = METHOD_STATS_MAP.get(methodName);
         if (methodStat == null) {
@@ -98,6 +87,17 @@ public class ProfilingAspect {
         if (methodStat.count % logFrequency == 0) {
             logStats(methodStat);
         }
+    }
+
+    private void logStats(MethodStat stat) {
+        long avgTime = stat.totalTime / stat.count;
+        log.info("MethodStat: [methodName: {}, totalTime: {}ms, execution:{}, averageTime: {}ms, min:{}ms, max:{}ms]",
+                stat.methodName, stat.totalTime, stat.count, avgTime, stat.minTime, stat.maxTime);
+        stat.reset();
+    }
+
+    @Pointcut("execution(public * *(..))")
+    public void publicMethod() {
     }
 
     static class MethodStat {

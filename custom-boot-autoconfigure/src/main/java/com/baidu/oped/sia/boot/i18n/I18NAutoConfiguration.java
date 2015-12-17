@@ -3,8 +3,6 @@ package com.baidu.oped.sia.boot.i18n;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
 
-import java.util.Locale;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +21,19 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.util.Locale;
+
 /**
  * Enable I18N support configuration.
- * <p>
  *
  * @author mason
  */
 @Configuration
 @ConditionalOnWebApplication
-@ConditionalOnProperty(prefix = I18N_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = I18N_PREFIX,
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 @EnableConfigurationProperties(I18nProperties.class)
 public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
 
@@ -70,14 +72,6 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
-    @Bean
-    public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename(properties.getMsgBaseName());
-        messageSource.setDefaultEncoding(DEFAULT_ENCODING);
-        return messageSource;
-    }
-
     private LocaleResolver buildCookieResolver(I18nProperties.CookieConfig config) {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setCookieMaxAge(config.getMaxAge());
@@ -94,5 +88,13 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         SessionLocaleResolver resolver = new SessionLocaleResolver();
         resolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
         return resolver;
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename(properties.getMsgBaseName());
+        messageSource.setDefaultEncoding(DEFAULT_ENCODING);
+        return messageSource;
     }
 }

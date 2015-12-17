@@ -20,7 +20,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnWebApplication
-@ConditionalOnProperty(prefix = DECODE_URI_PREFIX, name = ENABLED, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = DECODE_URI_PREFIX,
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 public class DecodeUriAutoConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(DecodeUriAutoConfiguration.class);
 

@@ -3,12 +3,12 @@ package com.baidu.oped.sia.boot.resolver;
 import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringArrayToPrimitiveArr;
 import static com.baidu.oped.sia.boot.utils.ArrayUtils.convertStringToPrimitive;
 
-import java.lang.reflect.Field;
-
 import com.baidu.oped.sia.boot.resolver.annotation.FromQuery;
 
 import org.junit.Test;
 import org.springframework.util.StringUtils;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by mason on 11/18/15.
@@ -47,12 +47,12 @@ public class ResolverUtilsTest {
         System.out.println(target);
     }
 
-    @Test
-    public void testMakeAccessible() throws Exception {
+    private void doNothing() {
 
     }
 
-    private void doNothing() {
+    @Test
+    public void testMakeAccessible() throws Exception {
 
     }
 
