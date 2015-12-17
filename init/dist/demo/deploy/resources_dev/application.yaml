@@ -1,0 +1,37 @@
+server:
+  port: 8888
+
+project:
+  info:
+    contact: meidongxu@baidu.com
+    version: 0.0.1
+    department: oped
+    description: demo程序
+
+custom:
+  boot:
+    iplist:
+      enabled: false
+    limit:
+      enabled: false
+    i18n:
+      enabled: true
+    iam:
+      enabled: false
+    trace:
+      enabled: true
+    args:
+      enabled: true
+    profiling:
+      enabled: true
+    spring:
+      fox:
+        enabled: true
+        patterns:
+          - /**
+        api-info:
+          title: demo
+
+spring:
+  aop:
+    proxy-target-class: true

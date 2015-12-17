@@ -33,7 +33,11 @@ copyAndDistFolders(){
             cp -rf ${WORK_DIR}/${file} ${WORK_DIR}/dist/${file}
             find ${WORK_DIR}/dist/${file} -name '.svn' | xargs rm -rf
             find ${WORK_DIR}/dist/${file} -name '.git' | xargs rm -rf
+            find ${WORK_DIR}/dist/${file} -name '.idea' | xargs rm -rf
+            find ${WORK_DIR}/dist/${file} -name '*.iml' | xargs rm -rf
+            find ${WORK_DIR}/dist/${file} -name 'target' | xargs rm -rf
 
+            ls -al ${WORK_DIR}/dist/${file}
             cd ${WORK_DIR}/dist && tar zcf ${file}.tar.gz ${file}
             rm -rf ${WORK_DIR}/dist/${file}
         else
