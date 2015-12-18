@@ -23,7 +23,6 @@ import java.util.Set;
 
 /**
  * Spring Fox AutoConfiguration.
- * <p>
  *
  * @author mason
  */
@@ -32,14 +31,19 @@ import java.util.Set;
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(SpringFoxProperties.class)
 @ConditionalOnProperty(prefix = SPRING_FOX_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableSwagger2
 public class SpringFoxAutoConfiguration {
     @Autowired
     private SpringFoxProperties properties;
 
+    /**
+     * Api Docket Bean.
+     *
+     * @return the docket.
+     */
     @Bean
     public Docket apiDocket() {
         Docket docket = new Docket(DocumentationType.SWAGGER_2);

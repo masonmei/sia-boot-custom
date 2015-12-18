@@ -43,7 +43,7 @@ public class IamAuthenticationFilter extends OncePerRequestFilter {
 
         if (RequestInfoHolder.inWhiteList()
                 || !iamManager.isActive()
-                || !accessControl.isNotIgnoredUri(request.getRequestURI())) {
+                || !accessControl.needAuthWithIam(request.getRequestURI())) {
             RequestInfoHolder.setIgnoreAuth(TRUE);
         }
 

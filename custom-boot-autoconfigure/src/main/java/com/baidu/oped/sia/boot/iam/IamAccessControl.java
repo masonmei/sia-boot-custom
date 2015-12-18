@@ -7,14 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mason on 12/3/15.
+ * Iam Access control.
+ *
+ * @author mason
  */
 public class IamAccessControl {
     private static final Logger LOG = LoggerFactory.getLogger(IamAccessControl.class);
 
     private List<String> ignoredUrls = new ArrayList<>();
 
-    public boolean isNotIgnoredUri(String url) {
+    /**
+     * Check if the given url should be process
+     *
+     * @param url the target checking url
+     * @return the check result.
+     */
+    public boolean needAuthWithIam(String url) {
         url = url.toLowerCase();
         // check not need authentication url
         for (String ignored : ignoredUrls) {

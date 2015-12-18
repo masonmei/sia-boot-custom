@@ -28,8 +28,7 @@ public abstract class FileUtils {
      *
      * @param parentDirectory parent directory
      * @param fileName        file name
-     *
-     * @return
+     * @return resolved file
      */
     public static File resolveConfigFile(String parentDirectory, String fileName) {
         String filePath = "";
@@ -49,9 +48,8 @@ public abstract class FileUtils {
     /**
      * Resolve file with file Path.
      *
-     * @param filePath
-     *
-     * @return
+     * @param filePath file path to resolved as file.
+     * @return resolved file
      */
     public static File resolveFile(String filePath) {
         Assert.hasLength(filePath, "File Path must not be null while resolving file.");

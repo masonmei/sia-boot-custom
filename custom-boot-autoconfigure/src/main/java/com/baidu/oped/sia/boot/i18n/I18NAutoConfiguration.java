@@ -31,9 +31,9 @@ import java.util.Locale;
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = I18N_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableConfigurationProperties(I18nProperties.class)
 public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
 
@@ -52,6 +52,11 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(interceptor);
     }
 
+    /**
+     * Define locale resolver bean.
+     *
+     * @return the locale resolver bean
+     */
     @Bean
     public LocaleResolver localResolver() {
         LOG.info("enable i18n resolver. Resolver type: {}", properties.getResolverType());
@@ -90,6 +95,11 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
+    /**
+     * Define message source bean.
+     *
+     * @return message source
+     */
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

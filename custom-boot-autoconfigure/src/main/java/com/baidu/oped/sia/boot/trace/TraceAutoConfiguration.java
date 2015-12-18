@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Tracing ability to support tracing request from different systems. Enabled by default.
- * <p>
  *
  * @author mason
  */
@@ -28,9 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 @ConditionalOnWebApplication
 @ConditionalOnClass({Servlet.class, HttpServletRequest.class, HttpServletResponse.class})
 @ConditionalOnProperty(prefix = TRACE_PREFIX,
-                       name = ENABLED,
-                       matchIfMissing = true,
-                       havingValue = "true")
+        name = ENABLED,
+        matchIfMissing = true,
+        havingValue = "true")
 @EnableConfigurationProperties(TraceProperties.class)
 public class TraceAutoConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(TraceAutoConfiguration.class);
@@ -38,6 +37,11 @@ public class TraceAutoConfiguration {
     @Autowired
     private TraceProperties properties;
 
+    /**
+     * Define trace filter.
+     *
+     * @return filter registration bean
+     */
     @Bean
     public FilterRegistrationBean traceFilter() {
         LOG.info("add trace filter");

@@ -1,6 +1,3 @@
-/*
- * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
- */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
 import com.baidu.oped.sia.boot.exception.RequestForbiddenException;
@@ -12,7 +9,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by mason on 7/14/15.
+ * Client Source Checking handler
+ *
+ * @author mason
  */
 public class ClientSourceCheckingHandler {
 
@@ -20,6 +19,12 @@ public class ClientSourceCheckingHandler {
     private final ClientSourceCheckingProperties properties;
     private final ClientSourceWhiteLabel clientSourceWhiteLabel;
 
+    /**
+     * Construct handler with configuration properties and white label.
+     *
+     * @param properties             configuration properties.
+     * @param clientSourceWhiteLabel white label
+     */
     public ClientSourceCheckingHandler(ClientSourceCheckingProperties properties,
                                        ClientSourceWhiteLabel clientSourceWhiteLabel) {
         Assert.notNull(properties);
@@ -29,6 +34,11 @@ public class ClientSourceCheckingHandler {
         this.clientSourceChecker = new ActionClientSourceChecker(properties.getPattern());
     }
 
+    /**
+     * Valid if allowed.
+     *
+     * @param targets validate target
+     */
     public void validate(Object... targets) {
         boolean checkSource = false;
         for (Object target : targets) {
@@ -59,7 +69,7 @@ public class ClientSourceCheckingHandler {
     /**
      * Provide the ability to get HttpServletRequest.
      *
-     * @return
+     * @return the request
      */
     private HttpServletRequest getRequest() {
         return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();

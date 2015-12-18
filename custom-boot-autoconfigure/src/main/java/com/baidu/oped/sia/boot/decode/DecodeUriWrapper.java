@@ -22,13 +22,17 @@ public class DecodeUriWrapper extends HttpServletRequestWrapper {
      * Constructs a request object wrapping the given request.
      *
      * @param request the request to be wrapped
-     *
      * @throws IllegalArgumentException if the request is null
      */
     public DecodeUriWrapper(HttpServletRequest request) {
         super(request);
     }
 
+    /**
+     * Get the Wrapped request uri that decoded.
+     *
+     * @return decoded uri
+     */
     @Override
     public String getRequestURI() {
         try {

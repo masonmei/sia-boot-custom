@@ -27,9 +27,7 @@ public abstract class ResolverUtils {
      * Get all the modifiable fields of the given.
      *
      * @param clazz the given Resolvable class
-     *
      * @return the modifiable fields
-     *
      * @throws SecurityException
      */
     public static <T> Field[] getDeclaredFields(Class<T> clazz) throws SecurityException {
@@ -67,7 +65,6 @@ public abstract class ResolverUtils {
      * SecurityManager (if active).
      *
      * @param field the field to make accessible
-     *
      * @see java.lang.reflect.Field#setAccessible
      */
     public static void makeAccessible(Field field) {

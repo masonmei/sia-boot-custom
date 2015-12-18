@@ -28,7 +28,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by mason on 12/2/15.
+ * Default Iam Manager.
+ *
+ * @author mason
  */
 public class DefaultIamManager implements IamManager {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultIamManager.class);
@@ -122,16 +124,6 @@ public class DefaultIamManager implements IamManager {
         userRequest.setUri(request.getRequestURI());
         userRequest.setMethod(request.getMethod());
 
-        // if user not set header content-type=application/json, put metricdata api will take metric data body as
-        // parameter key, and then will generate iam signature error
-//        boolean hasParameter = true;
-//        if (request.getRequestURI().startsWith("/json-api/v1/metricdata") && request.getMethod().equals("POST")) {
-//            hasParameter = false;
-//        }
-
-        // Should care that a parameter may have multiple values. But I have no idea here how to combine more than one
-        // values and which delimiter should use. So just pick the first value. It is protocol's bug in fact.
-//        if (hasParameter) {
         for (Enumeration<String> e = request.getParameterNames(); e.hasMoreElements(); ) {
             String key = e.nextElement();
             List<String> valueArray = new ArrayList<>();
@@ -144,7 +136,6 @@ public class DefaultIamManager implements IamManager {
                 userRequest.addParam(key, valueArray.get(0));
             }
         }
-//        }
 
         for (Enumeration<String> h = request.getHeaderNames(); h.hasMoreElements(); ) {
             String header = h.nextElement();
@@ -154,12 +145,8 @@ public class DefaultIamManager implements IamManager {
                 headerValues.add(value);
             }
 
-            // Here we just use colon to join multiple values. In http colon is the most commonly delimiter for
-            // http header attributes, but not the only one. So should suggest clients do not use multiple values in
-            // http headers.
             if (headerValues.size() > 1) {
                 Collections.sort(headerValues);
-                ;
                 userRequest.addHeader(header, collectionToDelimitedString(headerValues, ";"));
             } else {
                 userRequest.addHeader(header, headerValues.get(0));

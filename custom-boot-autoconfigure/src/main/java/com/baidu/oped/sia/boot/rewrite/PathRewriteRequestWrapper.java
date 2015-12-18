@@ -10,13 +10,20 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * Path Rewrite Http Servlet Request Wrapper.
- * <p>
- * Created by mason on 12/2/15.
+ *
+ * @author mason
  */
 class PathRewriteRequestWrapper extends HttpServletRequestWrapper {
 
     private final String servletPath;
 
+    /**
+     * Path rewrite request wrapper
+     *
+     * @param request request to wrap
+     * @param rewrite rewrite uri
+     * @param params  params to resole
+     */
     public PathRewriteRequestWrapper(HttpServletRequest request, String rewrite, Map<String, String> params) {
         super(request);
         Assert.hasLength(rewrite, "Rewrite Path must not be null.");

@@ -6,7 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Properties for Tracing purpose.
- * <p>
  *
  * @author mason
  */

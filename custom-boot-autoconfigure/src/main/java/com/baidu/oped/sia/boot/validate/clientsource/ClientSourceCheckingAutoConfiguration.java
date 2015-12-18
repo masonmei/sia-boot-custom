@@ -1,6 +1,3 @@
-/*
- * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
- */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
@@ -15,14 +12,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * Created by mason on 7/14/15.
+ * Client Source checking auto configuration.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = VALIDATE_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableConfigurationProperties({ClientSourceCheckingProperties.class})
 public class ClientSourceCheckingAutoConfiguration {
     @Autowired
@@ -33,6 +32,11 @@ public class ClientSourceCheckingAutoConfiguration {
         return new ClientSourceCheckingHandler(properties, clientSourceWhiteLabel);
     }
 
+    /**
+     * White label for testing or dev purpose.
+     *
+     * @return white label
+     */
     @Bean
     @Profile({"DEV", "test"})
     public ClientSourceWhiteLabel testWhiteLabel() {
@@ -49,6 +53,11 @@ public class ClientSourceCheckingAutoConfiguration {
         };
     }
 
+    /**
+     * White label for production.
+     *
+     * @return white label
+     */
     @Bean
     @Profile({"default", "PROD"})
     public ClientSourceWhiteLabel whiteLabel() {

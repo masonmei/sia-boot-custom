@@ -17,19 +17,27 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by mason on 12/2/15.
+ * Rewrite Auto configuration.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = REWRITE_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableConfigurationProperties(RewriteContext.class)
 public class RewriteAutoConfiguration {
     @Autowired
     private RewriteContext rewriteContext;
 
+    /**
+     * Define rewrite filter.
+     *
+     * @param parameterResolver param resolver
+     * @return Rewrite Filter Registration Bean
+     */
     @Bean
     public FilterRegistrationBean rewriteFiler(UriRewriteParameterResolver parameterResolver) {
         UriRewriteFiler rewriteFiler = new UriRewriteFiler();
@@ -40,6 +48,11 @@ public class RewriteAutoConfiguration {
         return registrationBean;
     }
 
+    /**
+     * Param resolver.
+     *
+     * @return param resolver
+     */
     @Bean
     @ConditionalOnMissingBean
     public UriRewriteParameterResolver uriRewriteParameterResolver() {

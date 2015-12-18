@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mason on 7/14/15.
+ * Client Source checking configuration properties.
+ *
+ * @author mason
  */
 @ConfigurationProperties(prefix = VALIDATE_PREFIX)
 public class ClientSourceCheckingProperties {

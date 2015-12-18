@@ -1,13 +1,12 @@
-/*
- * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
- */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Created by mason on 7/14/15.
+ * Client source checker for bcm alarm action checking.
+ *
+ * @author mason
  */
 public class ActionClientSourceChecker implements ClientSourceChecker {
 

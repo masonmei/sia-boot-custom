@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * Configuration for web application to enable swagger.
- * <p>
  *
  * @author mason
  */

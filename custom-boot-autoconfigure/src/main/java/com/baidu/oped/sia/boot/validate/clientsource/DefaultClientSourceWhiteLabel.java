@@ -23,6 +23,11 @@ public class DefaultClientSourceWhiteLabel implements ClientSourceWhiteLabel, Ru
     private List<String> addressList = new ArrayList<>();
     private List<String> hostList = new ArrayList<>();
 
+    /**
+     * Default client source white label.
+     *
+     * @param properties the checking rules.
+     */
     public DefaultClientSourceWhiteLabel(ClientSourceCheckingProperties properties) {
         this.properties = properties;
         this.addressList = properties.getAddresses();

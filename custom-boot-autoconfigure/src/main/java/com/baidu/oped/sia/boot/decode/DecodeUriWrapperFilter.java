@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * HttpServlet Request Uri decode support Filter
- * <p>
- * Created by mason on 11/23/15.
+ *
+ * @author mason
  */
 
 public class DecodeUriWrapperFilter extends OncePerRequestFilter {

@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Trace Interceptor for tracing web transactions.
- * <p>
  *
  * @author mason
  */
@@ -38,6 +37,14 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
     private final String traceSourceIpHeaderName;
     private final String traceSourceSeqHeaderName;
 
+    /**
+     * Construct trace filter with the given four header name.
+     *
+     * @param traceHeaderName          trace id header name
+     * @param traceTimestampHeaderName trace start timestamp header name
+     * @param traceSourceIpHeaderName  trace source ip header name
+     * @param traceSourceSeqHeaderName trace source sequence header name
+     */
     public TraceFilter(String traceHeaderName, String traceTimestampHeaderName, String traceSourceIpHeaderName,
                        String traceSourceSeqHeaderName) {
         if (StringUtils.isEmpty(traceHeaderName)) {
@@ -75,6 +82,12 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
         postProcess(request, response);
     }
 
+    /**
+     * Pre process the request with read or generate headers.
+     *
+     * @param request  the request
+     * @param response the response
+     */
     public void preProcess(HttpServletRequest request, HttpServletResponse response) {
         if (null == RequestInfoHolder.traceId()) {
             String requestId = request.getHeader(traceHeaderName);
@@ -117,6 +130,12 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
         LOG.info("request preHandle, method: {}, url: {}", request.getMethod(), request.getRequestURI());
     }
 
+    /**
+     * Post process for tracing.
+     *
+     * @param request  the request
+     * @param response the response
+     */
     public void postProcess(HttpServletRequest request, HttpServletResponse response) {
         String responseTraceId = response.getHeader(traceHeaderName);
         String responseTraceTimestamp = response.getHeader(traceTimestampHeaderName);

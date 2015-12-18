@@ -21,12 +21,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = DECODE_URI_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 public class DecodeUriAutoConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(DecodeUriAutoConfiguration.class);
 
+    /**
+     * Register iam authentication filter.
+     *
+     * @return iam auth filter refistration bean
+     */
     @Bean
     public FilterRegistrationBean iamAuthenticationFilter() {
         LOG.info("register decode uri filter");

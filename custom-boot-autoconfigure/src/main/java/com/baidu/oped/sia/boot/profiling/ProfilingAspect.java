@@ -12,8 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Aspect for profiling purpose.
- * <p>
- * Created by mason on 11/6/15.
+ *
+ * @author mason
  */
 @Aspect
 public class ProfilingAspect {
@@ -27,6 +27,12 @@ public class ProfilingAspect {
     private final long methodWarningThreshold;
     private final long logFrequency;
 
+    /**
+     * Construct an aspect.
+     *
+     * @param methodWarningThreshold method warning threshold in ms
+     * @param logFrequency           log statistic with frequency
+     */
     public ProfilingAspect(long methodWarningThreshold, long logFrequency) {
         if (methodWarningThreshold <= 0) {
             methodWarningThreshold = DEFAULT_WARNING_THRESHOLD_IN_MILLIS;

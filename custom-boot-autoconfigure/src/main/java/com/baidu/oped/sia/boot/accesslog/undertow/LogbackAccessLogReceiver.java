@@ -155,9 +155,9 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
     }
 
     protected void configure() {
-        URL configURL = getConfigurationFileURL();
-        if (configURL != null) {
-            runJoranOnFile(configURL);
+        URL configUrl = getConfigurationFileUrl();
+        if (configUrl != null) {
+            runJoranOnFile(configUrl);
         } else {
             addError("Could not find configuration file for logback-access");
         }
@@ -185,7 +185,7 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
      *
      * @return the configuration file url
      */
-    protected URL getConfigurationFileURL() {
+    protected URL getConfigurationFileUrl() {
         if (fileName != null) {
             addInfo("Will use configuration file [" + fileName + "]");
             File file = new File(fileName);
@@ -214,11 +214,11 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         return FileUtil.fileToURL(file);
     }
 
-    private void runJoranOnFile(URL configURL) {
+    private void runJoranOnFile(URL configUrl) {
         try {
             JoranConfigurator jc = new JoranConfigurator();
             jc.setContext(this);
-            jc.doConfigure(configURL);
+            jc.doConfigure(configUrl);
             if (getName() == null) {
                 setName("LogbackRequestLog");
             }
