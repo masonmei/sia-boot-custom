@@ -1,5 +1,7 @@
 package com.baidu.oped.sia.boot.exception;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,28 +11,33 @@ import java.util.Map;
  * @author mason
  */
 public enum SystemCode {
-    OK(1),
-    INVALID_PARAMETER(2),
-    INVALID_PARAMETER_VALUE(3),
-    INTERNAL_ERROR(4),
-    EXCEED_MAX_RETURN_DATA_POINTS(5),
-    EXCEED_MAX_QUERY_DATA_POINTS(6),
-    AUTHENTICATION_ERROR(7),
-    AUTHORIZATION_ERROR(8),
-    ACCESS_DENIED(9),
-    RESOURCE_NOT_EXIST(10),
-    INCORRECT_CONFIGURATION(11);
+    OK(1, HttpStatus.OK),
+    INVALID_PARAMETER(2, HttpStatus.BAD_REQUEST),
+    INVALID_PARAMETER_VALUE(3, HttpStatus.BAD_REQUEST),
+    INTERNAL_ERROR(4, HttpStatus.INTERNAL_SERVER_ERROR),
+    EXCEED_MAX_RETURN_DATA_POINTS(5, HttpStatus.BAD_REQUEST),
+    EXCEED_MAX_QUERY_DATA_POINTS(6, HttpStatus.BAD_REQUEST),
+    AUTHENTICATION_ERROR(7, HttpStatus.FORBIDDEN),
+    AUTHORIZATION_ERROR(8, HttpStatus.UNAUTHORIZED),
+    ACCESS_DENIED(9, HttpStatus.TOO_MANY_REQUESTS),
+    RESOURCE_NOT_EXIST(10, HttpStatus.NOT_FOUND),
+    INCORRECT_CONFIGURATION(11, HttpStatus.INTERNAL_SERVER_ERROR);
 
     private static Map<Integer, SystemCode> hash = new HashMap<>();
     private final int value;
+    private final HttpStatus statusCode;
 
-    SystemCode(int value) {
+    SystemCode(int value, HttpStatus statusCode) {
         this.value = value;
+        this.statusCode = statusCode;
     }
-
 
     public int getValue() {
         return value;
+    }
+
+    public HttpStatus getStatusCode() {
+        return statusCode;
     }
 
     @Override

@@ -2,20 +2,21 @@ package com.baidu.oped.sia.boot.exception;
 
 
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INTERNAL_SYS_ERROR;
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.REQ_PARAM_MISMATCH;
 
 import com.baidu.oped.sia.boot.common.BasicResponse;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.support.RequestContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author mason
  */
 @ControllerAdvice
-public class SystemExceptionHandler {
+public class SystemExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(SystemExceptionHandler.class);
 
@@ -34,7 +35,6 @@ public class SystemExceptionHandler {
      * Handle all the category system exception.
      *
      * @param exception system exception
-     *
      * @return Entity Response
      */
     @ExceptionHandler(SystemException.class)
@@ -77,34 +77,12 @@ public class SystemExceptionHandler {
     }
 
     /**
-     * Handle parameter missing exception.
-     *
-     * @param exception parameter missing exception
-     *
-     * @return Error Response Entity
-     */
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<BasicResponse> handleMissingServletRequestParameterException(
-            MissingServletRequestParameterException exception) {
-        LOG.warn("MissingServletRequestParameterException handled", exception);
-        BasicResponse error = new BasicResponse();
-        String requestId = getRequestId();
-        error.setRequestId(requestId);
-        error.setCode(SystemCode.INVALID_PARAMETER);
-        Object[] args = new Object[]{exception.getParameterName(), exception.getParameterType()};
-        error.setMessage(getLocalMessage(REQ_PARAM_MISMATCH, args));
-        LOG.info("[exception] {}", error.getCode());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
      * Handle All the exceptions to Server Error.
      *
      * @param exception un-category exception.
-     *
      * @return Response Entity.
      */
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler({Exception.class, Throwable.class})
     public ResponseEntity<BasicResponse> handleException(Exception exception) {
         LOG.error("Exception handled", exception);
         BasicResponse error = new BasicResponse();
@@ -114,5 +92,15 @@ public class SystemExceptionHandler {
         error.setMessage(getLocalMessage(INTERNAL_SYS_ERROR));
         LOG.info("[exception] {}", error.getCode());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
+                                                             HttpStatus status, WebRequest request) {
+        BasicResponse error = new BasicResponse();
+        String requestId = getRequestId();
+        error.setRequestId(requestId);
+
+        return new ResponseEntity<Object>(error, headers, status);
     }
 }
