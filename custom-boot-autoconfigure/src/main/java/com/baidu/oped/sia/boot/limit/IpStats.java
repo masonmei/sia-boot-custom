@@ -9,7 +9,7 @@ public class IpStats {
     private final int maxRequestsPerPeriod;
     private final int periodInMs;
     private final int bandTimeInMs;
-    private ConcurrentHashMap<String, IPTracker> ipTrackerMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, IpTracker> ipTrackerMap = new ConcurrentHashMap<>();
 
     public IpStats(int maxRequestsPerPeriod, int periodInMs, int bandTimeInMs) {
         this.maxRequestsPerPeriod = maxRequestsPerPeriod;
@@ -20,12 +20,12 @@ public class IpStats {
     public boolean shouldLimit(String remoteAddr) {
         long currentTimeInMillis = System.currentTimeMillis();
         if (ipTrackerMap.containsKey(remoteAddr)) {
-            IPTracker ipTracker = ipTrackerMap.get(remoteAddr);
+            IpTracker ipTracker = ipTrackerMap.get(remoteAddr);
             if (ipTracker != null && ipTracker.hasReachedLimit(maxRequestsPerPeriod, currentTimeInMillis)) {
                 return true;
             }
         } else {
-            IPTracker ipTracker = new IPTracker(remoteAddr, currentTimeInMillis, periodInMs, bandTimeInMs);
+            IpTracker ipTracker = new IpTracker(remoteAddr, currentTimeInMillis, periodInMs, bandTimeInMs);
             ipTrackerMap.put(remoteAddr, ipTracker);
         }
         return false;

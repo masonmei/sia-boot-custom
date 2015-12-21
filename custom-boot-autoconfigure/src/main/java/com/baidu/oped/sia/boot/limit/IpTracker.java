@@ -7,14 +7,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Created by mason on 11/10/15.
  */
-public class IPTracker {
+public class IpTracker {
     private final String ipAddress;
     private final List<Long> timestamps;
     private final int bandTimeInMillis;
     private final int periodInMillis;
     private Long bandUntilTime;
 
-    public IPTracker(String ipAddress, long currentTimeInMillis, int periodInMillis, int bandTimeInMillis) {
+    public IpTracker(String ipAddress, long currentTimeInMillis, int periodInMillis, int bandTimeInMillis) {
         this.ipAddress = ipAddress;
         this.bandTimeInMillis = bandTimeInMillis;
         this.periodInMillis = periodInMillis;

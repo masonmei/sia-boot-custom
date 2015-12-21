@@ -7,7 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by mason on 11/16/15.
+ * Annotation the value should populate from header.
+ *
+ * @author mason
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

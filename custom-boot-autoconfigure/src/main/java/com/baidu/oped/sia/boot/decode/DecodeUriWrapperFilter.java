@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author mason
  */
-
 public class DecodeUriWrapperFilter extends OncePerRequestFilter {
     private static final Logger LOG = LoggerFactory.getLogger(DecodeUriWrapperFilter.class);
 

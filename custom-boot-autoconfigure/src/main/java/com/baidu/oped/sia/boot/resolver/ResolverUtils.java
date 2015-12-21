@@ -28,7 +28,7 @@ public abstract class ResolverUtils {
      *
      * @param clazz the given Resolvable class
      * @return the modifiable fields
-     * @throws SecurityException
+     * @throws SecurityException throw security exception if no privilege
      */
     public static <T> Field[] getDeclaredFields(Class<T> clazz) throws SecurityException {
         Assert.isAssignable(Resolvable.class, clazz, "Only support sub class of Resolvable");

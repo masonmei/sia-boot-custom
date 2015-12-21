@@ -18,21 +18,28 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
 /**
- * Created by mason on 10/29/15.
+ * Quota Auto Configuration.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnClass({Servlet.class, Filter.class})
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = LIMIT_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableConfigurationProperties(LimiterProperties.class)
 public class LimiterAutoConfiguration {
 
     @Autowired
     private LimiterProperties properties;
 
+    /**
+     * Define quota filter.
+     *
+     * @return Filter Registration Bean with quota filter
+     */
     @Bean
     public FilterRegistrationBean ipListFilterRegistrationBean() {
         SimpleLimiterFilter filter = new SimpleLimiterFilter(buildLimiterConfig());

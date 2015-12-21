@@ -18,7 +18,7 @@ class PathRewriteRequestWrapper extends HttpServletRequestWrapper {
     private final String servletPath;
 
     /**
-     * Path rewrite request wrapper
+     * Path rewrite request wrapper.
      *
      * @param request request to wrap
      * @param rewrite rewrite uri

@@ -54,6 +54,13 @@ public class ProfilingAspect {
     public void controller() {
     }
 
+    /**
+     * Define the profiling methods to public and controller method.
+     *
+     * @param joinPoint joinPoint
+     * @return the method processing result
+     * @throws Throwable throw exception if any abnormal case occurred.
+     */
     @Around("(publicMethod() && annotatedProfiling()) || controller()")
     public Object profiling(ProceedingJoinPoint joinPoint) throws Throwable {
         StopWatch stopWatch = new StopWatch();
