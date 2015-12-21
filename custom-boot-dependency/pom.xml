@@ -6,14 +6,12 @@
 
     <parent>
         <groupId>com.baidu.oped.sia.boot</groupId>
-        <artifactId>sia-boot-custom</artifactId>
-        <version>0.0.2.SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <artifactId>boot-custom</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
-
     <artifactId>custom-boot-dependency</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.2.SNAPSHOT</version>
 
     <properties>
         <java.version>1.8</java.version>
