@@ -118,7 +118,7 @@ generateProject() {
 
     if [ -d ${project_name}/src/test/java/com/baidu/oped/sia/business/ ];
         then
-        mv ${project_name}/src/test/java/com/baidu/oped/sia/business/* ${project_name}/test/main/java/${package_path}
+        mv ${project_name}/src/test/java/com/baidu/oped/sia/business/* ${project_name}/src/test/java/${package_path}
         removeEmptyDirectory ${project_name}/src/test/java/com/baidu/oped/sia/business/
     fi
 
