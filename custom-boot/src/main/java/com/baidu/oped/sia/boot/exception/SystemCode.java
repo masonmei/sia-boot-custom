@@ -23,11 +23,10 @@ public enum SystemCode {
     RESOURCE_NOT_EXIST(10, HttpStatus.NOT_FOUND),
     INCORRECT_CONFIGURATION(11, HttpStatus.INTERNAL_SERVER_ERROR);
 
-    private static Map<Integer, SystemCode> hash = new HashMap<>();
     private final int value;
-    private final HttpStatus statusCode;
+    private final HttpStatus[] statusCode;
 
-    SystemCode(int value, HttpStatus statusCode) {
+    SystemCode(int value, HttpStatus... statusCode) {
         this.value = value;
         this.statusCode = statusCode;
     }
@@ -36,7 +35,7 @@ public enum SystemCode {
         return value;
     }
 
-    public HttpStatus getStatusCode() {
+    public HttpStatus[] getStatusCode() {
         return statusCode;
     }
 

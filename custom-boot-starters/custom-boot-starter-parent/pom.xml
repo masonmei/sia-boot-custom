@@ -12,5 +12,9 @@
 
     <artifactId>custom-boot-starter-parent</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>custom-boot-starter-web-parent</module>
+        <module>custom-boot-starter-non-web-parent</module>
+    </modules>
 
 </project>

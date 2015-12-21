@@ -149,6 +149,21 @@
                 <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
+                <groupId>com.baidu.oped.sia.boot</groupId>
+                <artifactId>custom-boot-starter-parent</artifactId>
+                <version>0.0.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baidu.oped.sia.boot</groupId>
+                <artifactId>custom-boot-starter-web-parent</artifactId>
+                <version>0.0.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baidu.oped.sia.boot</groupId>
+                <artifactId>custom-boot-starter-non-web-parent</artifactId>
+                <version>0.0.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${springfox.version}</version>
