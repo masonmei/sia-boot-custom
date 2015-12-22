@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.boot.autoconfigure.web.WebMvcProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -31,13 +35,19 @@ import java.util.Set;
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(SpringFoxProperties.class)
 @ConditionalOnProperty(prefix = SPRING_FOX_PREFIX,
-        name = ENABLED,
-        havingValue = "true",
-        matchIfMissing = false)
+                       name = ENABLED,
+                       havingValue = "true",
+                       matchIfMissing = false)
 @EnableSwagger2
-public class SpringFoxAutoConfiguration {
+public class SpringFoxAutoConfiguration extends WebMvcConfigurerAdapter {
     @Autowired
     private SpringFoxProperties properties;
+
+    @Autowired
+    private WebMvcProperties webMvcProperties;
+
+    @Autowired
+    private ResourceProperties resourceProperties;
 
     /**
      * Api Docket Bean.
@@ -72,5 +82,15 @@ public class SpringFoxAutoConfiguration {
             predicates.add(ant);
         }
         return Predicates.or(predicates);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        final String prefixWebJarsPattern = webMvcProperties.getStaticPathPattern() + "/webjars/**";
+        if (!registry.hasMappingForPattern(prefixWebJarsPattern)) {
+            registry.addResourceHandler(prefixWebJarsPattern)
+                    .addResourceLocations(new String[]{"classpath:/META-INF/resources/webjars/"})
+                    .setCachePeriod(resourceProperties.getCachePeriod());
+        }
     }
 }
