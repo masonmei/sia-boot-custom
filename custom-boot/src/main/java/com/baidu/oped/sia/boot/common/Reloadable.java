@@ -1,7 +1,21 @@
 package com.baidu.oped.sia.boot.common;
 
 /**
- * Created by mason on 12/22/15.
+ * Reload the config properties.
+ *
+ * @author mason
  */
-public interface Reloadable {
+public interface Reloadable<T extends ConfigProperties> {
+
+    /**
+     * Reload the reload object.
+     */
+    void reload();
+
+    /**
+     * Get the reload object.
+     *
+     * @return the reload object
+     */
+    T getReload();
 }

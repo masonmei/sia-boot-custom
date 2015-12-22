@@ -1,7 +1,11 @@
 package com.baidu.oped.sia.boot.common;
 
+import java.io.Serializable;
+
 /**
- * Created by mason on 12/22/15.
+ * Interface for organize the configuration properties.
+ *
+ * @author mason
  */
-public interface ConfigProperties {
+public interface ConfigProperties extends Serializable {
 }

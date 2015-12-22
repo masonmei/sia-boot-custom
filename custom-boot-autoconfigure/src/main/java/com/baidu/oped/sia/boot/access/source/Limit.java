@@ -14,8 +14,29 @@ public class Limit {
 
     private String[] paths = new String[0];
     private RequestMethod[] methods = new RequestMethod[0];
-    private List<ClientRange> clientRanges = new ArrayList<>();
+    private List<Range> ranges = new ArrayList<>();
 
+    public String[] getPaths() {
+        return paths;
+    }
 
+    public void setPaths(String[] paths) {
+        this.paths = paths;
+    }
 
+    public RequestMethod[] getMethods() {
+        return methods;
+    }
+
+    public void setMethods(RequestMethod[] methods) {
+        this.methods = methods;
+    }
+
+    public List<Range> getRanges() {
+        return ranges;
+    }
+
+    public void setRanges(List<Range> ranges) {
+        this.ranges = ranges;
+    }
 }

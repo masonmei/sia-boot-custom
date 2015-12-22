@@ -4,6 +4,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public abstract class ArrayUtils {
 
-    public static final List<Class<?>> WRAPPER_CLASS = Arrays.<Class<?>>asList(
+    public static final List<Class<?>> WRAPPER_CLASS = Collections.unmodifiableList(Arrays.asList(
             Boolean.class,
             Byte.class,
             Character.class,
@@ -22,7 +23,7 @@ public abstract class ArrayUtils {
             Long.class,
             Float.class,
             Double.class
-    );
+    ));
 
     /**
      * Convert String array to the primitive array.

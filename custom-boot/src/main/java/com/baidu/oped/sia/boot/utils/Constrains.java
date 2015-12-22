@@ -5,6 +5,8 @@ package com.baidu.oped.sia.boot.utils;
  */
 public abstract class Constrains {
 
+    public static final String CUSTOM_BOOT_RESOURCE_BUNDLE = "classpath:i18n/custom_boot_messages";
+
     public static final String AUTHORIZATION = "Authorization";
     public static final String USER = "currentUser";
     public static final String HOST = "host";

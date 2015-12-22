@@ -14,6 +14,8 @@ import java.util.List;
  * @author mason
  */
 public class Label implements ConfigProperties {
+    private static final long serialVersionUID = 1969886287494687135L;
+
     private List<String> blacks = new ArrayList<>();
     private List<String> whites = new ArrayList<>();
 
@@ -42,12 +44,16 @@ public class Label implements ConfigProperties {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Label label = (Label) o;
-        return Objects.equal(blacks, label.blacks) &&
-                Objects.equal(whites, label.whites);
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        Label label = (Label) other;
+        return Objects.equal(blacks, label.blacks)
+               && Objects.equal(whites, label.whites);
     }
 
     @Override

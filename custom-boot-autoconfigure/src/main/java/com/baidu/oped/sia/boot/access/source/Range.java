@@ -6,12 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Client Range.
+ * Client Source Range.
  *
  * @author mason
  */
 public class Range implements ConfigProperties {
-    private RangeType rangeType;
+    private static final long serialVersionUID = 4330895855668555732L;
+
+    private Type type;
     private List<String> ranges = new ArrayList<>();
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public List<String> getRanges() {
+        return ranges;
+    }
+
+    public void setRanges(List<String> ranges) {
+        this.ranges = ranges;
+    }
 }
