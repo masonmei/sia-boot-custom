@@ -1,5 +1,6 @@
 package com.baidu.oped.sia.boot.i18n;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.CUSTOM_BOOT_RESOURCE_BUNDLE;
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
 
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -103,7 +106,12 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename(properties.getMsgBaseName());
+        List<String> msgBaseNames = new ArrayList<>();
+        msgBaseNames.addAll(properties.getMsgBaseNames());
+        if (!msgBaseNames.contains(CUSTOM_BOOT_RESOURCE_BUNDLE)) {
+            msgBaseNames.add(CUSTOM_BOOT_RESOURCE_BUNDLE);
+        }
+        messageSource.setBasenames(msgBaseNames.toArray(new String[msgBaseNames.size()]));
         messageSource.setDefaultEncoding(DEFAULT_ENCODING);
         return messageSource;
     }

@@ -19,7 +19,9 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by mason on 12/2/15.
+ * Iam Auto Configuration.
+ *
+ * @author mason
  */
 @Configuration
 @ConditionalOnClass({IamClient.class, IamClientConfiguration.class})
@@ -29,6 +31,11 @@ public class IamAutoConfiguration {
     @Autowired
     private IamProperties properties;
 
+    /**
+     * Create iam access control bean.
+     *
+     * @return iam access control bean
+     */
     @Bean
     public IamAccessControl accessControl() {
         IamAccessControl accessControl = new IamAccessControl();
@@ -36,11 +43,16 @@ public class IamAutoConfiguration {
         return accessControl;
     }
 
+    /**
+     * Create an empty Iam Manager bean when iam not enabled.
+     *
+     * @return empty iam manager bean
+     */
     @Bean
     @ConditionalOnProperty(prefix = IAM_PREFIX,
-                           name = ENABLED,
-                           havingValue = "false",
-                           matchIfMissing = true)
+            name = ENABLED,
+            havingValue = "false",
+            matchIfMissing = true)
     public IamManager emptyIamManager() {
         return new IamManager() {
             @Override
@@ -67,6 +79,13 @@ public class IamAutoConfiguration {
         };
     }
 
+    /**
+     * Register Iam Authentication Filter.
+     *
+     * @param iamManager    iam manager
+     * @param accessControl access control.
+     * @return Filter Registration Bean with iam authentication filer
+     */
     @Bean
     public FilterRegistrationBean iamAuthenticationFilter(IamManager iamManager, IamAccessControl accessControl) {
         IamAuthenticationFilter filter = new IamAuthenticationFilter();
@@ -78,11 +97,16 @@ public class IamAutoConfiguration {
         return registrationBean;
     }
 
+    /**
+     * Create Default Iam manager bean.
+     *
+     * @return default iam manager
+     */
     @Bean
     @ConditionalOnProperty(prefix = IAM_PREFIX,
-                           name = ENABLED,
-                           havingValue = "true",
-                           matchIfMissing = false)
+            name = ENABLED,
+            havingValue = "true",
+            matchIfMissing = false)
     public IamManager iamManager() {
         DefaultIamManager iamManager = new DefaultIamManager();
         iamManager.setIamClient(iamClient());
@@ -90,7 +114,7 @@ public class IamAutoConfiguration {
         return iamManager;
     }
 
-    public IamClient iamClient() {
+    private IamClient iamClient() {
         if (properties.isEnabled()) {
             IamClientConfiguration configuration = new IamClientConfiguration();
             configuration.withHost(properties.getHost())

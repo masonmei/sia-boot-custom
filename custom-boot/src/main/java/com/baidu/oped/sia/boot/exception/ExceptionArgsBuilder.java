@@ -5,8 +5,10 @@ import static java.lang.String.format;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Exception Arguments builder.
@@ -33,10 +35,10 @@ public class ExceptionArgsBuilder {
      *
      * @param params the param to be join together
      * @param <T>    the Param type
-     *
      * @return the instance with new param added
      */
-    public <T> ExceptionArgsBuilder and(T... params) {
+    @SafeVarargs
+    public final <T> ExceptionArgsBuilder and(T... params) {
         this.params.add(join("and", params));
         return this;
     }
@@ -46,7 +48,6 @@ public class ExceptionArgsBuilder {
      *
      * @param params the param to be join together
      * @param <T>    the Param type
-     *
      * @return the instance with new param added
      */
     public <T> ExceptionArgsBuilder and(Collection<T> params) {
@@ -72,7 +73,6 @@ public class ExceptionArgsBuilder {
      *
      * @param params the param to be join together
      * @param <T>    the Param type
-     *
      * @return the instance with new param added
      */
     public <T> ExceptionArgsBuilder or(Collection<T> params) {
@@ -85,10 +85,10 @@ public class ExceptionArgsBuilder {
      *
      * @param params the param to be join together
      * @param <T>    the Param type
-     *
      * @return the instance with new param added
      */
-    public <T> ExceptionArgsBuilder or(T... params) {
+    @SafeVarargs
+    public final <T> ExceptionArgsBuilder or(T... params) {
         this.params.add(join("or", params));
         return this;
     }
@@ -99,7 +99,6 @@ public class ExceptionArgsBuilder {
      * @param from the region begin.
      * @param to   the region end
      * @param <T>  the Param type
-     *
      * @return the instance with new param added
      */
     public <T> ExceptionArgsBuilder range(T from, T to) {
@@ -121,13 +120,11 @@ public class ExceptionArgsBuilder {
      *
      * @param params the param to be join together
      * @param <T>    the Param type
-     *
      * @return the instance with new param added
      */
-    public <T> ExceptionArgsBuilder with(T... params) {
-        for (T param : params) {
-            this.params.add(param);
-        }
+    @SafeVarargs
+    public final <T> ExceptionArgsBuilder with(T... params) {
+        Collections.addAll(this.params, params);
         return this;
     }
 
@@ -136,13 +133,10 @@ public class ExceptionArgsBuilder {
      *
      * @param params the param to be join together
      * @param <T>    the Param type
-     *
      * @return the instance with new param added
      */
     public <T> ExceptionArgsBuilder with(List<T> params) {
-        for (T param : params) {
-            this.params.add(param);
-        }
+        this.params.addAll(params.stream().collect(Collectors.toList()));
         return this;
     }
 
@@ -152,10 +146,10 @@ public class ExceptionArgsBuilder {
      * @param decimeter the decimeter.
      * @param params    the params to join together
      * @param <T>       the param type
-     *
      * @return the joined result
      */
-    protected <T> String join(String decimeter, T... params) {
+    @SafeVarargs
+    protected final <T> String join(String decimeter, T... params) {
         if (params == null || params.length == 0) {
             return "";
         } else {
@@ -175,7 +169,6 @@ public class ExceptionArgsBuilder {
      * @param decimeter the decimeter.
      * @param params    the params to join together
      * @param <T>       the param type
-     *
      * @return the joined result
      */
     protected <T> String join(String decimeter, Collection<T> params) {

@@ -16,5 +16,10 @@ import java.lang.annotation.Target;
 @Documented
 public @interface FromQuery {
 
+    /**
+     * Query field name.
+     *
+     * @return field name
+     */
     String name() default "";
 }

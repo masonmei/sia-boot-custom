@@ -37,8 +37,8 @@ public class IpFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String ip = request.getRemoteAddr();
         LOG.debug("filter request: {} from {} with IpFilter", request.getRequestURI(), ip);
-        List<String> blackSet = fileWatcher.getHolder().getDeny();
-        List<String> whiteSet = fileWatcher.getHolder().getAllow();
+        List<String> blackSet = fileWatcher.getHolder().getContext().getDeny();
+        List<String> whiteSet = fileWatcher.getHolder().getContext().getAllow();
 
         if (blackSet != null) {
             for (String blackRange : blackSet) {

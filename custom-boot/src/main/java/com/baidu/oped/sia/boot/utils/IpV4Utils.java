@@ -34,19 +34,19 @@ public abstract class IpV4Utils {
      * Check if the client ip in the given ip range.
      *
      * @param ipOrRange the checking range
-     * @param clientIP  the client ip
+     * @param clientIp  the client ip
      * @return checking result
      */
-    public static boolean isInRange(String ipOrRange, String clientIP) {
+    public static boolean isInRange(String ipOrRange, String clientIp) {
         int indexOfSlash = ipOrRange.indexOf("/");
         if (indexOfSlash < 0) {
-            return ipOrRange.equals(clientIP);
+            return ipOrRange.equals(clientIp);
         } else {
             String[] split = ipOrRange.split("/", 2);
             Assert.state(split.length == 2, "Invalid ip range configuration");
             long checker = ipToLong(split[0]);
             long range = 32 - Long.parseLong(split[1]);
-            long clientIpInLong = ipToLong(clientIP);
+            long clientIpInLong = ipToLong(clientIp);
             return (checker >> range) == (clientIpInLong >> range);
         }
 

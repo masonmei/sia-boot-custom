@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Created by mason on 11/10/15.
+ * Ip Tracker.
+ *
+ * @author mason
  */
 public class IpTracker {
     private final String ipAddress;
@@ -14,6 +16,14 @@ public class IpTracker {
     private final int periodInMillis;
     private Long bandUntilTime;
 
+    /**
+     * Default constructor.
+     *
+     * @param ipAddress           remote ip address
+     * @param currentTimeInMillis current time
+     * @param periodInMillis      period length
+     * @param bandTimeInMillis    band time
+     */
     public IpTracker(String ipAddress, long currentTimeInMillis, int periodInMillis, int bandTimeInMillis) {
         this.ipAddress = ipAddress;
         this.bandTimeInMillis = bandTimeInMillis;
@@ -41,6 +51,13 @@ public class IpTracker {
         }
     }
 
+    /**
+     * Check meet the period limitation.
+     *
+     * @param maxRequestsPerPeriod period limitation
+     * @param currentTimeInMillis  current time
+     * @return check result
+     */
     public boolean hasReachedLimit(int maxRequestsPerPeriod, long currentTimeInMillis) {
         if (currentTimeInMillis < bandUntilTime) {
             return true;

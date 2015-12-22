@@ -96,34 +96,34 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
                 LOG.info("{} not found in header, generate traceId: {} ", traceHeaderName, requestId);
             }
             RequestInfoHolder.setTraceId(requestId);
-            response.addHeader(traceHeaderName, requestId);
+            response.setHeader(traceHeaderName, requestId);
             MDC.put("requestId", requestId);
         }
 
         if (null == RequestInfoHolder.traceTimestamp()) {
-            String currentTimeInMillis = request.getHeader(traceTimestampHeaderName);
-            if (currentTimeInMillis == null) {
-                currentTimeInMillis = format("%d", Calendar.getInstance().getTimeInMillis());
+            long currentTimeInMillis = request.getDateHeader(traceTimestampHeaderName);
+            if (currentTimeInMillis <= 0) {
+                currentTimeInMillis = Calendar.getInstance().getTimeInMillis();
                 RequestInfoHolder.setTraceTimestamp(currentTimeInMillis);
                 LOG.info("{} not found in header, generate traceStartTimestamp: {}",
                         traceTimestampHeaderName, currentTimeInMillis);
             }
-            response.addHeader(traceTimestampHeaderName, currentTimeInMillis);
-            MDC.put("traceTimestamp", currentTimeInMillis);
+            response.setDateHeader(traceTimestampHeaderName, currentTimeInMillis);
+            MDC.put("traceTimestamp", format("%d", currentTimeInMillis));
         }
 
         if (null == RequestInfoHolder.traceSourceIp()) {
             String sourceIp = request.getRemoteAddr();
 
             RequestInfoHolder.setTraceSourceIp(sourceIp);
-            response.addHeader(traceSourceIpHeaderName, sourceIp);
+            response.setHeader(traceSourceIpHeaderName, sourceIp);
             MDC.put("traceSourceIp", sourceIp);
         }
 
         if (null == RequestInfoHolder.traceSequence()) {
             int sequence = request.getIntHeader(traceSourceSeqHeaderName);
             RequestInfoHolder.setTraceSequence(sequence);
-            response.addIntHeader(traceTimestampHeaderName, sequence);
+            response.setIntHeader(traceTimestampHeaderName, sequence);
             MDC.put("traceSourceSeq", format("%d", sequence));
         }
 
@@ -141,18 +141,18 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
         String responseTraceTimestamp = response.getHeader(traceTimestampHeaderName);
 
         String threadTraceId = RequestInfoHolder.traceId();
-        String threadTraceTimestamp = RequestInfoHolder.traceTimestamp();
+        Long threadTraceTimestamp = RequestInfoHolder.traceTimestamp();
 
         if (!threadTraceId.equals(responseTraceId)) {
             LOG.error("traceId changed, traceId: {}, responseTraceId: {}", threadTraceId, responseTraceId);
         }
         response.setHeader(traceHeaderName, threadTraceId);
 
-        if (!threadTraceTimestamp.equals(responseTraceTimestamp)) {
+        if (!format("%s", threadTraceTimestamp).equals(responseTraceTimestamp)) {
             LOG.error("traceTimestamp changed, traceTimestamp: {}, responseTimestamp: {}",
                     threadTraceTimestamp, responseTraceTimestamp);
         }
-        response.setHeader(traceTimestampHeaderName, threadTraceTimestamp);
+        response.setDateHeader(traceTimestampHeaderName, threadTraceTimestamp);
 
         long timeUsed = Calendar.getInstance().getTimeInMillis() - Long.parseLong(responseTraceTimestamp);
         LOG.info("request afterCompletion, method: {}, url: {}, status: {}, time: {}ms", request.getMethod(),

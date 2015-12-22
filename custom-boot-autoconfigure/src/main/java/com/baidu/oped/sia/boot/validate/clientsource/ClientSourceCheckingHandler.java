@@ -9,7 +9,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Client Source Checking handler
+ * Client Source Checking handler.
  *
  * @author mason
  */

@@ -13,7 +13,7 @@ public class RequestInfoHolder {
     private static final ThreadLocal<Boolean> IGNORE_AUTH = new ThreadLocal<>();
 
     private static final ThreadLocal<String> TRACE_ID = new NamedInheritableThreadLocal<>("Trace Id");
-    private static final ThreadLocal<String> TRACE_TIMESTAMP = new NamedInheritableThreadLocal<>("Trace timestamp");
+    private static final ThreadLocal<Long> TRACE_TIMESTAMP = new NamedInheritableThreadLocal<>("Trace timestamp");
     private static final ThreadLocal<String> TRACE_SOURCE_IP = new NamedInheritableThreadLocal<>("Trace Source IP");
     private static final ThreadLocal<Integer> TRACE_SEQUENCE = new NamedInheritableThreadLocal<>("Trace Sequence");
 
@@ -83,7 +83,7 @@ public class RequestInfoHolder {
         TRACE_SOURCE_IP.set(traceSourceIp);
     }
 
-    public static void setTraceTimestamp(String traceTimestamp) {
+    public static void setTraceTimestamp(Long traceTimestamp) {
         TRACE_TIMESTAMP.set(traceTimestamp);
     }
 
@@ -99,7 +99,7 @@ public class RequestInfoHolder {
         return TRACE_SOURCE_IP.get();
     }
 
-    public static String traceTimestamp() {
+    public static Long traceTimestamp() {
         return TRACE_TIMESTAMP.get();
     }
 

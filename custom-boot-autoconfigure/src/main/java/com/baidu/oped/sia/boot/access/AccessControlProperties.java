@@ -1,13 +1,15 @@
 package com.baidu.oped.sia.boot.access;
 
+import com.baidu.oped.sia.boot.common.ConfigProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mason on 12/14/15.
+ * Access Control Configuration Properties.
+ *
+ * @author mason
  */
-public class AccessControlProperties {
-    private List<String> blackLabels = new ArrayList<>();
-    private List<String> whiteLabels = new ArrayList<>();
-    private Quota quota = new Quota();
+public class AccessControlProperties implements ConfigProperties {
+    private static final long serialVersionUID = -4037390803151204757L;
 }

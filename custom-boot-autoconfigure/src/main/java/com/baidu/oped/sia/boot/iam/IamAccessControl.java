@@ -17,7 +17,7 @@ public class IamAccessControl {
     private List<String> ignoredUrls = new ArrayList<>();
 
     /**
-     * Check if the given url should be process
+     * Check if the given url should be process.
      *
      * @param url the target checking url
      * @return the check result.
@@ -57,6 +57,11 @@ public class IamAccessControl {
         return urlPattern.equals(url);
     }
 
+    /**
+     * Set ignored url paths.
+     *
+     * @param ignoredUrls ignored url paths
+     */
     public void setIgnoredUrls(List<String> ignoredUrls) {
         if (ignoredUrls != null) {
             this.ignoredUrls.clear();

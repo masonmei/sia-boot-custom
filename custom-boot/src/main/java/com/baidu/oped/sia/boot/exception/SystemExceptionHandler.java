@@ -2,9 +2,13 @@ package com.baidu.oped.sia.boot.exception;
 
 
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INTERNAL_SYS_ERROR;
+import static com.baidu.oped.sia.boot.exception.SystemCode.INTERNAL_ERROR;
+import static com.baidu.oped.sia.boot.utils.RequestUtils.getTraceId;
+import static com.baidu.oped.sia.boot.utils.RequestUtils.getTraceSourceIp;
+import static com.baidu.oped.sia.boot.utils.RequestUtils.getTraceSourceSeq;
+import static com.baidu.oped.sia.boot.utils.RequestUtils.getTraceStartTime;
 
 import com.baidu.oped.sia.boot.common.BasicResponse;
-import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,29 +44,56 @@ public class SystemExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(SystemException.class)
     public ResponseEntity<BasicResponse> handleSystemException(SystemException exception) {
         LOG.warn("SystemException handled", exception);
-        SystemCode code = exception.getCode();
-        BasicResponse error = new BasicResponse();
-        String requestId = getRequestId();
-        error.setRequestId(requestId);
-        error.setCode(code);
-        error.setMessage(getLocalMessage(exception.getMessage()));
-        LOG.info("[exception] {}", error.getCode());
-        if (code == SystemCode.INTERNAL_ERROR) {
-            return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        final String localMessage = getLocalMessage(exception.getMessage());
+        final SystemCode systemCode = exception.getCode();
+        BasicResponse.Builder builder = generalResponseBuilder()
+                .code(systemCode).message(localMessage);
+        LOG.info("[exception] {}, error Message: {}", systemCode, localMessage);
+
+        if (systemCode == INTERNAL_ERROR) {
+            return new ResponseEntity<>(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        if (code == SystemCode.INVALID_PARAMETER || code == SystemCode.INVALID_PARAMETER_VALUE
-                || code == SystemCode.EXCEED_MAX_RETURN_DATA_POINTS
-                || code == SystemCode.EXCEED_MAX_QUERY_DATA_POINTS) {
-            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        if (systemCode == SystemCode.INVALID_PARAMETER || systemCode == SystemCode.INVALID_PARAMETER_VALUE
+                || systemCode == SystemCode.EXCEED_MAX_RETURN_DATA_POINTS
+                || systemCode == SystemCode.EXCEED_MAX_QUERY_DATA_POINTS) {
+            return new ResponseEntity<>(builder.build(), HttpStatus.BAD_REQUEST);
         }
-        if (code == SystemCode.AUTHENTICATION_ERROR || code == SystemCode.AUTHORIZATION_ERROR) {
-            return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+
+        if (systemCode == SystemCode.AUTHENTICATION_ERROR || systemCode == SystemCode.AUTHORIZATION_ERROR) {
+            return new ResponseEntity<>(builder.build(), HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return new ResponseEntity<>(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private static String getRequestId() {
-        return RequestInfoHolder.traceId();
+    /**
+     * Handle All the exceptions to Server Error.
+     *
+     * @param exception un-category exception.
+     * @return Response Entity.
+     */
+    @ExceptionHandler({Exception.class, Throwable.class})
+    public ResponseEntity<BasicResponse> handleException(Exception exception) {
+        LOG.error("Exception handled", exception);
+        final String localMessage = getLocalMessage(INTERNAL_SYS_ERROR);
+        final SystemCode systemCode = INTERNAL_ERROR;
+        BasicResponse.Builder builder = generalResponseBuilder()
+                .code(systemCode).message(localMessage);
+        LOG.info("[exception] {}, error Message: {}", systemCode, localMessage);
+        return new ResponseEntity<>(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
+                                                             HttpStatus status, WebRequest request) {
+        LOG.error("Exception handled", ex);
+        final SystemCode systemCode = INTERNAL_ERROR;
+        final String localMessage = getLocalMessage(INTERNAL_SYS_ERROR);
+        BasicResponse.Builder builder = generalResponseBuilder()
+                .code(systemCode).message(localMessage);
+        LOG.info("[exception] {}, error Message: {}", systemCode, localMessage);
+
+        return new ResponseEntity<>(builder.build(), headers, status);
     }
 
     private static String getLocalMessage(String key) {
@@ -76,31 +107,10 @@ public class SystemExceptionHandler extends ResponseEntityExceptionHandler {
         return requestContext.getMessage(key, args);
     }
 
-    /**
-     * Handle All the exceptions to Server Error.
-     *
-     * @param exception un-category exception.
-     * @return Response Entity.
-     */
-    @ExceptionHandler({Exception.class, Throwable.class})
-    public ResponseEntity<BasicResponse> handleException(Exception exception) {
-        LOG.error("Exception handled", exception);
-        BasicResponse error = new BasicResponse();
-        String requestId = getRequestId();
-        error.setRequestId(requestId);
-        error.setCode(SystemCode.INTERNAL_ERROR);
-        error.setMessage(getLocalMessage(INTERNAL_SYS_ERROR));
-        LOG.info("[exception] {}", error.getCode());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-                                                             HttpStatus status, WebRequest request) {
-        BasicResponse error = new BasicResponse();
-        String requestId = getRequestId();
-        error.setRequestId(requestId);
-
-        return new ResponseEntity<Object>(error, headers, status);
+    private BasicResponse.Builder generalResponseBuilder() {
+        return BasicResponse.builder().requestId(getTraceId())
+                .traceStartTime(getTraceStartTime())
+                .traceSourceIp(getTraceSourceIp())
+                .traceSourceSeq(getTraceSourceSeq());
     }
 }

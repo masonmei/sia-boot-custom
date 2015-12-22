@@ -1,5 +1,7 @@
 package com.baidu.oped.sia.boot.exception;
 
+import java.util.Arrays;
+
 /**
  * Base Exception of all the runtime Exceptions.
  *
@@ -8,10 +10,10 @@ package com.baidu.oped.sia.boot.exception;
 public abstract class SystemException extends RuntimeException {
 
     private final SystemCode code;
-    private Object[] args;
+    private final Object[] args;
 
     public SystemException(SystemCode code, String message) {
-        this(code, message, null);
+        this(code, message, new Object[0]);
     }
 
     /**
@@ -24,15 +26,14 @@ public abstract class SystemException extends RuntimeException {
     public SystemException(SystemCode code, String message, Object[] args) {
         super(message);
         this.code = code;
-        this.args = args;
+        if (args == null) {
+            args = new Object[0];
+        }
+        this.args = Arrays.copyOf(args, args.length);
     }
 
     public Object[] getArgs() {
-        return args;
-    }
-
-    public void setArgs(Object[] args) {
-        this.args = args;
+        return Arrays.copyOf(args, args.length);
     }
 
     public SystemCode getCode() {

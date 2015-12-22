@@ -2,8 +2,7 @@ package com.baidu.oped.sia.boot.exception;
 
 import org.springframework.http.HttpStatus;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 /**
  * Categories of system process result.
@@ -11,7 +10,7 @@ import java.util.Map;
  * @author mason
  */
 public enum SystemCode {
-    OK(1, HttpStatus.OK),
+    OK(1, HttpStatus.OK, HttpStatus.CREATED, HttpStatus.ACCEPTED, HttpStatus.NO_CONTENT),
     INVALID_PARAMETER(2, HttpStatus.BAD_REQUEST),
     INVALID_PARAMETER_VALUE(3, HttpStatus.BAD_REQUEST),
     INTERNAL_ERROR(4, HttpStatus.INTERNAL_SERVER_ERROR),
@@ -36,7 +35,7 @@ public enum SystemCode {
     }
 
     public HttpStatus[] getStatusCode() {
-        return statusCode;
+        return Arrays.copyOf(statusCode, statusCode.length);
     }
 
     @Override

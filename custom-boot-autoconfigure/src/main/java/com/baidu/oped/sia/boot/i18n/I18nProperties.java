@@ -5,6 +5,10 @@ import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
 import com.google.common.base.MoreObjects;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * I18n Auto configuration properties.
  *
@@ -12,12 +16,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = I18N_PREFIX)
 public class I18nProperties {
-    private static final String DEFAULT_I18N_MSG_BASE_NAME = "classpath:/i18n/messages";
+    private static final List<String> DEFAULT_I18N_MSG_BASE_NAME = Arrays.asList("classpath:/i18n/messages");
     private static final String DEFAULT_LOCALE_PARAM = "locale";
     private static final String DEFAULT_LOCALE = "en";
 
     private boolean enabled = false;
-    private String msgBaseName = DEFAULT_I18N_MSG_BASE_NAME;
+    private List<String> msgBaseNames = DEFAULT_I18N_MSG_BASE_NAME;
     private String localParam = DEFAULT_LOCALE_PARAM;
     private String defaultLocale = DEFAULT_LOCALE;
 
@@ -49,12 +53,12 @@ public class I18nProperties {
         this.localParam = localParam;
     }
 
-    public String getMsgBaseName() {
-        return msgBaseName;
+    public List<String> getMsgBaseNames() {
+        return msgBaseNames;
     }
 
-    public void setMsgBaseName(String msgBaseName) {
-        this.msgBaseName = msgBaseName;
+    public void setMsgBaseNames(List<String> msgBaseNames) {
+        this.msgBaseNames = msgBaseNames;
     }
 
     public ResolverType getResolverType() {

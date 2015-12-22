@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * HttpServlet Request Uri decode support Filter
+ * HttpServlet Request Uri decode support Filter.
  *
  * @author mason
  */

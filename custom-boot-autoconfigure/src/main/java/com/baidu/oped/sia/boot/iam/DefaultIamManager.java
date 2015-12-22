@@ -94,7 +94,7 @@ public class DefaultIamManager implements IamManager {
     @Override
     public String getUserFromIam(HttpServletRequest servletRequest) {
 
-        String requestURI = servletRequest.getRequestURI();
+        String requestUri = servletRequest.getRequestURI();
 
         String authorization = servletRequest.getHeader(AUTHORIZATION);
         SignatureAuthentication.Request userRequest = buildSignatureAuthenticationRequest(servletRequest);
@@ -105,10 +105,10 @@ public class DefaultIamManager implements IamManager {
             SignatureAuthentication sigAuth = new SignatureAuthentication(authorization, userRequest);
             Token token = iamClient.authenticate(sigAuth);
             String userId = token.getUser().getId();
-            LOG.info("iam authenticate success,url:{},token:{}", requestURI, userId);
+            LOG.info("iam authenticate success,url:{},token:{}", requestUri, userId);
             return userId;
         } catch (IamException ex) {
-            LOG.warn("iam authenticate fail,url:{},errorCode:{},errorMsg:{}", requestURI, ex.getErrorCode(),
+            LOG.warn("iam authenticate fail,url:{},errorCode:{},errorMsg:{}", requestUri, ex.getErrorCode(),
                     ex.getErrMsg());
             return null;
         }
@@ -168,6 +168,11 @@ public class DefaultIamManager implements IamManager {
         this.iamClient = iamClient;
     }
 
+    /**
+     * Set the Service Accounts to Iam Manager.
+     *
+     * @param serviceAccounts service accounts
+     */
     public void setServiceAccounts(List<IamProperties.ServiceAccount> serviceAccounts) {
         this.serviceAccountMap.clear();
         for (IamProperties.ServiceAccount serviceAccount : serviceAccounts) {

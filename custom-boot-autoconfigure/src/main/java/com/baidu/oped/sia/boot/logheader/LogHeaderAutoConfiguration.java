@@ -1,6 +1,3 @@
-/*
- * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
- */
 package com.baidu.oped.sia.boot.logheader;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
@@ -25,9 +22,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnProperty(prefix = LOG_HEADER_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableConfigurationProperties(LogHeaderProperties.class)
 @ConditionalOnWebApplication
 public class LogHeaderAutoConfiguration {
@@ -36,6 +33,11 @@ public class LogHeaderAutoConfiguration {
     @Autowired
     private LogHeaderProperties properties;
 
+    /**
+     * Log Header registration bean filer.
+     *
+     * @return log header registration bean
+     */
     @Bean
     public FilterRegistrationBean statisticsCollectingFilter() {
         LOG.info("register log header filter");

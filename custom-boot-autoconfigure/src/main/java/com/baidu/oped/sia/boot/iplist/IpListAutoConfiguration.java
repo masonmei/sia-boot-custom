@@ -30,9 +30,9 @@ import javax.servlet.Servlet;
 @ConditionalOnClass({Servlet.class, Filter.class})
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = IP_PERMISSION_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableConfigurationProperties(IpListProperties.class)
 public class IpListAutoConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(IpListAutoConfiguration.class);
@@ -40,6 +40,11 @@ public class IpListAutoConfiguration {
     @Autowired
     private IpListProperties ipListProperties;
 
+    /**
+     * Register Ip List filer bean.
+     *
+     * @return Filter registration bean with ip list filter
+     */
     @Bean
     public FilterRegistrationBean ipListFilterRegistrationBean() {
         LOG.info("register ipList filter.");

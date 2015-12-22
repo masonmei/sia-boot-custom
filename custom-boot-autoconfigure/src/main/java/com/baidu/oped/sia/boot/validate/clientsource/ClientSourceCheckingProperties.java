@@ -1,6 +1,3 @@
-/*
- * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
- */
 package com.baidu.oped.sia.boot.validate.clientsource;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.VALIDATE_PREFIX;

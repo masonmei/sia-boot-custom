@@ -16,5 +16,10 @@ import java.lang.annotation.Target;
 @Documented
 public @interface FromHeader {
 
+    /**
+     * header name.
+     *
+     * @return annotated filed name
+     */
     String name() default "";
 }

@@ -13,7 +13,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.concurrent.TimeUnit;
@@ -22,17 +21,15 @@ import java.util.concurrent.TimeUnit;
  * Watch file for content changing and convert the file to POJO object.
  *
  * @param <T> The POJO Object from configuration file.
- *
  * @author mason
  */
 public class FileWatcher<T> {
     private static final Logger LOG = LoggerFactory.getLogger(FileWatcher.class);
 
-    private final int refreshIntervalInSecond;
+    private final int refreshInterval;
     private final File configFile;
-
     private final Class<T> contentType;
-    private T holder;
+    private DelegateHolder<T> holder;
     private boolean stop = false;
 
     public FileWatcher(File configFile, Class<T> type) {
@@ -42,12 +39,12 @@ public class FileWatcher<T> {
     /**
      * Construct a file watcher and convert to given type instance in the specified period.
      *
-     * @param refreshIntervalInSecond reload interval
-     * @param configFile              reloadable configuration file
-     * @param type                    the configuration instance type
+     * @param refreshInterval reload interval
+     * @param configFile      reloadable configuration file
+     * @param type            the configuration instance type
      */
-    public FileWatcher(int refreshIntervalInSecond, File configFile, Class<T> type) {
-        Assert.state(refreshIntervalInSecond > 0, "The minimum refresh interval is 1 second");
+    public FileWatcher(int refreshInterval, File configFile, Class<T> type) {
+        Assert.state(refreshInterval > 0, "The minimum refresh interval is 1 second");
         Assert.notNull(configFile, "Configuration File must not be null.");
         Assert.notNull(type, "Content type must null be null.");
 
@@ -66,21 +63,22 @@ public class FileWatcher<T> {
             throw new IllegalArgumentException("Configuration File cannot be read.");
         }
 
-        this.refreshIntervalInSecond = refreshIntervalInSecond;
+        this.refreshInterval = refreshInterval;
         this.configFile = configFile;
         this.contentType = type;
 
-        loadingProperties();
+        load();
         watchingForChanges();
         registerShutDownHook();
     }
 
-    private void loadingProperties() {
+    private void load() {
         LOG.debug("start to load properties with path {}", configFile.getName());
 
         try (InputStream inputStream = new FileInputStream(configFile)) {
             Yaml yaml = new Yaml();
-            holder = yaml.loadAs(inputStream, contentType);
+            T context = yaml.loadAs(inputStream, contentType);
+            holder.setContext(context);
         } catch (IOException e) {
             LOG.warn("Cannot reading configurations");
         }
@@ -89,45 +87,38 @@ public class FileWatcher<T> {
     }
 
     private void watchingForChanges() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    final Path parentPath = Paths.get(configFile.getParent());
-                    final WatchService watchService = FileSystems.getDefault().newWatchService();
-                    parentPath.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
+        new Thread(() -> {
+            try {
+                final Path parentPath = Paths.get(configFile.getParent());
+                final WatchService watchService = FileSystems.getDefault().newWatchService();
+                parentPath.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
 
-                    while (!stop) {
-                        final WatchKey watchKey = watchService.poll(refreshIntervalInSecond, TimeUnit.SECONDS);
-                        if (watchKey != null) {
-                            for (WatchEvent<?> event : watchKey.pollEvents()) {
-                                if (configFile.getName().equals(event.context().toString())) {
+                while (!stop) {
+                    final WatchKey watchKey = watchService.poll(refreshInterval, TimeUnit.SECONDS);
+                    if (watchKey != null) {
+                        watchKey.pollEvents().stream()
+                                .filter(event -> configFile.getName().equals(event.context().toString()))
+                                .forEach(event -> {
                                     LOG.debug("Start to loading properties changes.");
-                                    loadingProperties();
+                                    load();
                                     LOG.debug("Finish to load properties changes.");
-                                }
-                            }
-                        }
+                                });
                     }
-
-                } catch (IOException | InterruptedException e) {
-                    LOG.warn("Watching file failed or reloading failed");
                 }
+            } catch (IOException | InterruptedException e) {
+                LOG.warn("Watching file failed or reloading failed");
             }
         }).start();
     }
 
     private void registerShutDownHook() {
         Runtime.getRuntime()
-                .addShutdownHook(new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        stop = true;
-                    }
+                .addShutdownHook(new Thread(() -> {
+                    stop = true;
                 }));
     }
 
-    public T getHolder() {
+    public DelegateHolder<T> getHolder() {
         return holder;
     }
 

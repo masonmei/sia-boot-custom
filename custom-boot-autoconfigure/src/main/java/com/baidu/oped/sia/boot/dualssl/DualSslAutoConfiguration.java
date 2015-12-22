@@ -30,9 +30,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @Configuration
 @ConditionalOnProperty(prefix = SSL_DUAL_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableConfigurationProperties(DualSslProperties.class)
 public class DualSslAutoConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(DualSslAutoConfiguration.class);
@@ -40,42 +40,44 @@ public class DualSslAutoConfiguration {
     @Autowired
     private DualSslProperties properties;
 
+    /**
+     * Customize the embedded servlet container.
+     *
+     * @return customizer
+     */
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         LOG.info("enable dual ssl port.");
-        return new EmbeddedServletContainerCustomizer() {
-            @Override
-            public void customize(ConfigurableEmbeddedServletContainer container) {
-                if (container instanceof TomcatEmbeddedServletContainerFactory) {
-                    TomcatEmbeddedServletContainerFactory factory = (TomcatEmbeddedServletContainerFactory) container;
+        return container -> {
+            if (container instanceof TomcatEmbeddedServletContainerFactory) {
+                TomcatEmbeddedServletContainerFactory factory = (TomcatEmbeddedServletContainerFactory) container;
 
-                    Connector connector = new Connector(TomcatEmbeddedServletContainerFactory.DEFAULT_PROTOCOL);
-                    connector.setPort(properties.getHttpPort());
-                    factory.addAdditionalTomcatConnectors(connector);
-                }
+                Connector connector = new Connector(TomcatEmbeddedServletContainerFactory.DEFAULT_PROTOCOL);
+                connector.setPort(properties.getHttpPort());
+                factory.addAdditionalTomcatConnectors(connector);
+            }
 
-                if (container instanceof JettyEmbeddedServletContainerFactory) {
-                    JettyEmbeddedServletContainerFactory factory = (JettyEmbeddedServletContainerFactory) container;
-                    factory.addServerCustomizers(new JettyServerCustomizer() {
-                        @Override
-                        public void customize(org.eclipse.jetty.server.Server server) {
-                            NetworkTrafficServerConnector connector = new NetworkTrafficServerConnector(server);
-                            connector.setPort(properties.getHttpPort());
-                            server.addConnector(connector);
-                        }
-                    });
-                }
+            if (container instanceof JettyEmbeddedServletContainerFactory) {
+                JettyEmbeddedServletContainerFactory factory = (JettyEmbeddedServletContainerFactory) container;
+                factory.addServerCustomizers(new JettyServerCustomizer() {
+                    @Override
+                    public void customize(org.eclipse.jetty.server.Server server) {
+                        NetworkTrafficServerConnector connector = new NetworkTrafficServerConnector(server);
+                        connector.setPort(properties.getHttpPort());
+                        server.addConnector(connector);
+                    }
+                });
+            }
 
-                if (container instanceof UndertowEmbeddedServletContainerFactory) {
-                    UndertowEmbeddedServletContainerFactory factory =
-                            (UndertowEmbeddedServletContainerFactory) container;
-                    factory.addBuilderCustomizers(new UndertowBuilderCustomizer() {
-                        @Override
-                        public void customize(Undertow.Builder builder) {
-                            builder.addHttpListener(properties.getHttpPort(), "0.0.0.0");
-                        }
-                    });
-                }
+            if (container instanceof UndertowEmbeddedServletContainerFactory) {
+                UndertowEmbeddedServletContainerFactory factory =
+                        (UndertowEmbeddedServletContainerFactory) container;
+                factory.addBuilderCustomizers(new UndertowBuilderCustomizer() {
+                    @Override
+                    public void customize(Undertow.Builder builder) {
+                        builder.addHttpListener(properties.getHttpPort(), "0.0.0.0");
+                    }
+                });
             }
         };
     }
@@ -87,10 +89,10 @@ public class DualSslAutoConfiguration {
      */
     @Configuration
     @ConditionalOnProperty(prefix = SSL_DUAL_PREFIX,
-                           name = "redirect-ssl",
-                           havingValue = "true",
-                           matchIfMissing = false)
-    public class WebSecurityAutoRedirectConfiguration extends WebSecurityConfigurerAdapter {
+            name = "redirect-ssl",
+            havingValue = "true",
+            matchIfMissing = false)
+    public static class WebSecurityAutoRedirectConfiguration extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {

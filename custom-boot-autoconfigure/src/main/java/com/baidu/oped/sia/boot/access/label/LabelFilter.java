@@ -1,10 +1,7 @@
 package com.baidu.oped.sia.boot.access.label;
 
-import com.baidu.oped.sia.boot.common.FileWatcher;
+import com.baidu.oped.sia.boot.common.DelegateHolder;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
-import com.baidu.oped.sia.boot.exception.RequestForbiddenException;
-import com.baidu.oped.sia.boot.iplist.IpHolder;
-import com.baidu.oped.sia.boot.utils.IpV4Utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,29 +23,20 @@ import javax.servlet.http.HttpServletResponse;
 public class LabelFilter extends OncePerRequestFilter {
     private static final Logger LOG = LoggerFactory.getLogger(LabelFilter.class);
 
-    private final FileWatcher<IpHolder> fileWatcher;
+    private final DelegateHolder<Label> label;
 
-    public LabelFilter(FileWatcher<IpHolder> fileWatcher) {
-        Assert.notNull(fileWatcher, "IpHolder watcher must not be null.");
-        this.fileWatcher = fileWatcher;
+    public LabelFilter(DelegateHolder<Label> label) {
+        Assert.notNull(label, "Label Delegate Holder must not be null.");
+        this.label = label;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String ip = request.getRemoteAddr();
-        LOG.debug("filter request: {} from {} with IpFilter", request.getRequestURI(), ip);
-        List<String> blackSet = fileWatcher.getHolder().getDeny();
-        List<String> whiteSet = fileWatcher.getHolder().getAllow();
+        LOG.debug("filter request: {} from {} with LabelFilter", request.getRequestURI(), ip);
 
-        if (blackSet != null) {
-            for (String blackRange : blackSet) {
-                if (IpV4Utils.isInRange(blackRange, ip)) {
-                    LOG.debug("request with url: {} from ip: {} has been blocked", request.getRequestURI(), ip);
-                    throw new RequestForbiddenException();
-                }
-            }
-        }
+        List<String> whiteSet = label.getContext().getWhites();
 
         if (whiteSet != null && whiteSet.contains(ip)) {
             LOG.debug("request: {} from {} has in the white list.", request.getRequestURI(), ip);
