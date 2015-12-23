@@ -4,9 +4,9 @@ import com.baidu.oped.sia.boot.rewrite.UriRewriteParameterResolver;
 
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by mason on 12/2/15.

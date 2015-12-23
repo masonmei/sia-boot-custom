@@ -2,9 +2,6 @@ package com.baidu.oped.sia.boot.access;
 
 import com.baidu.oped.sia.boot.common.ConfigProperties;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Access Control Configuration Properties.
  *

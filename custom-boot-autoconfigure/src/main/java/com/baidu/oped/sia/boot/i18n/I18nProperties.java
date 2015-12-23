@@ -5,7 +5,6 @@ import static com.baidu.oped.sia.boot.utils.Constrains.I18N_PREFIX;
 import com.google.common.base.MoreObjects;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
