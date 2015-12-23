@@ -1,6 +1,6 @@
 package com.baidu.oped.sia.boot.exception.request;
 
-import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.BAD_REQUEST;
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.UNSUPPORTED_REQUEST;
 
 /**
  * Bad Request Exception.
@@ -8,10 +8,13 @@ import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.BAD_REQUEST
  * @author mason
  */
 public class UnsupportRequestException extends RequestException {
+
     /**
      * Request Exception Constructor.
+     *
+     * @param args the key params
      */
-    public UnsupportRequestException() {
-        super(BAD_REQUEST, null);
+    public UnsupportRequestException(Object[] args) {
+        super(UNSUPPORTED_REQUEST, args);
     }
 }
