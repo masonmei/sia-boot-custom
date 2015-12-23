@@ -1,5 +1,6 @@
 package com.baidu.oped.sia.boot.exception;
 
+import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.RESOURCE_NOT_FOUND;
 import static com.baidu.oped.sia.boot.exception.SystemCode.RESOURCE_NOT_EXIST;
 
 /**
@@ -9,11 +10,7 @@ import static com.baidu.oped.sia.boot.exception.SystemCode.RESOURCE_NOT_EXIST;
  */
 public class ResourceNotFoundException extends SystemException {
 
-    public ResourceNotFoundException(String message) {
-        this(message, null);
-    }
-
-    public ResourceNotFoundException(String message, Object[] args) {
-        super(RESOURCE_NOT_EXIST, message, args);
+    public ResourceNotFoundException() {
+        super(RESOURCE_NOT_EXIST, RESOURCE_NOT_FOUND, null);
     }
 }

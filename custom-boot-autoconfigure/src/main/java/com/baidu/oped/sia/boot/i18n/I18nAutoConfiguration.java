@@ -61,7 +61,7 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
      * @return the locale resolver bean
      */
     @Bean
-    public LocaleResolver localResolver() {
+    public LocaleResolver localeResolver() {
         LOG.info("enable i18n resolver. Resolver type: {}", properties.getResolverType());
         LocaleResolver resolver = null;
         switch (properties.getResolverType()) {

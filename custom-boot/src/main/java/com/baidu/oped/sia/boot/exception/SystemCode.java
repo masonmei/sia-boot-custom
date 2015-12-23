@@ -20,7 +20,8 @@ public enum SystemCode {
     AUTHORIZATION_ERROR(8, HttpStatus.UNAUTHORIZED),
     ACCESS_DENIED(9, HttpStatus.TOO_MANY_REQUESTS),
     RESOURCE_NOT_EXIST(10, HttpStatus.NOT_FOUND),
-    INCORRECT_CONFIGURATION(11, HttpStatus.INTERNAL_SERVER_ERROR);
+    INCORRECT_CONFIGURATION(11, HttpStatus.INTERNAL_SERVER_ERROR),
+    REQUEST_ERROR(12, HttpStatus.BAD_REQUEST, HttpStatus.UNSUPPORTED_MEDIA_TYPE, HttpStatus.METHOD_NOT_ALLOWED);
 
     private final int value;
     private final HttpStatus[] statusCode;

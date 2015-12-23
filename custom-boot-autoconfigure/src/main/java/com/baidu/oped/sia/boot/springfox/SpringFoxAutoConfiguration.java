@@ -43,12 +43,6 @@ public class SpringFoxAutoConfiguration extends WebMvcConfigurerAdapter {
     @Autowired
     private SpringFoxProperties properties;
 
-    @Autowired
-    private WebMvcProperties webMvcProperties;
-
-    @Autowired
-    private ResourceProperties resourceProperties;
-
     /**
      * Api Docket Bean.
      *
@@ -86,11 +80,14 @@ public class SpringFoxAutoConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        final String prefixWebJarsPattern = webMvcProperties.getStaticPathPattern() + "/webjars/**";
+        final String prefixWebJarsPattern = "/webjars/**";
         if (!registry.hasMappingForPattern(prefixWebJarsPattern)) {
             registry.addResourceHandler(prefixWebJarsPattern)
-                    .addResourceLocations(new String[]{"classpath:/META-INF/resources/webjars/"})
-                    .setCachePeriod(resourceProperties.getCachePeriod());
+                    .addResourceLocations("classpath:/META-INF/resources/webjars/");
         }
+
+        final String swaggerEndpoint = "/swagger-ui.html";
+        registry.addResourceHandler(swaggerEndpoint)
+                .addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
     }
 }

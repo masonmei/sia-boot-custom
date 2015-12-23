@@ -3,9 +3,11 @@ package com.baidu.oped.sia.boot.utils;
 import com.baidu.oped.sia.boot.common.RequestInfoHolder;
 
 /**
- * Created by mason on 12/22/15.
+ * Request Utils.
+ *
+ * @author mason
  */
-public class RequestUtils {
+public abstract class RequestUtils {
     /**
      * Get the trace request id from RequestInfoHolder.
      *

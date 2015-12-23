@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  *
  * @author mason
  */
-public class ReplaceUtils {
+public abstract class ReplaceUtils {
     private static final String PATTERN_STRING = "\\{[^\\{\\\\/}]*\\}";
 
     /**

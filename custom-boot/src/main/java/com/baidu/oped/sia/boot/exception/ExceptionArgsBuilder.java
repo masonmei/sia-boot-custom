@@ -88,6 +88,31 @@ public class ExceptionArgsBuilder {
      * @return the instance with new param added
      */
     @SafeVarargs
+    public final <T> ExceptionArgsBuilder comma(T... params) {
+        this.params.add(join(", ", params));
+        return this;
+    }
+
+    /**
+     * join the params with an or syntax.
+     *
+     * @param params the param to be join together
+     * @param <T>    the Param type
+     * @return the instance with new param added
+     */
+    public <T> ExceptionArgsBuilder comma(Collection<T> params) {
+        this.params.add(join(", ", params));
+        return this;
+    }
+
+    /**
+     * join the params with an or syntax.
+     *
+     * @param params the param to be join together
+     * @param <T>    the Param type
+     * @return the instance with new param added
+     */
+    @SafeVarargs
     public final <T> ExceptionArgsBuilder or(T... params) {
         this.params.add(join("or", params));
         return this;
@@ -137,6 +162,33 @@ public class ExceptionArgsBuilder {
      */
     public <T> ExceptionArgsBuilder with(List<T> params) {
         this.params.addAll(params.stream().collect(Collectors.toList()));
+        return this;
+    }
+
+    /**
+     * Add the decimeter joined params to arguments.
+     *
+     * @param decimeter decimeter
+     * @param params    the param to be join together
+     * @param <T>       the Param type
+     * @return the instance with new param added
+     */
+    @SafeVarargs
+    public final <T> ExceptionArgsBuilder with(String decimeter, T... params) {
+        this.params.add(join(decimeter, params));
+        return this;
+    }
+
+    /**
+     * Add the decimeter joined params to arguments.
+     *
+     * @param decimeter decimeter
+     * @param params the param to be join together
+     * @param <T>    the Param type
+     * @return the instance with new param added
+     */
+    public <T> ExceptionArgsBuilder with(String decimeter, List<T> params) {
+        this.params.add(join(decimeter, params));
         return this;
     }
 

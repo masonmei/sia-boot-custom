@@ -28,7 +28,11 @@ checkEnv(){
 }
 
 downloadInitProject() {
-    curl -sOL ${init_project_url}
+    if [ -f ${init_package_name} ];
+    then
+        return 0
+    fi
+    curl -sOL ${init_package_download_url}
     if [ $? != 0 ];
         then
         echo "cannot download the prototype project"
@@ -44,56 +48,159 @@ cleanDownload() {
     fi
 }
 
-prepareParams() {
-    while [ ""${confirm} != "Y" ]
+prepareProjectName() {
+    local local_name=""
+    while [ "X${local_name}" == "X" ]
     do
-        while [ "X"${project_name} == "X" ]
-        do
-            read -p "Please Enter the project name: " name
+        read -p "请输入项目名称 [${project_name}]: " local_name
 
-            if [ -f ${name} ];
-            then
-                echo "There is a file with name ${name} exist"
-                continue
-            fi
+        if [ "X${project_name}" != "X" ] && [ -z ${local_name} ];
+        then
+            break
+        fi
 
-            if [ -d ${name} ];
-            then
-                echo "The is already exist a directory with name ${name}"
-                continue
-            fi
+        if [ -z ${local_name} ];
+        then
+            echo -e "项目名称不能为空!\n"
+            continue
+        fi
 
-            project_name=${name}
-        done
+        if [ -f ${local_name} ];
+        then
+            echo "该目录下已经存在名称为${local_name}的文件!"
+            local_name=""
+            continue
+        fi
 
-        while [ "X"${package} == "X" ]
-        do
-            read -p "Please Enter the base package: " pkg
-            echo "${pkg}"
-            package=${pkg}
-        done
+        if [ -d ${local_name} ];
+        then
+            echo "当前目录下已经存在名称为 ${local_name} 的目录!\n"
+            local_name=""
+            continue
+        fi
+        project_name=${local_name}
+    done
+    echo ""
+}
 
-        while [ "X"${module_name} == "X" ]
-        do
-            read -p "Please enter the module name: " module
-            echo "${module}"
-            module_name=${module}
-        done
+prepareBasePackage() {
+    local pkg=""
+    while [ "X${pkg}" == "X" ]
+    do
+        read -p "请输入项目包名[${package}]: " pkg
+        if [ "X${package}" != "X" ] && [ -z ${pkg} ];
+        then
+            break
+        fi
 
-        echo "Project Name : ${project_name}"
-        echo "Base Package : ${package}"
-        echo "Module Name : ${module_name}"
-        read -p "Is this correct? (Y/n) " input
+        if [ -z ${pkg} ];
+        then
+            echo -e "项目包名不能为空!\n"
+            continue
+        fi
+        package=${pkg}
+    done
+    echo ""
+}
+
+prepareModulePath() {
+    local module=""
+    while [ "X${module}" == "X" ]
+    do
+        read -p "请输入项目模块路径[${module_name}]: " module
+
+        if [ "X${module_name}" != "X" ] && [ -z ${module} ];
+        then
+            break
+        fi
+
+        if [ -z ${module} ];
+        then
+            echo -e "项目模块路径不能为空!\n"
+            continue
+        fi
+        module_name=${module}
+    done
+    echo ""
+}
+
+preparePort() {
+    local port=""
+    while [ "X${port}" == "X" ]
+    do
+        read -p "请输入服务端口[${application_port}]: " port
+
+        if [ "X${application_port}" != "X" ] && [ -z ${port} ];
+        then
+            break
+        fi
+
+        if [ -z ${port} ];
+        then
+            echo -e "服务端口不能为空!\n"
+            continue
+        fi
+        application_port=${port}
+    done
+    echo ""
+}
+
+prepareDeployPath() {
+    local deploy=""
+    while [ "X${deploy}" == "X" ]
+    do
+        read -p "请输入部署路径[${deploy_path}]: " deploy
+
+        if [ "X${deploy_path}" != "X" ] && [ -z ${deploy} ];
+        then
+            break
+        fi
+
+        if [ -z ${deploy} ];
+        then
+            echo -e "部署路径不能为空!\n"
+            continue
+        fi
+        deploy_path=${deploy}
+    done
+    echo ""
+}
+
+showParams() {
+    echo "项目配置信息如下:"
+    echo "========================================="
+    echo "项目名称: ${project_name}"
+    echo "包名: ${package}"
+    echo "模块路径: ${module_name}"
+    echo "部署路径: ${deploy_path}"
+    echo "服务端口: ${application_port}"
+    echo "========================================="
+    echo ""
+}
+
+prepareParams() {
+    local confirm=""
+    while [ "${confirm}" != "Y" ]
+    do
+        prepareProjectName
+
+        prepareBasePackage
+
+        prepareModulePath
+
+        prepareDeployPath
+
+        preparePort
+
+        showParams
+        read -p "是否正确? (Y/n) " input
         if [ "X"${input} == "XY" ] || [ "X"${input} == "Xy" ];
             then
             confirm="Y"
-        else
-            project_name=""
-            package=""
-            module_name=""
         fi
     done
     echo "Prepare params finished."
+    echo ""
 }
 
 generateProject() {
@@ -131,7 +238,7 @@ generateProject() {
     fi
 
     echo "Rename package name"
-    for file in `find ./${project_name} -type f | grep -v build/bin/babysitter`
+    for file in `find ./${project_name} -type f | grep -v ./${project_name}/build/`
     do
         echo "process file ${file}"
         if ${darwin}; then
@@ -144,7 +251,7 @@ generateProject() {
     done
 
     echo "Rename project name"
-    for file in `find ./${project_name} -type f | grep -v build/bin/babysitter`
+    for file in `find ./${project_name} -type f | grep -v ./${project_name}/build/`
     do
         echo "process file ${file}"
         if ${darwin}; then
@@ -167,12 +274,12 @@ removeEmptyDirectory() {
     cd ${base}
     while [ ""${isEmpty} == "True" ];
     do
-        current_path=`pwd`
+        local current_path=`pwd`
         entries=`ls ${current_path}`
         if [ -z ${entries} ];
             then
             cd ..
-            rm -rf $current_path
+            rm -rf ${current_path}
         else
             isEmpty="False"
         fi
@@ -180,12 +287,41 @@ removeEmptyDirectory() {
     cd ${WORK_DIR}
 }
 
+initialProject() {
+    local PROJECT_DIR=${WORK_DIR}/${project_name}
+    mv ${PROJECT_DIR}/build/bin/${init_project_pkg_name}.sh ${PROJECT_DIR}/build/bin/${project_name}.sh
+    mv ${PROJECT_DIR}/build/bin/${init_project_pkg_name}_control ${PROJECT_DIR}/build/bin/${project_name}_control
+
+    if ${darwin}; then
+        sed -i '' -e "1,10s%^readonly PROJECT=${init_project_pkg_name}%readonly PROJECT=${project_name}%g" ${PROJECT_DIR}/build/bin/${project_name}.sh
+        sed -i '' -e "1,10s%^readonly MAIN_PORT=${init_project_port}%readonly MAIN_PORT=${application_port}%g" ${PROJECT_DIR}/build/bin/${project_name}.sh
+
+        sed -i '' -e "1,10s%^PROJECT_NAME=${init_project_pkg_name}%PROJECT_NAME=${project_name}%g" ${PROJECT_DIR}/build.sh
+
+        sed -i '' -e "1s%${init_deploy_path}%${deploy_path}%g" ${PROJECT_DIR}/build/conf/babysitter.conf
+        sed -i '' -e "2,\$s%${init_project_pkg_name}%${project_name}%g" ${PROJECT_DIR}/build/conf/babysitter.conf
+    fi
+
+    if ${linux}; then
+        sed -i -e "1,10s%^readonly PROJECT=${init_project_pkg_name}%readonly PROJECT=${project_name}%g" ${PROJECT_DIR}/build/bin/${project_name}.sh
+        sed -i -e "1,10s%^readonly MAIN_PORT=${init_project_port}%readonly MAIN_PORT=${application_port}%g" ${PROJECT_DIR}/build/bin/${project_name}.sh
+
+        sed -i -e "1,10s%^PROJECT_NAME=${init_project_pkg_name}%PROJECT_NAME=${project_name}%g" ${PROJECT_DIR}/build.sh
+
+        sed -i -e "1s%${init_deploy_path}%${deploy_path}%g" ${PROJECT_DIR}/build/conf/babysitter.conf
+        sed -i -e "2,\$s%${init_project_pkg_name}%${project_name}%g" ${PROJECT_DIR}/build/conf/babysitter.conf
+    fi
+
+    echo "Application configuration applied."
+}
+
+
 buildProject() {
     echo "Start building project"
     cd ${project_name} && mvn clean package > build.log && cd -
     if [ $? != 0 ];
     then
-        echo "Build prject failed."
+        echo "Build project failed."
         echo "Please checking the build.log file for details."
         exit 1
     fi
@@ -195,20 +331,29 @@ buildProject() {
 }
 
 
+
+
 WORK_DIR=`dirname $0`
 WORK_DIR=`cd ${WORK_DIR}; pwd`
-echo "Work dir: ${WORK_DIR}"
+echo "当前目录: ${WORK_DIR}"
 
-init_project_url=https://raw.githubusercontent.com/masonmei/sia-boot-custom/master/init/dist/demo.tar.gz
+init_package_name=demo.tar.gz
+init_package_download_url=https://raw.githubusercontent.com/masonmei/sia-boot-custom/master/init/dist/${init_package_name}
 init_project_pkg_name=demo
+init_project_port=8888
+init_deploy_path=/home/work/bcm/demo
 project_name=
 package=
 module_name=
+application_port=
+deploy_path=
 
+#
 checkEnv
 prepareParams
 downloadInitProject
 generateProject
+initialProject
 cleanDownload
 buildProject
 

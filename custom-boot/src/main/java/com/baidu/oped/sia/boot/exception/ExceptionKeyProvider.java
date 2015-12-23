@@ -31,4 +31,9 @@ public abstract class ExceptionKeyProvider {
 
     public static final String INVALID_CONFIGURATION_FILE_PATH = "config.file.invalid.path";
     public static final String CONFIGURATION_FILE_NOT_FOUND = "config.file.not-found";
+
+    public static final String RESOURCE_NOT_FOUND = "resource.error.not-found";
+
+    public static final String BAD_REQUEST = "request.error.bad-request";
+    public static final String UNSUPPORTED_REQUEST = "request.error.un-supported";
 }

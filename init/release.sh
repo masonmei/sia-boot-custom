@@ -36,6 +36,7 @@ copyAndDistFolders(){
             find ${WORK_DIR}/dist/${file} -name '.idea' | xargs rm -rf
             find ${WORK_DIR}/dist/${file} -name '*.iml' | xargs rm -rf
             find ${WORK_DIR}/dist/${file} -name 'target' | xargs rm -rf
+            find ${WORK_DIR}/dist/${file} -name '.gitignore' | xargs rm -rf
 
             ls -al ${WORK_DIR}/dist/${file}
             cd ${WORK_DIR}/dist && tar zcf ${file}.tar.gz ${file}
