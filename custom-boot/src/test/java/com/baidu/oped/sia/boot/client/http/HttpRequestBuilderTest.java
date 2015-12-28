@@ -1,18 +1,50 @@
 package com.baidu.oped.sia.boot.client.http;
 
-import static org.junit.Assert.*;
+import com.baidu.oped.sia.boot.common.BasicResponse;
 
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by mason on 12/28/15.
+ * Http request build test case.
+ *
+ * @author mason
  */
 public class HttpRequestBuilderTest {
+    private final String endpoint = "http://localhost:8888";
+    private HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
+            = new HttpComponentsClientHttpRequestFactory(HttpClientBuilder.create().build());
+
+    private RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory);
+    private HttpRequestBuilder builder;
+
+    @Before
+    public void setUp() throws Exception {
+        builder = HttpRequestBuilder.get(endpoint);
+        builder.acceptJson().path("/persons").parameter("num", 10000).header("Accept-Encoding", "gzip")
+                .method(HttpMethod.GET);
+    }
 
     @Test
     public void testGetParameters() throws Exception {
+        ResponseEntity<BasicResponse> forEntity = restTemplate
+                .exchange(builder.getRequestUri(), builder.getMethod(), builder.getEntity(), BasicResponse.class,
+                        (Map<String, ?>) builder.getParameters());
+        System.out.println(forEntity);
 
+        builder.removeHeader("Accept-Encoding");
+        forEntity = restTemplate
+                .exchange(builder.getRequestUri(), builder.getMethod(), builder.getEntity(), BasicResponse.class,
+                        (Map<String, ?>) builder.getParameters());
+        System.out.println(forEntity);
     }
 
     @Test
@@ -82,11 +114,6 @@ public class HttpRequestBuilderTest {
 
     @Test
     public void testGet() throws Exception {
-
-    }
-
-    @Before
-    public void setUp() throws Exception {
 
     }
 }

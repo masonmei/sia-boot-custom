@@ -1,5 +1,11 @@
 package com.baidu.oped.sia.boot.trace;
 
+import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_HEADER_NAME;
+import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_PREFIX;
+import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_SOURCE_HEADER_NAME;
+import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_SOURCE_SEQUENCE_HEADER_NAME;
+import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_TIMESTAMP_HEADER_NAME;
+
 import com.baidu.oped.sia.boot.utils.Constrains;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,15 +15,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author mason
  */
-@ConfigurationProperties(prefix = Constrains.TRACE_PREFIX)
+@ConfigurationProperties(prefix = TRACE_PREFIX)
 public class TraceProperties {
 
     private boolean enabled = true;
 
-    private String traceHeaderName = Constrains.TRACE_HEADER_NAME;
-    private String traceStartTimeHeaderName = Constrains.TRACE_TIMESTAMP_HEADER_NAME;
-    private String traceSourceHeaderName = Constrains.TRACE_SOURCE_HEADER_NAME;
-    private String traceSourceSeqHeaderName = Constrains.TRACE_SOURCE_SEQUENCE_HEADER_NAME;
+    private String traceHeaderName = TRACE_HEADER_NAME;
+    private String traceStartTimeHeaderName = TRACE_TIMESTAMP_HEADER_NAME;
+    private String traceSourceHeaderName = TRACE_SOURCE_HEADER_NAME;
+    private String traceSourceSeqHeaderName = TRACE_SOURCE_SEQUENCE_HEADER_NAME;
 
     public String getTraceHeaderName() {
         return traceHeaderName;

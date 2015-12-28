@@ -20,10 +20,10 @@ public abstract class Constrains {
     public static final String IP_PERMISSION_PREFIX = CUSTOMER_BOOT_BASE + "iplist";
 
     public static final String TRACE_PREFIX = CUSTOMER_BOOT_BASE + "trace";
-    public static final String TRACE_HEADER_NAME = "x-trace-header-name";
-    public static final String TRACE_TIMESTAMP_HEADER_NAME = "x-trace-timestamp-header-name";
-    public static final String TRACE_SOURCE_HEADER_NAME = "x-trace-source-header-name";
-    public static final String TRACE_SOURCE_SEQUENCE_HEADER_NAME = "x-trace-source-seq-header-name";
+    public static final String TRACE_HEADER_NAME = "X-TRACE_ID";
+    public static final String TRACE_TIMESTAMP_HEADER_NAME = "X-TRACE-TIMESTAMP";
+    public static final String TRACE_SOURCE_HEADER_NAME = "X-TRACE-SOURCE-IP";
+    public static final String TRACE_SOURCE_SEQUENCE_HEADER_NAME = "X-TRACE-SOURCE-SEQ";
 
     public static final String ACCESS_LOG_PREFIX = CUSTOMER_BOOT_BASE + "access-log";
 
@@ -50,4 +50,9 @@ public abstract class Constrains {
     public static final String VALIDATE_PREFIX = CUSTOMER_BOOT_BASE + "client-source";
 
     public static final String DECODE_URI_PREFIX = COMPRESSION_PREFIX + "decode-uri";
+
+    public static class ClientConstrains {
+        public static final int RETRIES = 3;
+        public static final int MAX_RETRY_INTERVAL = 1000;
+    }
 }

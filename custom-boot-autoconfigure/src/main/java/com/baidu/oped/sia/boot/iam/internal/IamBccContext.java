@@ -1,26 +1,25 @@
 package com.baidu.oped.sia.boot.iam.internal;
 
+import static com.baidu.oped.cloudwatch.business.common.iam.internal.BccVmDetailRequest.BCC_AUTH_HEADER_NAME;
+
 import static java.util.concurrent.TimeUnit.HOURS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
-import static com.baidu.oped.cloudwatch.business.common.iam.internal.BccVmDetailRequest.BCC_AUTH_HEADER_NAME;
+import com.baidu.oped.cloudwatch.business.client.http.Entity;
+import com.baidu.oped.cloudwatch.business.client.http.InternalRequest;
+import com.baidu.oped.cloudwatch.business.client.http.InternalResponse;
 
-import javax.annotation.PostConstruct;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-
-import com.baidu.oped.cloudwatch.business.client.http.Entity;
-import com.baidu.oped.cloudwatch.business.client.http.InternalRequest;
-import com.baidu.oped.cloudwatch.business.client.http.InternalResponse;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
+import javax.annotation.PostConstruct;
 
 /**
  * Created by mason on 12/16/15.

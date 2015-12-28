@@ -1,13 +1,12 @@
 package com.baidu.oped.sia.boot.iam.internal;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.springframework.util.CollectionUtils;
 
 /**
  * Created by mason on 12/16/15.

@@ -1,21 +1,22 @@
 package com.baidu.oped.sia.boot.iam.internal;
 
-import javax.servlet.http.HttpServletRequest;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import com.baidu.oped.cloudwatch.business.common.rewrite.AgentUriRewriteParameterResolver;
+import com.baidu.oped.sia.boot.rewrite.UriRewriteParameterResolver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * Created by mason on 12/16/15.
+ * Iam bcm Agent uri rewrite parameter resolver.
+ *
+ * @author mason
  */
 @Component
-public class AgentRequestRewriteParameterResolver implements AgentUriRewriteParameterResolver {
+public class AgentRequestRewriteParameterResolver implements UriRewriteParameterResolver {
     public static final String USER_ID = "userId";
     private static final String AGENT_VM_HEADER_NAME = "X-BCM-VM-UUID";
     @Autowired

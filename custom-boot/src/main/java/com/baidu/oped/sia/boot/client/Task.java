@@ -1,7 +1,21 @@
 package com.baidu.oped.sia.boot.client;
 
 /**
- * Created by mason on 12/28/15.
+ * Represent a remote invoking task.
+ *
+ * @author mason
  */
-public interface Task {
+public interface Task<T> {
+
+    /**
+     * Get the task context.
+     *
+     * @return context.
+     */
+    Context<T> context();
+
+    /**
+     * Execute the task and save the result to context.
+     */
+    void execute();
 }

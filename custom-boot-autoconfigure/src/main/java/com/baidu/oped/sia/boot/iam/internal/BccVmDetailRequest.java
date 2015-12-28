@@ -4,7 +4,6 @@ import static java.lang.String.format;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-
 import org.springframework.util.Assert;
 
 /**

@@ -1,7 +1,11 @@
 package com.baidu.oped.sia.boot.client;
 
 /**
- * Created by mason on 12/28/15.
+ * Root of all the remote invoking.
+ *
+ * @author mason
  */
-public class Client {
+public interface Client {
+
+    <T> void execute(Task<T> task);
 }

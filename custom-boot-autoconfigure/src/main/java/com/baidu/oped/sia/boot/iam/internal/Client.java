@@ -1,20 +1,9 @@
 package com.baidu.oped.sia.boot.iam.internal;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.ClientRequestContext;
-import javax.ws.rs.client.ClientRequestFilter;
-import javax.ws.rs.ext.ContextResolver;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
-
 import com.baidu.oped.cloudwatch.business.client.http.InternalRequest;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.glassfish.jersey.apache.connector.ApacheClientProperties;
 import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
@@ -23,6 +12,16 @@ import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.RequestEntityProcessing;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.ClientRequestContext;
+import javax.ws.rs.client.ClientRequestFilter;
+import javax.ws.rs.ext.ContextResolver;
 
 /**
  * Created by mason on 12/16/15.

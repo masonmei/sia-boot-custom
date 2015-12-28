@@ -2,12 +2,11 @@ package com.baidu.oped.sia.boot.iam.internal;
 
 import static java.lang.String.format;
 
-import java.io.Serializable;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-
 import org.springframework.util.Assert;
+
+import java.io.Serializable;
 
 /**
  * Created by mason on 12/16/15.

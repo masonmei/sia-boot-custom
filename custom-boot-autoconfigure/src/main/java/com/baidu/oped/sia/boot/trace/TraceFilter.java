@@ -108,7 +108,7 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
                 LOG.info("{} not found in header, generate traceStartTimestamp: {}",
                         traceTimestampHeaderName, currentTimeInMillis);
             }
-            response.setDateHeader(traceTimestampHeaderName, currentTimeInMillis);
+            response.setHeader(traceTimestampHeaderName, format("%d", currentTimeInMillis));
             MDC.put("traceTimestamp", format("%d", currentTimeInMillis));
         }
 
@@ -123,7 +123,7 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
         if (null == RequestInfoHolder.traceSequence()) {
             int sequence = request.getIntHeader(traceSourceSeqHeaderName);
             RequestInfoHolder.setTraceSequence(sequence);
-            response.setIntHeader(traceTimestampHeaderName, sequence);
+            response.setIntHeader(traceSourceSeqHeaderName, sequence);
             MDC.put("traceSourceSeq", format("%d", sequence));
         }
 
@@ -145,20 +145,25 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
 
         if (!threadTraceId.equals(responseTraceId)) {
             LOG.error("traceId changed, traceId: {}, responseTraceId: {}", threadTraceId, responseTraceId);
+            response.setHeader(traceHeaderName, threadTraceId);
         }
-        response.setHeader(traceHeaderName, threadTraceId);
 
         if (!format("%s", threadTraceTimestamp).equals(responseTraceTimestamp)) {
             LOG.error("traceTimestamp changed, traceTimestamp: {}, responseTimestamp: {}",
                     threadTraceTimestamp, responseTraceTimestamp);
+            response.setDateHeader(traceTimestampHeaderName, threadTraceTimestamp);
         }
-        response.setDateHeader(traceTimestampHeaderName, threadTraceTimestamp);
 
         long timeUsed = Calendar.getInstance().getTimeInMillis() - Long.parseLong(responseTraceTimestamp);
         LOG.info("request afterCompletion, method: {}, url: {}, status: {}, time: {}ms", request.getMethod(),
                 request.getRequestURI(), response.getStatus(), timeUsed);
         MDC.remove("requestId");
+        MDC.remove("traceTimestamp");
+        MDC.remove("traceSourceIp");
+        MDC.remove("traceSourceSeq");
         RequestInfoHolder.removeTraceTimestamp();
         RequestInfoHolder.removeTraceId();
+        RequestInfoHolder.removeTraceSourceIp();
+        RequestInfoHolder.removeTraceSequence();
     }
 }

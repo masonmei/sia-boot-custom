@@ -6,3 +6,5 @@ custom:
       enabled: true
       trace-header-name: X-IGITRAS-TRACE-ID
       trace-start-time-header-name: X-IGITRAS-TRACE-TIMESTAMP
+      trace-source-header-name: X-IGITRAS-TRACE-SOURCE-IP
+      trace-source-seq-header-name: X-IGITRAS-TRACE-SOURCE-SEQ
