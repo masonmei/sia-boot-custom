@@ -1,6 +1,6 @@
 package com.baidu.oped.sia.boot;
 
-import com.baidu.oped.sia.boot.rewrite.UriRewriteParameterResolver;
+import com.baidu.oped.sia.boot.rewrite.AgentUriRewriteParameterResolver;
 
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by mason on 12/2/15.
  */
 @Component
-public class RewriteParamResolver implements UriRewriteParameterResolver {
+public class RewriteParamResolverAgent implements AgentUriRewriteParameterResolver {
     private static final String KEY = "name";
 
     @Override

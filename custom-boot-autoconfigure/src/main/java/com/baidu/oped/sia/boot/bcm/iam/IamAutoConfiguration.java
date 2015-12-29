@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.iam;
+package com.baidu.oped.sia.boot.bcm.iam;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
@@ -8,8 +8,8 @@ import com.baidu.bce.iam.IamClient;
 import com.baidu.bce.iam.IamClientConfiguration;
 import com.baidu.oped.sia.boot.client.http.HttpClient;
 import com.baidu.oped.sia.boot.common.FilterOrder;
-import com.baidu.oped.sia.boot.iam.internal.IamAuthRequest;
-import com.baidu.oped.sia.boot.iam.internal.IamBccContext;
+import com.baidu.oped.sia.boot.bcm.iam.internal.IamAuthRequest;
+import com.baidu.oped.sia.boot.bcm.iam.internal.IamBccContext;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

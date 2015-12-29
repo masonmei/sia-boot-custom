@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.iam;
+package com.baidu.oped.sia.boot.bcm.iam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

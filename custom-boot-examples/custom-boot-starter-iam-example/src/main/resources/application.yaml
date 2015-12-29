@@ -47,4 +47,8 @@ custom:
           scope: BCE_BS
 
 
-
+    rewrite:
+      enabled: true
+      resolve-param: true
+      pattern: /json-api/v1/metricdata/AGENT
+      rewrite: /json-api/v1/metricdata/{userId}

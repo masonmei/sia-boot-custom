@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.iam;
+package com.baidu.oped.sia.boot.bcm.iam;
 
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_SERVICE;
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.AUTH_INVALID_USER;

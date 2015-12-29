@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.iam.internal;
+package com.baidu.oped.sia.boot.bcm.iam.internal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.CollectionUtils;

@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.rewrite;
+package com.baidu.oped.sia.boot.bcm.rewrite;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.REWRITE_PREFIX;
@@ -39,8 +39,8 @@ public class RewriteAutoConfiguration {
      * @return Rewrite Filter Registration Bean
      */
     @Bean
-    public FilterRegistrationBean rewriteFiler(UriRewriteParameterResolver parameterResolver) {
-        UriRewriteFiler rewriteFiler = new UriRewriteFiler();
+    public FilterRegistrationBean rewriteFiler(AgentUriRewriteParameterResolver parameterResolver) {
+        AgentUriRewriteFiler rewriteFiler = new AgentUriRewriteFiler();
         rewriteFiler.setParameterResolver(parameterResolver);
         rewriteFiler.setRewriteContext(rewriteContext);
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
@@ -55,8 +55,8 @@ public class RewriteAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public UriRewriteParameterResolver uriRewriteParameterResolver() {
-        return new UriRewriteParameterResolver() {
+    public AgentUriRewriteParameterResolver uriRewriteParameterResolver() {
+        return new AgentUriRewriteParameterResolver() {
             @Override
             public Map<String, String> resolve(HttpServletRequest request) {
                 return Collections.emptyMap();

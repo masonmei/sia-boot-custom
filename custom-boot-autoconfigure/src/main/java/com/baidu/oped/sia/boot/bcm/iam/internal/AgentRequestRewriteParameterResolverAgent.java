@@ -1,6 +1,6 @@
-package com.baidu.oped.sia.boot.iam.internal;
+package com.baidu.oped.sia.boot.bcm.iam.internal;
 
-import com.baidu.oped.sia.boot.rewrite.UriRewriteParameterResolver;
+import com.baidu.oped.sia.boot.rewrite.AgentUriRewriteParameterResolver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author mason
  */
 @Component
-public class AgentRequestRewriteParameterResolver implements UriRewriteParameterResolver {
+public class AgentRequestRewriteParameterResolverAgent implements AgentUriRewriteParameterResolver {
     public static final String USER_ID = "userId";
     private static final String AGENT_VM_HEADER_NAME = "X-BCM-VM-UUID";
     @Autowired

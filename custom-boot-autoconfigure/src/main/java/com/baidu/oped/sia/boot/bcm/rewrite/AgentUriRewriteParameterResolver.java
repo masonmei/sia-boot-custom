@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.rewrite;
+package com.baidu.oped.sia.boot.bcm.rewrite;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author mason
  */
-public interface UriRewriteParameterResolver {
+public interface AgentUriRewriteParameterResolver {
     /**
      * Resolve the Parameters for Uri Rewrite Purpose.
      *

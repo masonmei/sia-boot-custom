@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.iam.internal;
+package com.baidu.oped.sia.boot.bcm.iam.internal;
 
 import static java.lang.String.format;
 

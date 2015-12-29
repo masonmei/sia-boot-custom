@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.iam;
+package com.baidu.oped.sia.boot.bcm.iam;
 
 import javax.servlet.http.HttpServletRequest;
 

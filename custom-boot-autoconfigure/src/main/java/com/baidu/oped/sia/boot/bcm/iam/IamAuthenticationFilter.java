@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.iam;
+package com.baidu.oped.sia.boot.bcm.iam;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.REMOTE_ADDRESS;
 import static com.baidu.oped.sia.boot.utils.Constrains.USER;

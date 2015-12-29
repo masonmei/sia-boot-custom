@@ -1,6 +1,6 @@
-package com.baidu.oped.sia.boot.iam.internal;
+package com.baidu.oped.sia.boot.bcm.iam.internal;
 
-import static com.baidu.oped.sia.boot.iam.internal.BccVmDetailRequest.BCC_AUTH_HEADER_NAME;
+import static com.baidu.oped.sia.boot.bcm.iam.internal.BccVmDetailRequest.BCC_AUTH_HEADER_NAME;
 
 import static java.util.concurrent.TimeUnit.HOURS;
 import static java.util.concurrent.TimeUnit.MINUTES;
