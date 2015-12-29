@@ -1,6 +1,6 @@
 package com.baidu.oped.sia.boot;
 
-import com.baidu.oped.sia.boot.rewrite.AgentUriRewriteParameterResolver;
+import com.baidu.oped.sia.boot.bcm.rewrite.AgentUriRewriteParameterResolver;
 
 import org.springframework.stereotype.Component;
 
