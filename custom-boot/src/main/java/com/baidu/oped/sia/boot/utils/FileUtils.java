@@ -2,8 +2,8 @@ package com.baidu.oped.sia.boot.utils;
 
 import static com.baidu.oped.sia.boot.exception.ExceptionArgsBuilder.get;
 
-import com.baidu.oped.sia.boot.exception.internal.ConfigFileNotFoundException;
-import com.baidu.oped.sia.boot.exception.internal.InvalidConfigFilePathException;
+import com.baidu.oped.sia.boot.exception.internal.config.ConfigFileNotFoundException;
+import com.baidu.oped.sia.boot.exception.internal.config.InvalidConfigFilePathException;
 
 import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;

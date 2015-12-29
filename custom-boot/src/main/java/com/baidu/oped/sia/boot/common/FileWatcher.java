@@ -72,6 +72,10 @@ public class FileWatcher<T> {
         registerShutDownHook();
     }
 
+    public DelegateHolder<T> getHolder() {
+        return holder;
+    }
+
     private void load() {
         LOG.debug("start to load properties with path {}", configFile.getName());
 
@@ -84,6 +88,12 @@ public class FileWatcher<T> {
         }
 
         LOG.info("reload properties finished.");
+    }
+
+    private void registerShutDownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            stop = true;
+        }));
     }
 
     private void watchingForChanges() {
@@ -109,17 +119,6 @@ public class FileWatcher<T> {
                 LOG.warn("Watching file failed or reloading failed");
             }
         }).start();
-    }
-
-    private void registerShutDownHook() {
-        Runtime.getRuntime()
-                .addShutdownHook(new Thread(() -> {
-                    stop = true;
-                }));
-    }
-
-    public DelegateHolder<T> getHolder() {
-        return holder;
     }
 
 }

@@ -6,8 +6,6 @@ import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_SOURCE_HEADER_NAME;
 import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_SOURCE_SEQUENCE_HEADER_NAME;
 import static com.baidu.oped.sia.boot.utils.Constrains.TRACE_TIMESTAMP_HEADER_NAME;
 
-import com.baidu.oped.sia.boot.utils.Constrains;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

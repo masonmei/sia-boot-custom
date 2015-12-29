@@ -69,8 +69,7 @@ public class DualSslAutoConfiguration {
             }
 
             if (container instanceof UndertowEmbeddedServletContainerFactory) {
-                UndertowEmbeddedServletContainerFactory factory =
-                        (UndertowEmbeddedServletContainerFactory) container;
+                UndertowEmbeddedServletContainerFactory factory = (UndertowEmbeddedServletContainerFactory) container;
                 factory.addBuilderCustomizers(new UndertowBuilderCustomizer() {
                     @Override
                     public void customize(Undertow.Builder builder) {

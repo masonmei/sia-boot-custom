@@ -22,19 +22,13 @@ public abstract class AbstractTaskContext<T> implements Context<T> {
     }
 
     @Override
+    public String contextInfo() {
+        return toString();
+    }
+
+    @Override
     public int getExecutions() {
         return executions.get();
-    }
-
-    @Override
-    public void markExecution() {
-        int executionTimes = this.executions.getAndIncrement();
-        LOG.debug("mark task execution, task: {} already context {} times", contextInfo(), executionTimes);
-    }
-
-    @Override
-    public void markComplete() {
-        completed.set(true);
     }
 
     @Override
@@ -43,8 +37,14 @@ public abstract class AbstractTaskContext<T> implements Context<T> {
     }
 
     @Override
-    public String contextInfo() {
-        return toString();
+    public void markComplete() {
+        completed.set(true);
+    }
+
+    @Override
+    public void markExecution() {
+        int executionTimes = this.executions.getAndIncrement();
+        LOG.debug("mark task execution, task: {} already context {} times", contextInfo(), executionTimes);
     }
 
     @Override

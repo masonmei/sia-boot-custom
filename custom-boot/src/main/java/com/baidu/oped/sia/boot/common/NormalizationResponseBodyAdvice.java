@@ -18,22 +18,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class NormalizationResponseBodyAdvice implements ResponseBodyAdvice {
 
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
-                                  Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if (body instanceof BasicResponse) {
-            return body;
-        }
-        return builder()
-                .requestId(getTraceId())
-                .traceSourceSeq(getTraceSourceSeq())
-                .traceSourceIp(getTraceSourceIp())
-                .traceStartTime(getTraceStartTime())
-                .data(body)
-                .build();
+    public boolean supports(MethodParameter returnType, Class converterType) {
+        return true;
     }
 
     @Override
-    public boolean supports(MethodParameter returnType, Class converterType) {
-        return true;
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
+            Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        if (body instanceof BasicResponse) {
+            return body;
+        }
+        return builder().requestId(getTraceId()).traceSourceSeq(getTraceSourceSeq()).traceSourceIp(getTraceSourceIp())
+                .traceStartTime(getTraceStartTime()).data(body).build();
     }
 }

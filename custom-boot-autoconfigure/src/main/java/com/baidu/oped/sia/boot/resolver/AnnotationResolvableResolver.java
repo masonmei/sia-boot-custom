@@ -24,7 +24,7 @@ public class AnnotationResolvableResolver implements ResolvableResolver {
 
     @Override
     public Resolvable resolve(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                              NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+            NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         Class<?> parameterType = parameter.getParameterType();
         if (!Resolvable.class.isAssignableFrom(parameterType)) {
             LOG.debug("{} is not a resolvable class", parameterType);

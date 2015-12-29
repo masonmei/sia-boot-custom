@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +33,46 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
+    public void testAcceptJson() throws Exception {
+
+    }
+
+    @Test
+    public void testAcceptXml() throws Exception {
+
+    }
+
+    @Test
+    public void testAddHeader() throws Exception {
+
+    }
+
+    @Test
+    public void testAddParameter() throws Exception {
+
+    }
+
+    @Test
+    public void testEntity() throws Exception {
+
+    }
+
+    @Test
+    public void testGet() throws Exception {
+
+    }
+
+    @Test
+    public void testGetEntity() throws Exception {
+
+    }
+
+    @Test
+    public void testGetHeaders() throws Exception {
+
+    }
+
+    @Test
     public void testGetParameters() throws Exception {
         ResponseEntity<BasicResponse> forEntity = restTemplate
                 .exchange(builder.getRequestUri(), builder.getMethod(), builder.getEntity(), BasicResponse.class,
@@ -48,37 +87,7 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testGetHeaders() throws Exception {
-
-    }
-
-    @Test
-    public void testGetEntity() throws Exception {
-
-    }
-
-    @Test
     public void testGetRequestUri() throws Exception {
-
-    }
-
-    @Test
-    public void testEntity() throws Exception {
-
-    }
-
-    @Test
-    public void testAcceptXml() throws Exception {
-
-    }
-
-    @Test
-    public void testAcceptJson() throws Exception {
-
-    }
-
-    @Test
-    public void testRemoveHeader() throws Exception {
 
     }
 
@@ -88,22 +97,7 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testAddHeader() throws Exception {
-
-    }
-
-    @Test
-    public void testRemoveParameter() throws Exception {
-
-    }
-
-    @Test
     public void testParameter() throws Exception {
-
-    }
-
-    @Test
-    public void testAddParameter() throws Exception {
 
     }
 
@@ -113,7 +107,12 @@ public class HttpRequestBuilderTest {
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void testRemoveHeader() throws Exception {
+
+    }
+
+    @Test
+    public void testRemoveParameter() throws Exception {
 
     }
 }

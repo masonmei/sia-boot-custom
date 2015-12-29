@@ -33,24 +33,6 @@ public class IpTracker {
         this.bandUntilTime = currentTimeInMillis - bandTimeInMillis;
     }
 
-    private void addEntry(long currentTimeInMillis) {
-        fixRange(currentTimeInMillis);
-        timestamps.add(currentTimeInMillis);
-    }
-
-    private void fixRange(long currentTimeInMillis) {
-        List<Long> toRemove = new ArrayList<>();
-        for (Long timestamp : timestamps) {
-            if (timestamp <= currentTimeInMillis - periodInMillis) {
-                toRemove.add(timestamp);
-            }
-        }
-
-        if (toRemove.size() > 0) {
-            timestamps.removeAll(toRemove);
-        }
-    }
-
     /**
      * Check meet the period limitation.
      *
@@ -70,5 +52,23 @@ public class IpTracker {
         }
 
         return false;
+    }
+
+    private void addEntry(long currentTimeInMillis) {
+        fixRange(currentTimeInMillis);
+        timestamps.add(currentTimeInMillis);
+    }
+
+    private void fixRange(long currentTimeInMillis) {
+        List<Long> toRemove = new ArrayList<>();
+        for (Long timestamp : timestamps) {
+            if (timestamp <= currentTimeInMillis - periodInMillis) {
+                toRemove.add(timestamp);
+            }
+        }
+
+        if (toRemove.size() > 0) {
+            timestamps.removeAll(toRemove);
+        }
     }
 }

@@ -1,6 +1,8 @@
-package com.baidu.oped.sia.boot.exception;
+package com.baidu.oped.sia.boot.exception.internal.database;
 
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.DATA_SERVICE_ERROR;
+
+import com.baidu.oped.sia.boot.exception.internal.InternalException;
 
 /**
  * Data Service Exception.

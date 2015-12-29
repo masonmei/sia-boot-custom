@@ -14,16 +14,9 @@ import java.util.List;
  */
 public abstract class ArrayUtils {
 
-    public static final List<Class<?>> WRAPPER_CLASS = Collections.unmodifiableList(Arrays.asList(
-            Boolean.class,
-            Byte.class,
-            Character.class,
-            Short.class,
-            Integer.class,
-            Long.class,
-            Float.class,
-            Double.class
-    ));
+    public static final List<Class<?>> WRAPPER_CLASS = Collections.unmodifiableList(
+            Arrays.asList(Boolean.class, Byte.class, Character.class, Short.class, Integer.class, Long.class,
+                    Float.class, Double.class));
 
     /**
      * Convert String array to the primitive array.
@@ -97,17 +90,6 @@ public abstract class ArrayUtils {
     }
 
     /**
-     * Check if the class is String.
-     *
-     * @param type the class type to check
-     * @return check string result
-     */
-    public static boolean isString(Class<?> type) {
-        Assert.notNull(type, "type must not be null while checking is String");
-        return type == String.class;
-    }
-
-    /**
      * Check if the class is a primitive or wrapper type.
      *
      * @param type type to check
@@ -116,6 +98,17 @@ public abstract class ArrayUtils {
     public static boolean isPrimitiveOrWrapperClass(Class<?> type) {
         Assert.notNull(type, "type must not be null while checking is Primitive or Wrapper");
         return type.isPrimitive() || isWrapperClass(type);
+    }
+
+    /**
+     * Check if the class is String.
+     *
+     * @param type the class type to check
+     * @return check string result
+     */
+    public static boolean isString(Class<?> type) {
+        Assert.notNull(type, "type must not be null while checking is String");
+        return type == String.class;
     }
 
     /**

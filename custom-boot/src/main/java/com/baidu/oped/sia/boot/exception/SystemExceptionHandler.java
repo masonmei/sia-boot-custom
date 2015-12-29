@@ -10,6 +10,7 @@ import static com.baidu.oped.sia.boot.utils.RequestUtils.getTraceSourceSeq;
 import static com.baidu.oped.sia.boot.utils.RequestUtils.getTraceStartTime;
 
 import com.baidu.oped.sia.boot.common.BasicResponse;
+import com.baidu.oped.sia.boot.exception.internal.InternalException;
 import com.baidu.oped.sia.boot.exception.request.BadRequestException;
 import com.baidu.oped.sia.boot.exception.request.UnsupportRequestException;
 
@@ -50,35 +51,15 @@ public class SystemExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(SystemExceptionHandler.class);
 
-    /**
-     * Handle all the category system exception.
-     *
-     * @param exception system exception
-     * @return Entity Response
-     */
-    @ExceptionHandler(SystemException.class)
-    public ResponseEntity<BasicResponse> handleSystemException(SystemException exception) {
-        LOG.warn("SystemException handled", exception);
-        final String localMessage = getLocalMessage(exception.getMessage());
-        final SystemCode systemCode = exception.getCode();
-        BasicResponse.Builder builder = generalResponseBuilder()
-                .code(systemCode).message(localMessage);
-        LOG.info("[exception] {}, error Message: {}", systemCode, localMessage);
+    private static String getLocalMessage(String key) {
+        return getLocalMessage(key, null);
+    }
 
-        if (systemCode == INTERNAL_ERROR) {
-            return new ResponseEntity<>(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        if (systemCode == SystemCode.INVALID_PARAMETER || systemCode == SystemCode.INVALID_PARAMETER_VALUE
-            || systemCode == SystemCode.EXCEED_MAX_RETURN_DATA_POINTS
-            || systemCode == SystemCode.EXCEED_MAX_QUERY_DATA_POINTS) {
-            return new ResponseEntity<>(builder.build(), HttpStatus.BAD_REQUEST);
-        }
-
-        if (systemCode == SystemCode.AUTHENTICATION_ERROR || systemCode == SystemCode.AUTHORIZATION_ERROR) {
-            return new ResponseEntity<>(builder.build(), HttpStatus.FORBIDDEN);
-        }
-
-        return new ResponseEntity<>(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
+    private static String getLocalMessage(String key, Object[] args) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest();
+        RequestContext requestContext = new RequestContext(request);
+        return requestContext.getMessage(key, args);
     }
 
     /**
@@ -92,21 +73,49 @@ public class SystemExceptionHandler extends ResponseEntityExceptionHandler {
         LOG.error("Exception handled", exception);
         final String localMessage = getLocalMessage(INTERNAL_SYS_ERROR);
         final SystemCode systemCode = INTERNAL_ERROR;
-        BasicResponse.Builder builder = generalResponseBuilder()
-                .code(systemCode).message(localMessage);
+        BasicResponse.Builder builder = generalResponseBuilder().code(systemCode).message(localMessage);
         LOG.info("[exception] {}, error Message: {}", systemCode, localMessage);
+        return new ResponseEntity<>(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Handle all the category system exception.
+     *
+     * @param exception system exception
+     * @return Entity Response
+     */
+    @ExceptionHandler(SystemException.class)
+    public ResponseEntity<BasicResponse> handleSystemException(SystemException exception) {
+        LOG.warn("SystemException handled", exception);
+        final String localMessage = getLocalMessage(exception.getMessage());
+        final SystemCode systemCode = exception.getCode();
+        BasicResponse.Builder builder = generalResponseBuilder().code(systemCode).message(localMessage);
+        LOG.info("[exception] {}, error Message: {}", systemCode, localMessage);
+
+        if (systemCode == INTERNAL_ERROR) {
+            return new ResponseEntity<>(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if (systemCode == SystemCode.INVALID_PARAMETER || systemCode == SystemCode.INVALID_PARAMETER_VALUE
+                || systemCode == SystemCode.EXCEED_MAX_RETURN_DATA_POINTS
+                || systemCode == SystemCode.EXCEED_MAX_QUERY_DATA_POINTS) {
+            return new ResponseEntity<>(builder.build(), HttpStatus.BAD_REQUEST);
+        }
+
+        if (systemCode == SystemCode.AUTHENTICATION_ERROR || systemCode == SystemCode.AUTHORIZATION_ERROR) {
+            return new ResponseEntity<>(builder.build(), HttpStatus.FORBIDDEN);
+        }
+
         return new ResponseEntity<>(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-                                                             HttpStatus status, WebRequest request) {
+            HttpStatus status, WebRequest request) {
         LOG.error("Exception handled", ex);
         final SystemException exception = convertException(ex);
         final SystemCode systemCode = exception.getCode();
         final String localMessage = getLocalMessage(exception.getMessage());
-        BasicResponse.Builder builder = generalResponseBuilder()
-                .code(systemCode).message(localMessage);
+        BasicResponse.Builder builder = generalResponseBuilder().code(systemCode).message(localMessage);
         LOG.info("[exception] {}, error Message: {}", systemCode, localMessage);
 
         return new ResponseEntity<>(builder.build(), headers, status);
@@ -124,34 +133,18 @@ public class SystemExceptionHandler extends ResponseEntityExceptionHandler {
             return new UnsupportRequestException(
                     get().with("MediaType").comma(exception.getSupportedMediaTypes()).args());
         } else if (ex instanceof MissingServletRequestParameterException
-                   || ex instanceof HttpMediaTypeNotAcceptableException
-                   || ex instanceof ServletRequestBindingException
-                   || ex instanceof TypeMismatchException
-                   || ex instanceof HttpMessageNotReadableException
-                   || ex instanceof MethodArgumentNotValidException
-                   || ex instanceof MissingServletRequestPartException
-                   || ex instanceof BindException) {
+                || ex instanceof HttpMediaTypeNotAcceptableException || ex instanceof ServletRequestBindingException
+                || ex instanceof TypeMismatchException || ex instanceof HttpMessageNotReadableException
+                || ex instanceof MethodArgumentNotValidException || ex instanceof MissingServletRequestPartException
+                || ex instanceof BindException) {
             return new BadRequestException();
         } else {
             return new InternalException();
         }
     }
 
-    private static String getLocalMessage(String key) {
-        return getLocalMessage(key, null);
-    }
-
-    private static String getLocalMessage(String key, Object[] args) {
-        HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        RequestContext requestContext = new RequestContext(request);
-        return requestContext.getMessage(key, args);
-    }
-
     private BasicResponse.Builder generalResponseBuilder() {
-        return BasicResponse.builder().requestId(getTraceId())
-                .traceStartTime(getTraceStartTime())
-                .traceSourceIp(getTraceSourceIp())
-                .traceSourceSeq(getTraceSourceSeq());
+        return BasicResponse.builder().requestId(getTraceId()).traceStartTime(getTraceStartTime())
+                .traceSourceIp(getTraceSourceIp()).traceSourceSeq(getTraceSourceSeq());
     }
 }

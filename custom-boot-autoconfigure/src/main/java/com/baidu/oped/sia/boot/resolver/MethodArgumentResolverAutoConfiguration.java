@@ -22,9 +22,9 @@ import java.util.List;
  */
 @Configuration
 @ConditionalOnProperty(prefix = ARGS_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @ConditionalOnClass({ResolvableHandlerInterceptor.class})
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
 public class MethodArgumentResolverAutoConfiguration {

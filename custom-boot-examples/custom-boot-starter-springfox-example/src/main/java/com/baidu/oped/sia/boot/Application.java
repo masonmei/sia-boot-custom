@@ -20,22 +20,16 @@ public class Application {
     }
 
     @RequestMapping(value = {"api"},
-                    method = RequestMethod.GET)
-    public String api(
-            @ApiParam(value = "value",
-                      required = true)
-            @RequestParam("value")
-            String value) {
+            method = RequestMethod.GET)
+    public String api(@ApiParam(value = "value",
+            required = true) @RequestParam("value") String value) {
         return "api : " + value;
     }
 
     @RequestMapping(value = {"test"},
-                    method = RequestMethod.GET)
-    public String test(
-            @ApiParam(value = "value",
-                      required = true)
-            @RequestParam("value")
-            String value) {
+            method = RequestMethod.GET)
+    public String test(@ApiParam(value = "value",
+            required = true) @RequestParam("value") String value) {
         return "api : " + value;
     }
 }

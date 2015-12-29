@@ -35,6 +35,18 @@ public class IamAccessControl {
         return true;
     }
 
+    /**
+     * Set ignored url paths.
+     *
+     * @param ignoredUrls ignored url paths
+     */
+    public void setIgnoredUrls(List<String> ignoredUrls) {
+        if (ignoredUrls != null) {
+            this.ignoredUrls.clear();
+            this.ignoredUrls.addAll(ignoredUrls);
+        }
+    }
+
     private boolean matchUrlPattern(String urlPattern, String url) {
         if (urlPattern == null) {
             return false;
@@ -55,18 +67,6 @@ public class IamAccessControl {
             }
         }
         return urlPattern.equals(url);
-    }
-
-    /**
-     * Set ignored url paths.
-     *
-     * @param ignoredUrls ignored url paths
-     */
-    public void setIgnoredUrls(List<String> ignoredUrls) {
-        if (ignoredUrls != null) {
-            this.ignoredUrls.clear();
-            this.ignoredUrls.addAll(ignoredUrls);
-        }
     }
 
 }

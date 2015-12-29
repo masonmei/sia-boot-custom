@@ -8,14 +8,14 @@ package com.baidu.oped.sia.boot.common;
 public interface Reloadable<T extends ConfigProperties> {
 
     /**
-     * Reload the reload object.
-     */
-    void reload();
-
-    /**
      * Get the reload object.
      *
      * @return the reload object
      */
     T getReload();
+
+    /**
+     * Reload the reload object.
+     */
+    void reload();
 }

@@ -32,8 +32,8 @@ import java.util.List;
  *
  * @author mason
  */
-public class LogbackAccessLogReceiver extends ContextBase implements AccessLogReceiver,
-        AppenderAttachable<IAccessEvent>, FilterAttachable<IAccessEvent> {
+public class LogbackAccessLogReceiver extends ContextBase
+        implements AccessLogReceiver, AppenderAttachable<IAccessEvent>, FilterAttachable<IAccessEvent> {
     public static final String DEFAULT_CONFIG_FILE = "conf" + File.separatorChar + "logback-access.xml";
     boolean started = false;
     boolean quiet = false;
@@ -113,6 +113,14 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         this.resource = resource;
     }
 
+    public boolean isQuiet() {
+        return quiet;
+    }
+
+    public void setQuiet(boolean quiet) {
+        this.quiet = quiet;
+    }
+
     @Override
     public void logMessage(String message) {
         HttpServletRequestImpl request = ServletRequestContext.current().getOriginalRequest();
@@ -163,23 +171,6 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         }
     }
 
-    public boolean isQuiet() {
-        return quiet;
-    }
-
-    public void setQuiet(boolean quiet) {
-        this.quiet = quiet;
-    }
-
-    private void registerShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                stop();
-            }
-        }));
-    }
-
     /**
      * Resolver the configuration file.
      *
@@ -214,6 +205,23 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         return FileUtil.fileToURL(file);
     }
 
+    private void addError(String msg) {
+        getStatusManager().add(new ErrorStatus(msg, this));
+    }
+
+    private void addInfo(String msg) {
+        getStatusManager().add(new InfoStatus(msg, this));
+    }
+
+    private void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                stop();
+            }
+        }));
+    }
+
     private void runJoranOnFile(URL configUrl) {
         try {
             JoranConfigurator jc = new JoranConfigurator();
@@ -225,14 +233,6 @@ public class LogbackAccessLogReceiver extends ContextBase implements AccessLogRe
         } catch (JoranException e) {
             // errors have been registered as status messages
         }
-    }
-
-    private void addError(String msg) {
-        getStatusManager().add(new ErrorStatus(msg, this));
-    }
-
-    private void addInfo(String msg) {
-        getStatusManager().add(new InfoStatus(msg, this));
     }
 
 }

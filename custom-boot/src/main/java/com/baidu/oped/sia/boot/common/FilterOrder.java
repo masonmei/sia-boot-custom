@@ -15,13 +15,7 @@ public abstract class FilterOrder {
     public static final String LOG_HEADER = "log_header";
     public static final String DECODE = "decode";
 
-    private static final List<String> KEYS = Arrays.asList(
-            IP_LIST,
-            IP_LIMIT,
-            DECODE,
-            IAM,
-            LOG_HEADER
-    );
+    private static final List<String> KEYS = Arrays.asList(IP_LIST, IP_LIMIT, DECODE, IAM, LOG_HEADER);
 
     public static int getOrder(String key) {
         return KEYS.indexOf(key) + 1;

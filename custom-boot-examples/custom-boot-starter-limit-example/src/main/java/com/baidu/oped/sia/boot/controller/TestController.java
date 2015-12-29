@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
 public class TestController {
 
     @RequestMapping(value = "async/callable",
-                    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public Callable<String> asyncCallable() {
         return new Callable<String>() {
             @Override
@@ -26,19 +26,19 @@ public class TestController {
         };
     }
 
+    @RequestMapping(value = "async/result",
+            method = RequestMethod.GET)
+    public AsyncResult<String> asyncResult() {
+        return new AsyncResult<>(printCurrentTimestamp());
+    }
+
     @Profiling
     public String printCurrentTimestamp() {
         return String.format("current time is : %d", System.currentTimeMillis());
     }
 
-    @RequestMapping(value = "async/result",
-                    method = RequestMethod.GET)
-    public AsyncResult<String> asyncResult() {
-        return new AsyncResult<>(printCurrentTimestamp());
-    }
-
     @RequestMapping(value = "sync/future",
-                    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public String syncFuture() {
         return printCurrentTimestamp();
     }

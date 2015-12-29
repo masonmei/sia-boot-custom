@@ -23,6 +23,22 @@ public abstract class ResolverUtils {
      */
     private static final Map<Class<?>, Field[]> DECLARED_FIELDS_CACHE = new ConcurrentReferenceHashMap<>(256);
 
+    private static Field[] filter(Field[] fields) {
+        if (fields == null) {
+            return new Field[0];
+        }
+
+        List<Field> fieldList = new ArrayList<>(fields.length);
+        for (Field field : fields) {
+            int modifiers = field.getModifiers();
+            if (isFinal(field.getModifiers()) || isStatic(modifiers)) {
+                continue;
+            }
+            fieldList.add(field);
+        }
+        return fieldList.toArray(new Field[fieldList.size()]);
+    }
+
     /**
      * Get all the modifiable fields of the given.
      *
@@ -42,22 +58,6 @@ public abstract class ResolverUtils {
         return result;
     }
 
-    private static Field[] filter(Field[] fields) {
-        if (fields == null) {
-            return new Field[0];
-        }
-
-        List<Field> fieldList = new ArrayList<>(fields.length);
-        for (Field field : fields) {
-            int modifiers = field.getModifiers();
-            if (isFinal(field.getModifiers()) || isStatic(modifiers)) {
-                continue;
-            }
-            fieldList.add(field);
-        }
-        return fieldList.toArray(new Field[fieldList.size()]);
-    }
-
     /**
      * Make the given field accessible, explicitly setting it accessible if
      * necessary. The {@code setAccessible(true)} method is only called
@@ -68,8 +68,7 @@ public abstract class ResolverUtils {
      * @see java.lang.reflect.Field#setAccessible
      */
     public static void makeAccessible(Field field) {
-        if ((!Modifier.isPublic(field.getModifiers())
-                || !Modifier.isPublic(field.getDeclaringClass().getModifiers())
+        if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers())
                 || Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
             field.setAccessible(true);
         }

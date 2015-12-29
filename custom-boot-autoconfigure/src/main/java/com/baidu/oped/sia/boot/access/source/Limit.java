@@ -16,20 +16,20 @@ public class Limit {
     private RequestMethod[] methods = new RequestMethod[0];
     private List<Range> ranges = new ArrayList<>();
 
-    public String[] getPaths() {
-        return paths;
-    }
-
-    public void setPaths(String[] paths) {
-        this.paths = paths;
-    }
-
     public RequestMethod[] getMethods() {
         return methods;
     }
 
     public void setMethods(RequestMethod[] methods) {
         this.methods = methods;
+    }
+
+    public String[] getPaths() {
+        return paths;
+    }
+
+    public void setPaths(String[] paths) {
+        this.paths = paths;
     }
 
     public List<Range> getRanges() {

@@ -46,7 +46,7 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
      * @param traceSourceSeqHeaderName trace source sequence header name
      */
     public TraceFilter(String traceHeaderName, String traceTimestampHeaderName, String traceSourceIpHeaderName,
-                       String traceSourceSeqHeaderName) {
+            String traceSourceSeqHeaderName) {
         if (StringUtils.isEmpty(traceHeaderName)) {
             traceHeaderName = Constrains.TRACE_HEADER_NAME;
         }
@@ -74,12 +74,41 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
         return Ordered.HIGHEST_PRECEDENCE;
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        preProcess(request, response);
-        filterChain.doFilter(request, response);
-        postProcess(request, response);
+    /**
+     * Post process for tracing.
+     *
+     * @param request  the request
+     * @param response the response
+     */
+    public void postProcess(HttpServletRequest request, HttpServletResponse response) {
+        String responseTraceId = response.getHeader(traceHeaderName);
+        String responseTraceTimestamp = response.getHeader(traceTimestampHeaderName);
+
+        String threadTraceId = RequestInfoHolder.traceId();
+        Long threadTraceTimestamp = RequestInfoHolder.traceTimestamp();
+
+        if (!threadTraceId.equals(responseTraceId)) {
+            LOG.error("traceId changed, traceId: {}, responseTraceId: {}", threadTraceId, responseTraceId);
+            response.setHeader(traceHeaderName, threadTraceId);
+        }
+
+        if (!format("%s", threadTraceTimestamp).equals(responseTraceTimestamp)) {
+            LOG.error("traceTimestamp changed, traceTimestamp: {}, responseTimestamp: {}", threadTraceTimestamp,
+                    responseTraceTimestamp);
+            response.setDateHeader(traceTimestampHeaderName, threadTraceTimestamp);
+        }
+
+        long timeUsed = Calendar.getInstance().getTimeInMillis() - Long.parseLong(responseTraceTimestamp);
+        LOG.info("request afterCompletion, method: {}, url: {}, status: {}, time: {}ms", request.getMethod(),
+                request.getRequestURI(), response.getStatus(), timeUsed);
+        MDC.remove("requestId");
+        MDC.remove("traceTimestamp");
+        MDC.remove("traceSourceIp");
+        MDC.remove("traceSourceSeq");
+        RequestInfoHolder.removeTraceTimestamp();
+        RequestInfoHolder.removeTraceId();
+        RequestInfoHolder.removeTraceSourceIp();
+        RequestInfoHolder.removeTraceSequence();
     }
 
     /**
@@ -105,8 +134,8 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
             if (currentTimeInMillis <= 0) {
                 currentTimeInMillis = Calendar.getInstance().getTimeInMillis();
                 RequestInfoHolder.setTraceTimestamp(currentTimeInMillis);
-                LOG.info("{} not found in header, generate traceStartTimestamp: {}",
-                        traceTimestampHeaderName, currentTimeInMillis);
+                LOG.info("{} not found in header, generate traceStartTimestamp: {}", traceTimestampHeaderName,
+                        currentTimeInMillis);
             }
             response.setHeader(traceTimestampHeaderName, format("%d", currentTimeInMillis));
             MDC.put("traceTimestamp", format("%d", currentTimeInMillis));
@@ -130,40 +159,11 @@ public class TraceFilter extends OncePerRequestFilter implements Ordered {
         LOG.info("request preHandle, method: {}, url: {}", request.getMethod(), request.getRequestURI());
     }
 
-    /**
-     * Post process for tracing.
-     *
-     * @param request  the request
-     * @param response the response
-     */
-    public void postProcess(HttpServletRequest request, HttpServletResponse response) {
-        String responseTraceId = response.getHeader(traceHeaderName);
-        String responseTraceTimestamp = response.getHeader(traceTimestampHeaderName);
-
-        String threadTraceId = RequestInfoHolder.traceId();
-        Long threadTraceTimestamp = RequestInfoHolder.traceTimestamp();
-
-        if (!threadTraceId.equals(responseTraceId)) {
-            LOG.error("traceId changed, traceId: {}, responseTraceId: {}", threadTraceId, responseTraceId);
-            response.setHeader(traceHeaderName, threadTraceId);
-        }
-
-        if (!format("%s", threadTraceTimestamp).equals(responseTraceTimestamp)) {
-            LOG.error("traceTimestamp changed, traceTimestamp: {}, responseTimestamp: {}",
-                    threadTraceTimestamp, responseTraceTimestamp);
-            response.setDateHeader(traceTimestampHeaderName, threadTraceTimestamp);
-        }
-
-        long timeUsed = Calendar.getInstance().getTimeInMillis() - Long.parseLong(responseTraceTimestamp);
-        LOG.info("request afterCompletion, method: {}, url: {}, status: {}, time: {}ms", request.getMethod(),
-                request.getRequestURI(), response.getStatus(), timeUsed);
-        MDC.remove("requestId");
-        MDC.remove("traceTimestamp");
-        MDC.remove("traceSourceIp");
-        MDC.remove("traceSourceSeq");
-        RequestInfoHolder.removeTraceTimestamp();
-        RequestInfoHolder.removeTraceId();
-        RequestInfoHolder.removeTraceSourceIp();
-        RequestInfoHolder.removeTraceSequence();
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        preProcess(request, response);
+        filterChain.doFilter(request, response);
+        postProcess(request, response);
     }
 }

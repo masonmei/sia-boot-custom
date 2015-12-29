@@ -7,7 +7,9 @@ import com.google.common.base.Objects;
 import org.springframework.util.Assert;
 
 /**
- * Created by mason on 12/16/15.
+ * Bcc VM Details information request.
+ *
+ * @author mason
  */
 public class BccVmDetailRequest {
     public static final String BCC_AUTH_HEADER_NAME = "X-Auth-Token";
@@ -32,6 +34,11 @@ public class BccVmDetailRequest {
         this.endpoint = endpoint;
     }
 
+    /**
+     * Get the request target.
+     *
+     * @return request target uri
+     */
     public String getRequestTarget() {
         Assert.hasLength(endpoint, "UserName must have length.");
         Assert.hasLength(vmUuid, "Password must have length.");
@@ -54,25 +61,21 @@ public class BccVmDetailRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        BccVmDetailRequest that = (BccVmDetailRequest) o;
-        return Objects.equal(endpoint, that.endpoint)
-                && Objects.equal(vmUuid, that.vmUuid)
-                && Objects.equal(authToken, that.authToken);
+        BccVmDetailRequest that = (BccVmDetailRequest) other;
+        return Objects.equal(endpoint, that.endpoint) && Objects.equal(vmUuid, that.vmUuid) && Objects
+                .equal(authToken, that.authToken);
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("endpoint", endpoint)
-                .add("vmUuid", vmUuid)
-                .add("authToken", authToken)
-                .toString();
+        return MoreObjects.toStringHelper(this).add("endpoint", endpoint).add("vmUuid", vmUuid)
+                .add("authToken", authToken).toString();
     }
 }

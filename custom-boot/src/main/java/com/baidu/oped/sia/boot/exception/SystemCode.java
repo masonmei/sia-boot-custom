@@ -31,12 +31,12 @@ public enum SystemCode {
         this.statusCode = statusCode;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public HttpStatus[] getStatusCode() {
         return Arrays.copyOf(statusCode, statusCode.length);
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override

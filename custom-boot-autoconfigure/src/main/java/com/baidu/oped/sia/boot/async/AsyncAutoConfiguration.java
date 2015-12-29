@@ -27,9 +27,9 @@ import java.util.concurrent.Executor;
 @ConditionalOnWebApplication
 @EnableAsync
 @ConditionalOnProperty(prefix = ASYNC_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableConfigurationProperties(AsyncProperties.class)
 public class AsyncAutoConfiguration implements AsyncConfigurer {
     public static final Logger LOG = LoggerFactory.getLogger(AsyncAutoConfiguration.class);

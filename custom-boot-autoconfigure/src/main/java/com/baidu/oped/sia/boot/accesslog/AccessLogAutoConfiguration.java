@@ -70,8 +70,7 @@ public class AccessLogAutoConfiguration {
             }
 
             if (container instanceof UndertowEmbeddedServletContainerFactory) {
-                UndertowEmbeddedServletContainerFactory factory =
-                        (UndertowEmbeddedServletContainerFactory) container;
+                UndertowEmbeddedServletContainerFactory factory = (UndertowEmbeddedServletContainerFactory) container;
                 factory.addDeploymentInfoCustomizers(new UndertowDeploymentInfoCustomizer() {
                     @Override
                     public void customize(DeploymentInfo deploymentInfo) {

@@ -1,4 +1,4 @@
-package com.baidu.oped.sia.boot.exception.internal;
+package com.baidu.oped.sia.boot.exception.internal.config;
 
 import static com.baidu.oped.sia.boot.exception.SystemCode.INCORRECT_CONFIGURATION;
 

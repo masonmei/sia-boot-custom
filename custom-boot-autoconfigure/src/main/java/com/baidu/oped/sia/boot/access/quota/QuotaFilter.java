@@ -27,9 +27,7 @@ public class QuotaFilter extends OncePerRequestFilter {
 
     QuotaFilter(LimiterConfig limiterConfig) {
         Assert.notNull(limiterConfig, "LimitConfig must not be null.");
-        this.ipStats = new IpStats(
-                limiterConfig.getMaxRequestsPerPeriod(),
-                limiterConfig.getPeriodInMs(),
+        this.ipStats = new IpStats(limiterConfig.getMaxRequestsPerPeriod(), limiterConfig.getPeriodInMs(),
                 limiterConfig.getBandTimeInMs());
     }
 

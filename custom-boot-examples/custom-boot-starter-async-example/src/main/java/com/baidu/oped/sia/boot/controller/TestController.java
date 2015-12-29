@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.Callable;
 
 /**
- * Created by mason on 11/5/15.
+ * Test controller.
+ *
+ * @author mason
  */
 @RestController
 public class TestController {
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
     @RequestMapping(value = "async/callable",
-                    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public Callable<String> asyncCallable() {
         return new Callable<String>() {
             @Override
@@ -27,6 +29,12 @@ public class TestController {
         };
     }
 
+    @RequestMapping(value = "async/result",
+            method = RequestMethod.GET)
+    public AsyncResult<String> asyncResult() {
+        return new AsyncResult<>(printCurrentTimestamp());
+    }
+
     private String printCurrentTimestamp() {
         try {
             Thread.sleep(1000L);
@@ -34,12 +42,6 @@ public class TestController {
             LOG.warn("sleep failed.");
         }
         return String.format("current time is : %d", System.currentTimeMillis());
-    }
-
-    @RequestMapping(value = "async/result",
-                    method = RequestMethod.GET)
-    public AsyncResult<String> asyncResult() {
-        return new AsyncResult<>(printCurrentTimestamp());
     }
 
 }

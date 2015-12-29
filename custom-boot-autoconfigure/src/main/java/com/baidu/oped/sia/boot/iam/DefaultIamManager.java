@@ -119,6 +119,22 @@ public class DefaultIamManager implements IamManager {
         return true;
     }
 
+    public void setIamClient(IamClient iamClient) {
+        this.iamClient = iamClient;
+    }
+
+    /**
+     * Set the Service Accounts to Iam Manager.
+     *
+     * @param serviceAccounts service accounts
+     */
+    public void setServiceAccounts(List<IamProperties.ServiceAccount> serviceAccounts) {
+        this.serviceAccountMap.clear();
+        for (IamProperties.ServiceAccount serviceAccount : serviceAccounts) {
+            this.serviceAccountMap.put(serviceAccount.getUserId(), serviceAccount);
+        }
+    }
+
     private SignatureAuthentication.Request buildSignatureAuthenticationRequest(HttpServletRequest request) {
         SignatureAuthentication.Request userRequest = new SignatureAuthentication.Request();
         userRequest.setUri(request.getRequestURI());
@@ -162,21 +178,5 @@ public class DefaultIamManager implements IamManager {
             return null;
         }
         return serviceAccount.getScope();
-    }
-
-    public void setIamClient(IamClient iamClient) {
-        this.iamClient = iamClient;
-    }
-
-    /**
-     * Set the Service Accounts to Iam Manager.
-     *
-     * @param serviceAccounts service accounts
-     */
-    public void setServiceAccounts(List<IamProperties.ServiceAccount> serviceAccounts) {
-        this.serviceAccountMap.clear();
-        for (IamProperties.ServiceAccount serviceAccount : serviceAccounts) {
-            this.serviceAccountMap.put(serviceAccount.getUserId(), serviceAccount);
-        }
     }
 }

@@ -113,10 +113,7 @@ public class I18nProperties {
 
         @Override
         public String toString() {
-            return MoreObjects.toStringHelper(this)
-                    .add("name", name)
-                    .add("maxAge", maxAge)
-                    .add("domain", domain)
+            return MoreObjects.toStringHelper(this).add("name", name).add("maxAge", maxAge).add("domain", domain)
                     .toString();
         }
     }

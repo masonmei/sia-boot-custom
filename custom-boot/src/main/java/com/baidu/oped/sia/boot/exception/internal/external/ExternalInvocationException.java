@@ -1,6 +1,8 @@
-package com.baidu.oped.sia.boot.exception;
+package com.baidu.oped.sia.boot.exception.internal.external;
 
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.EXTERNAL_SERVICE_ERROR;
+
+import com.baidu.oped.sia.boot.exception.internal.InternalException;
 
 /**
  * External Service Invocation Exception.

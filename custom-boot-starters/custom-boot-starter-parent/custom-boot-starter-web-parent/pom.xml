@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>custom-boot-starter-parent</artifactId>
@@ -168,39 +168,39 @@
                 </executions>
             </plugin>
             <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>cobertura-maven-plugin</artifactId>-->
-                <!--<version>2.7</version>-->
-                <!--<configuration>-->
-                    <!--<check>-->
-                        <!--<branchRate>85</branchRate>-->
-                        <!--<lineRate>85</lineRate>-->
-                        <!--<haltOnFailure>true</haltOnFailure>-->
-                        <!--<totalBranchRate>85</totalBranchRate>-->
-                        <!--<totalLineRate>85</totalLineRate>-->
-                        <!--<packageLineRate>85</packageLineRate>-->
-                        <!--<packageBranchRate>85</packageBranchRate>-->
-                    <!--</check>-->
-                    <!--<instrumentation>-->
-                        <!--<excludes>-->
-                            <!--<exclude>**/Application.class</exclude>-->
-                            <!--<exclude>**/mvc/dto/*.class</exclude>-->
-                            <!--<exclude>**/domain/entity/*.class</exclude>-->
-                        <!--</excludes>-->
-                    <!--</instrumentation>-->
-                    <!--<formats>-->
-                        <!--<format>html</format>-->
-                        <!--<format>xml</format>-->
-                    <!--</formats>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>clean</goal>-->
-                            <!--<goal>check</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>cobertura-maven-plugin</artifactId>-->
+            <!--<version>2.7</version>-->
+            <!--<configuration>-->
+            <!--<check>-->
+            <!--<branchRate>85</branchRate>-->
+            <!--<lineRate>85</lineRate>-->
+            <!--<haltOnFailure>true</haltOnFailure>-->
+            <!--<totalBranchRate>85</totalBranchRate>-->
+            <!--<totalLineRate>85</totalLineRate>-->
+            <!--<packageLineRate>85</packageLineRate>-->
+            <!--<packageBranchRate>85</packageBranchRate>-->
+            <!--</check>-->
+            <!--<instrumentation>-->
+            <!--<excludes>-->
+            <!--<exclude>**/Application.class</exclude>-->
+            <!--<exclude>**/mvc/dto/*.class</exclude>-->
+            <!--<exclude>**/domain/entity/*.class</exclude>-->
+            <!--</excludes>-->
+            <!--</instrumentation>-->
+            <!--<formats>-->
+            <!--<format>html</format>-->
+            <!--<format>xml</format>-->
+            <!--</formats>-->
+            <!--</configuration>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<goals>-->
+            <!--<goal>clean</goal>-->
+            <!--<goal>check</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
             <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

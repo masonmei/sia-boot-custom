@@ -36,11 +36,8 @@ public class Label implements ConfigProperties {
     }
 
     @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("blacks", blacks)
-                .add("whites", whites)
-                .toString();
+    public int hashCode() {
+        return Objects.hashCode(blacks, whites);
     }
 
     @Override
@@ -52,12 +49,11 @@ public class Label implements ConfigProperties {
             return false;
         }
         Label label = (Label) other;
-        return Objects.equal(blacks, label.blacks)
-               && Objects.equal(whites, label.whites);
+        return Objects.equal(blacks, label.blacks) && Objects.equal(whites, label.whites);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(blacks, whites);
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("blacks", blacks).add("whites", whites).toString();
     }
 }

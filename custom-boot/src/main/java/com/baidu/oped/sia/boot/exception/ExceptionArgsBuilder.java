@@ -75,18 +75,6 @@ public class ExceptionArgsBuilder {
      * @param <T>    the Param type
      * @return the instance with new param added
      */
-    public <T> ExceptionArgsBuilder or(Collection<T> params) {
-        this.params.add(join("or", params));
-        return this;
-    }
-
-    /**
-     * join the params with an or syntax.
-     *
-     * @param params the param to be join together
-     * @param <T>    the Param type
-     * @return the instance with new param added
-     */
     @SafeVarargs
     public final <T> ExceptionArgsBuilder comma(T... params) {
         this.params.add(join(", ", params));
@@ -102,6 +90,18 @@ public class ExceptionArgsBuilder {
      */
     public <T> ExceptionArgsBuilder comma(Collection<T> params) {
         this.params.add(join(", ", params));
+        return this;
+    }
+
+    /**
+     * join the params with an or syntax.
+     *
+     * @param params the param to be join together
+     * @param <T>    the Param type
+     * @return the instance with new param added
+     */
+    public <T> ExceptionArgsBuilder or(Collection<T> params) {
+        this.params.add(join("or", params));
         return this;
     }
 
@@ -183,8 +183,8 @@ public class ExceptionArgsBuilder {
      * Add the decimeter joined params to arguments.
      *
      * @param decimeter decimeter
-     * @param params the param to be join together
-     * @param <T>    the Param type
+     * @param params    the param to be join together
+     * @param <T>       the Param type
      * @return the instance with new param added
      */
     public <T> ExceptionArgsBuilder with(String decimeter, List<T> params) {

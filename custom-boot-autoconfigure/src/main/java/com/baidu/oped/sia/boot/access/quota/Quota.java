@@ -26,8 +26,12 @@ public class Quota implements ConfigProperties {
     private int period = 10;
     private int bandTime = 60;
 
-    public int getQuota() {
-        return quota;
+    public int getBandTime() {
+        return bandTime;
+    }
+
+    public void setBandTime(int bandTime) {
+        this.bandTime = bandTime;
     }
 
     public Level getLevel() {
@@ -38,14 +42,6 @@ public class Quota implements ConfigProperties {
         this.level = level;
     }
 
-    public String[] getPaths() {
-        return Arrays.copyOf(paths, paths.length);
-    }
-
-    public void setPaths(String[] paths) {
-        this.paths = paths;
-    }
-
     public RequestMethod[] getMethods() {
         return Arrays.copyOf(methods, methods.length);
     }
@@ -54,8 +50,12 @@ public class Quota implements ConfigProperties {
         this.methods = methods;
     }
 
-    public void setQuota(int quota) {
-        this.quota = quota;
+    public String[] getPaths() {
+        return Arrays.copyOf(paths, paths.length);
+    }
+
+    public void setPaths(String[] paths) {
+        this.paths = paths;
     }
 
     public int getPeriod() {
@@ -66,24 +66,17 @@ public class Quota implements ConfigProperties {
         this.period = period;
     }
 
-    public int getBandTime() {
-        return bandTime;
+    public int getQuota() {
+        return quota;
     }
 
-    public void setBandTime(int bandTime) {
-        this.bandTime = bandTime;
+    public void setQuota(int quota) {
+        this.quota = quota;
     }
 
     @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("level", level)
-                .add("paths", paths)
-                .add("methods", methods)
-                .add("quota", quota)
-                .add("period", period)
-                .add("bandTime", bandTime)
-                .toString();
+    public int hashCode() {
+        return Objects.hashCode(level, paths, methods, quota, period, bandTime);
     }
 
     @Override
@@ -95,16 +88,13 @@ public class Quota implements ConfigProperties {
             return false;
         }
         Quota quota1 = (Quota) other;
-        return quota == quota1.quota
-               && period == quota1.period
-               && bandTime == quota1.bandTime
-               && level == quota1.level
-               && Objects.equal(paths, quota1.paths)
-               && Objects.equal(methods, quota1.methods);
+        return quota == quota1.quota && period == quota1.period && bandTime == quota1.bandTime && level == quota1.level
+                && Objects.equal(paths, quota1.paths) && Objects.equal(methods, quota1.methods);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(level, paths, methods, quota, period, bandTime);
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("level", level).add("paths", paths).add("methods", methods)
+                .add("quota", quota).add("period", period).add("bandTime", bandTime).toString();
     }
 }

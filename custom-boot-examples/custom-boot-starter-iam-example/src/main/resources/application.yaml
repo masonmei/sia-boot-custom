@@ -11,6 +11,7 @@ custom:
       username: bcm
       password: bcm
       domain: default
+      project-id: 169234e2b69945e0a24e45eab9926262
       cache-ttl: 300
       max-cache-size: 10000
       token-discard-ttl: 30

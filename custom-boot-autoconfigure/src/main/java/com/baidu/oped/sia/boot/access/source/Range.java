@@ -16,19 +16,19 @@ public class Range implements ConfigProperties {
     private Type type;
     private List<String> ranges = new ArrayList<>();
 
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
     public List<String> getRanges() {
         return ranges;
     }
 
     public void setRanges(List<String> ranges) {
         this.ranges = ranges;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

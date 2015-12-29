@@ -2,11 +2,17 @@ package com.baidu.oped.sia.boot.iam;
 
 import static com.baidu.oped.sia.boot.utils.Constrains.ENABLED;
 import static com.baidu.oped.sia.boot.utils.Constrains.IAM_PREFIX;
+import static com.baidu.oped.sia.boot.utils.Constrains.REWRITE_PREFIX;
 
 import com.baidu.bce.iam.IamClient;
 import com.baidu.bce.iam.IamClientConfiguration;
+import com.baidu.oped.sia.boot.client.http.HttpClient;
 import com.baidu.oped.sia.boot.common.FilterOrder;
+import com.baidu.oped.sia.boot.iam.internal.IamAuthRequest;
+import com.baidu.oped.sia.boot.iam.internal.IamBccContext;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,7 +21,10 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -114,21 +123,52 @@ public class IamAutoConfiguration {
         return iamManager;
     }
 
+    @Bean
+    @ConditionalOnProperty(prefix = REWRITE_PREFIX,
+            name = ENABLED,
+            havingValue = "true",
+            matchIfMissing = false)
+    IamBccContext iamBccContext() {
+        IamAuthRequest request = new IamAuthRequest();
+        request.setProtocol(properties.getProtocol());
+        request.setHost(properties.getHost());
+        request.setPort(properties.getPort());
+        request.setUsername(properties.getUsername());
+        request.setPassword(properties.getPassword());
+        request.setProjectId(properties.getProjectId());
+
+        return new IamBccContext(request, httpClient());
+    }
+
+    private HttpClient httpClient() {
+        HttpClient client = new HttpClient();
+        client.setTimeout(1000);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        objectMapper.setDateFormat(format);
+
+        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+        messageConverter.setObjectMapper(objectMapper);
+
+        client.getRestTemplate().getMessageConverters().clear();
+        client.getRestTemplate().getMessageConverters().add(messageConverter);
+        return client;
+    }
+
     private IamClient iamClient() {
         if (properties.isEnabled()) {
             IamClientConfiguration configuration = new IamClientConfiguration();
-            configuration.withHost(properties.getHost())
-                    .withPort(properties.getPort())
-                    .withUserName(properties.getUsername())
-                    .withPassword(properties.getPassword())
-                    .withDefaultDomain(properties.getDomain())
-                    .withTokenDiscardTtl(properties.getTokenDiscardTtl())
-                    .withCacheTtl(properties.getCacheTtl())
-                    .withMaxCacheSize(properties.getMaxCacheSize());
+            configuration.withHost(properties.getHost()).withPort(properties.getPort())
+                    .withUserName(properties.getUsername()).withPassword(properties.getPassword())
+                    .withDefaultDomain(properties.getDomain()).withTokenDiscardTtl(properties.getTokenDiscardTtl())
+                    .withCacheTtl(properties.getCacheTtl()).withMaxCacheSize(properties.getMaxCacheSize());
             return new IamClient(configuration);
         }
         return null;
     }
-
 
 }

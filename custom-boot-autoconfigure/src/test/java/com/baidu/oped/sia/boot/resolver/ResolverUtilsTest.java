@@ -47,12 +47,12 @@ public class ResolverUtilsTest {
         System.out.println(target);
     }
 
-    private void doNothing() {
+    @Test
+    public void testMakeAccessible() throws Exception {
 
     }
 
-    @Test
-    public void testMakeAccessible() throws Exception {
+    private void doNothing() {
 
     }
 

@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by mason on 12/16/15.
+ * Iam auth response.
+ *
+ * @author mason
  */
 public class IamAuthResponse implements Serializable {
     private Token token;
@@ -17,6 +19,12 @@ public class IamAuthResponse implements Serializable {
         return token.getCatalogByType(type);
     }
 
+    /**
+     * Get the public endpoint of given type.
+     *
+     * @param type service type
+     * @return endpoint
+     */
     public String getPublicEndpoint(String type) {
         Catalog catalog = getCatelogByType(type);
         if (null != catalog && null != catalog.getEndpoints()) {
@@ -37,6 +45,9 @@ public class IamAuthResponse implements Serializable {
         this.token = token;
     }
 
+    /**
+     * Token entity.
+     */
     public static class Token {
         private List<Catalog> catalog = new ArrayList<>();
         private User user;
@@ -53,6 +64,12 @@ public class IamAuthResponse implements Serializable {
             this.catalog = catalog;
         }
 
+        /**
+         * Find the catalog type.
+         *
+         * @param type service type
+         * @return catalog
+         */
         public Catalog getCatalogByType(String type) {
             if (catalog != null) {
                 for (Catalog cat : catalog) {

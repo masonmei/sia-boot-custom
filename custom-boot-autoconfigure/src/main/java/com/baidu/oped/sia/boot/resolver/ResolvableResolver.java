@@ -10,7 +10,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  */
 public interface ResolvableResolver {
 
-    Resolvable resolve(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                       NativeWebRequest webRequest, WebDataBinderFactory binderFactory);
+    Resolvable resolve(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest,
+            WebDataBinderFactory binderFactory);
 
 }

@@ -80,24 +80,6 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
-    private LocaleResolver buildCookieResolver(I18nProperties.CookieConfig config) {
-        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-        localeResolver.setCookieMaxAge(config.getMaxAge());
-        localeResolver.setCookieName(config.getName());
-        if (!StringUtils.isEmpty(config.getDomain())) {
-            localeResolver.setCookieDomain(config.getDomain());
-        }
-
-        localeResolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
-        return localeResolver;
-    }
-
-    private LocaleResolver buildSessionResolver() {
-        SessionLocaleResolver resolver = new SessionLocaleResolver();
-        resolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
-        return resolver;
-    }
-
     /**
      * Define message source bean.
      *
@@ -114,5 +96,23 @@ public class I18nAutoConfiguration extends WebMvcConfigurerAdapter {
         messageSource.setBasenames(msgBaseNames.toArray(new String[msgBaseNames.size()]));
         messageSource.setDefaultEncoding(DEFAULT_ENCODING);
         return messageSource;
+    }
+
+    private LocaleResolver buildCookieResolver(I18nProperties.CookieConfig config) {
+        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+        localeResolver.setCookieMaxAge(config.getMaxAge());
+        localeResolver.setCookieName(config.getName());
+        if (!StringUtils.isEmpty(config.getDomain())) {
+            localeResolver.setCookieDomain(config.getDomain());
+        }
+
+        localeResolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
+        return localeResolver;
+    }
+
+    private LocaleResolver buildSessionResolver() {
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
+        resolver.setDefaultLocale(new Locale(properties.getDefaultLocale()));
+        return resolver;
     }
 }

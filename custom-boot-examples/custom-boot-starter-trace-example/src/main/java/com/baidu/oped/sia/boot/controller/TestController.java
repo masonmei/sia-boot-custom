@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
     @RequestMapping(value = {"home"},
-                    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public String home() {
-        return String.format("Trace home with id %s start at %s",
-                RequestInfoHolder.traceId(),
+        return String.format("Trace home with id %s start at %s", RequestInfoHolder.traceId(),
                 RequestInfoHolder.traceTimestamp());
     }
 }

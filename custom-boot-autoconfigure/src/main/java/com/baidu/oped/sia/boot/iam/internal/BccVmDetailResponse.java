@@ -7,13 +7,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * Created by mason on 12/16/15.
+ * Bcc VM Details response.
+ *
+ * @author mason
  */
 public class BccVmDetailResponse {
     private Server server;
 
+    /**
+     * Get the floating ips.
+     *
+     * @return floating ip
+     */
     public List<String> getFloatingIps() {
         if (server != null) {
             return server.getFloatingIps();
@@ -29,6 +37,9 @@ public class BccVmDetailResponse {
         this.server = server;
     }
 
+    /**
+     * Server entity.
+     */
     public static class Server {
         private String id;
         private String status;
@@ -45,18 +56,18 @@ public class BccVmDetailResponse {
             this.addresses = addresses;
         }
 
+        /**
+         * Get all the floating ips.
+         *
+         * @return floating ips
+         */
         public List<String> getFloatingIps() {
             List<String> floatingIps = new ArrayList<>();
             if (!CollectionUtils.isEmpty(addresses)) {
-                for (List<Address> address : addresses.values()) {
-                    if (!CollectionUtils.isEmpty(address)) {
-                        for (Address addr : address) {
-                            if (addr.getType().equalsIgnoreCase("floating")) {
-                                floatingIps.add(addr.getAddr());
-                            }
-                        }
-                    }
-                }
+                addresses.values().stream().filter(address -> !CollectionUtils.isEmpty(address)).forEach(address -> {
+                    floatingIps.addAll(address.stream().filter(addr -> addr.getType().equalsIgnoreCase("floating"))
+                            .map(Address::getAddr).collect(Collectors.toList()));
+                });
             }
             return floatingIps;
         }
@@ -94,6 +105,9 @@ public class BccVmDetailResponse {
         }
     }
 
+    /**
+     * Address in server.
+     */
     public static class Address {
         @JsonProperty("OS-EXT-IPS-MAC:mac_addr")
         private String mac;

@@ -13,21 +13,18 @@ package com.baidu.oped.sia.boot.client;
 public interface Context<T> {
 
     /**
+     * Get the context information.
+     *
+     * @return String present context.
+     */
+    String contextInfo();
+
+    /**
      * Get the execution times.
      *
      * @return execution times.
      */
     int getExecutions();
-
-    /**
-     * Mark an execution of the task.
-     */
-    void markExecution();
-
-    /**
-     * Mark the execution of the task as completed.
-     */
-    void markComplete();
 
     /**
      * Check if the task complete successfully.
@@ -37,11 +34,14 @@ public interface Context<T> {
     boolean isComplete();
 
     /**
-     * Get the context information.
-     *
-     * @return String present context.
+     * Mark the execution of the task as completed.
      */
-    String contextInfo();
+    void markComplete();
+
+    /**
+     * Mark an execution of the task.
+     */
+    void markExecution();
 
     /**
      * Get the task execution result.

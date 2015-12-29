@@ -33,48 +33,13 @@ import java.util.Set;
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(SpringFoxProperties.class)
 @ConditionalOnProperty(prefix = SPRING_FOX_PREFIX,
-                       name = ENABLED,
-                       havingValue = "true",
-                       matchIfMissing = false)
+        name = ENABLED,
+        havingValue = "true",
+        matchIfMissing = false)
 @EnableSwagger2
 public class SpringFoxAutoConfiguration extends WebMvcConfigurerAdapter {
     @Autowired
     private SpringFoxProperties properties;
-
-    /**
-     * Api Docket Bean.
-     *
-     * @return the docket.
-     */
-    @Bean
-    public Docket apiDocket() {
-        Docket docket = new Docket(DocumentationType.SWAGGER_2);
-        docket.groupName(properties.getGroupName())
-                .apiInfo(buildApiInfo())
-                .select()
-                .paths(buildPaths())
-                .build();
-        return docket;
-    }
-
-    private ApiInfo buildApiInfo() {
-        return new ApiInfo(properties.getApiInfo().getTitle(),
-                properties.getApiInfo().getDescription(),
-                properties.getApiInfo().getVersion(),
-                properties.getApiInfo().getTermsOfServiceUrl(),
-                properties.getApiInfo().getContact(),
-                properties.getApiInfo().getLicense(),
-                properties.getApiInfo().getLicenseUrl());
-    }
-
-    private Predicate<String> buildPaths() {
-        Set<Predicate<String>> predicates = new HashSet<>();
-        for (String pattern : properties.getPatterns()) {
-            Predicate<String> ant = PathSelectors.ant(pattern);
-            predicates.add(ant);
-        }
-        return Predicates.or(predicates);
-    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -87,5 +52,33 @@ public class SpringFoxAutoConfiguration extends WebMvcConfigurerAdapter {
         final String swaggerEndpoint = "/swagger-ui.html";
         registry.addResourceHandler(swaggerEndpoint)
                 .addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
+    }
+
+    /**
+     * Api Docket Bean.
+     *
+     * @return the docket.
+     */
+    @Bean
+    public Docket apiDocket() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2);
+        docket.groupName(properties.getGroupName()).apiInfo(buildApiInfo()).select().paths(buildPaths()).build();
+        return docket;
+    }
+
+    private ApiInfo buildApiInfo() {
+        return new ApiInfo(properties.getApiInfo().getTitle(), properties.getApiInfo().getDescription(),
+                properties.getApiInfo().getVersion(), properties.getApiInfo().getTermsOfServiceUrl(),
+                properties.getApiInfo().getContact(), properties.getApiInfo().getLicense(),
+                properties.getApiInfo().getLicenseUrl());
+    }
+
+    private Predicate<String> buildPaths() {
+        Set<Predicate<String>> predicates = new HashSet<>();
+        for (String pattern : properties.getPatterns()) {
+            Predicate<String> ant = PathSelectors.ant(pattern);
+            predicates.add(ant);
+        }
+        return Predicates.or(predicates);
     }
 }

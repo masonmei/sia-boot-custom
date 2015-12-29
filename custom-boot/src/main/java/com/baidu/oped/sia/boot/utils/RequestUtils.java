@@ -18,15 +18,6 @@ public abstract class RequestUtils {
     }
 
     /**
-     * Get the trace start timestamp from RequestInfoHolder.
-     *
-     * @return trace start timestamp in long
-     */
-    public static Long getTraceStartTime() {
-        return RequestInfoHolder.traceTimestamp();
-    }
-
-    /**
      * Get the trace source client ip from RequestInfoHolder.
      *
      * @return trace source client ip.
@@ -46,6 +37,15 @@ public abstract class RequestUtils {
             return integer;
         }
         return -1;
+    }
+
+    /**
+     * Get the trace start timestamp from RequestInfoHolder.
+     *
+     * @return trace start timestamp in long
+     */
+    public static Long getTraceStartTime() {
+        return RequestInfoHolder.traceTimestamp();
     }
 
 

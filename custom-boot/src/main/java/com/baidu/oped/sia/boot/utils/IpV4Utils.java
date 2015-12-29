@@ -15,19 +15,15 @@ public abstract class IpV4Utils {
     public static final Pattern PATTERN_IPV4 = Pattern.compile("^(?:" + PATTERN_255 + "\\.){3}" + PATTERN_255 + "$");
 
     /**
-     * Check if the client ip in the given ip ranges.
+     * Convert ipv4 string to long.
      *
-     * @param ipOrRanges the checking ranges
-     * @param clientIp   the client ip
-     * @return checking result
+     * @param ip ipv4 address
+     * @return the long present ip address
      */
-    public static boolean isInRanges(List<String> ipOrRanges, String clientIp) {
-        for (String ipOrRange : ipOrRanges) {
-            if (isInRange(ipOrRange, clientIp)) {
-                return true;
-            }
-        }
-        return false;
+    public static long ipToLong(String ip) {
+        String[] octets = ip.split("\\.");
+        return (Long.parseLong(octets[0]) << 24) + (Integer.parseInt(octets[1]) << 16) + (Integer.parseInt(octets[2])
+                << 8) + Integer.parseInt(octets[3]);
     }
 
     /**
@@ -53,15 +49,19 @@ public abstract class IpV4Utils {
     }
 
     /**
-     * Convert ipv4 string to long.
+     * Check if the client ip in the given ip ranges.
      *
-     * @param ip ipv4 address
-     * @return the long present ip address
+     * @param ipOrRanges the checking ranges
+     * @param clientIp   the client ip
+     * @return checking result
      */
-    public static long ipToLong(String ip) {
-        String[] octets = ip.split("\\.");
-        return (Long.parseLong(octets[0]) << 24) + (Integer.parseInt(octets[1]) << 16)
-                + (Integer.parseInt(octets[2]) << 8) + Integer.parseInt(octets[3]);
+    public static boolean isInRanges(List<String> ipOrRanges, String clientIp) {
+        for (String ipOrRange : ipOrRanges) {
+            if (isInRange(ipOrRange, clientIp)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -72,8 +72,8 @@ public abstract class IpV4Utils {
      */
     public static boolean isPrivate(String ip) {
         long longIp = ipToLong(ip);
-        return (longIp >= ipToLong("10.0.0.0") && longIp <= ipToLong("10.255.255.255"))
-                || (longIp >= ipToLong("172.16.0.0") && longIp <= ipToLong("172.31.255.255"))
+        return (longIp >= ipToLong("10.0.0.0") && longIp <= ipToLong("10.255.255.255")) || (
+                longIp >= ipToLong("172.16.0.0") && longIp <= ipToLong("172.31.255.255"))
                 || longIp >= ipToLong("192.168.0.0") && longIp <= ipToLong("192.168.255.255");
     }
 

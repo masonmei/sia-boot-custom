@@ -42,10 +42,6 @@ public class Page implements Resolvable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("page", page)
-                .add("size", size)
-                .add("total", total)
-                .toString();
+        return MoreObjects.toStringHelper(this).add("page", page).add("size", size).add("total", total).toString();
     }
 }

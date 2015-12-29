@@ -9,7 +9,9 @@ import org.springframework.util.Assert;
 import java.io.Serializable;
 
 /**
- * Created by mason on 12/16/15.
+ * Iam Auth request.
+ *
+ * @author mason
  */
 public class IamAuthRequest implements Serializable {
     public static final String IAM_AUTH_REQUEST_ENDPOINT_TEMPLATE = "%s://%s:%s/v3/auth/tokens";
@@ -87,6 +89,11 @@ public class IamAuthRequest implements Serializable {
         this.protocol = protocol;
     }
 
+    /**
+     * Get the request body.
+     *
+     * @return String represent request body.
+     */
     public String getRequestBody() {
         Assert.hasLength(username, "UserName must have length.");
         Assert.hasLength(password, "Password must have length.");
@@ -95,6 +102,11 @@ public class IamAuthRequest implements Serializable {
         return format(IAM_AUTH_REQUEST_BODY_TEMPLATE, username, password, projectId);
     }
 
+    /**
+     * Get the request endpoint uri.
+     *
+     * @return request uri
+     */
     public String getRequestEndpoint() {
         Assert.hasLength(protocol, "Protocol must have length.");
         Assert.hasLength(host, "Host must have length.");
@@ -116,31 +128,22 @@ public class IamAuthRequest implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        IamAuthRequest request = (IamAuthRequest) o;
-        return Objects.equal(host, request.host)
-                && Objects.equal(port, request.port)
-                && Objects.equal(protocol, request.protocol)
-                && Objects.equal(username, request.username)
-                && Objects.equal(password, request.password)
-                && Objects.equal(projectId, request.projectId);
+        IamAuthRequest request = (IamAuthRequest) other;
+        return Objects.equal(host, request.host) && Objects.equal(port, request.port) && Objects
+                .equal(protocol, request.protocol) && Objects.equal(username, request.username) && Objects
+                .equal(password, request.password) && Objects.equal(projectId, request.projectId);
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("host", host)
-                .add("port", port)
-                .add("protocol", protocol)
-                .add("username", username)
-                .add("password", password)
-                .add("projectId", projectId)
-                .toString();
+        return MoreObjects.toStringHelper(this).add("host", host).add("port", port).add("protocol", protocol)
+                .add("username", username).add("password", password).add("projectId", projectId).toString();
     }
 }

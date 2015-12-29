@@ -1,6 +1,8 @@
-package com.baidu.oped.sia.boot.exception.internal;
+package com.baidu.oped.sia.boot.exception.internal.config;
 
 import static com.baidu.oped.sia.boot.exception.ExceptionKeyProvider.INVALID_CONFIGURATION_FILE_PATH;
+
+import com.baidu.oped.sia.boot.exception.internal.config.ApplicationConfigurationException;
 
 /**
  * Invalid Configuration File Path exception.

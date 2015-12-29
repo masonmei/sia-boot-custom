@@ -41,9 +41,8 @@ public class IamAuthenticationFilter extends OncePerRequestFilter {
 
         MDC.put(REMOTE_ADDRESS, remoteAddress);
 
-        if (RequestInfoHolder.inWhiteList()
-                || !iamManager.isActive()
-                || !accessControl.needAuthWithIam(request.getRequestURI())) {
+        if (RequestInfoHolder.inWhiteList() || !iamManager.isActive() || !accessControl
+                .needAuthWithIam(request.getRequestURI())) {
             RequestInfoHolder.setIgnoreAuth(TRUE);
         }
 

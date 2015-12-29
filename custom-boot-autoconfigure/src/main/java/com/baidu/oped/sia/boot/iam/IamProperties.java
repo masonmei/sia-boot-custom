@@ -23,6 +23,7 @@ public class IamProperties {
     private String username;
     private String password;
     private String domain = "default";
+    private String projectId;
     private int tokenDiscardTtl = 30;
     private int maxCacheSize = 10000;
     private int cacheTtl = 300;
@@ -83,6 +84,14 @@ public class IamProperties {
 
     public void setPort(String port) {
         this.port = port;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     public String getProtocol() {

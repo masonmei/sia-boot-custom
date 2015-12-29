@@ -7,5 +7,11 @@ package com.baidu.oped.sia.boot.client;
  */
 public interface Client {
 
+    /**
+     * Execute the remoting task.
+     *
+     * @param task remoting task
+     * @param <T>  Task result type
+     */
     <T> void execute(Task<T> task);
 }

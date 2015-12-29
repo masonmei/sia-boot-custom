@@ -30,20 +30,40 @@ public class BasicResponse<T> {
 
     private T data;
 
+    public static <T> Builder<T> builder() {
+        return new Builder<>();
+    }
+
+    public SystemCode getCode() {
+        return code;
+    }
+
+    public void setCode(SystemCode code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getRequestId() {
         return requestId;
     }
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
-    }
-
-    public Long getTraceStartTime() {
-        return traceStartTime;
-    }
-
-    public void setTraceStartTime(Long traceStartTime) {
-        this.traceStartTime = traceStartTime;
     }
 
     public String getTraceSourceIp() {
@@ -62,32 +82,12 @@ public class BasicResponse<T> {
         this.traceSourceSeq = traceSourceSeq;
     }
 
-    public SystemCode getCode() {
-        return code;
+    public Long getTraceStartTime() {
+        return traceStartTime;
     }
 
-    public void setCode(SystemCode code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public static <T> Builder<T> builder() {
-        return new Builder<>();
+    public void setTraceStartTime(Long traceStartTime) {
+        this.traceStartTime = traceStartTime;
     }
 
     /**
@@ -103,41 +103,6 @@ public class BasicResponse<T> {
         private SystemCode code = SystemCode.OK;
         private String message = "";
         private T data;
-
-        public Builder requestId(String requestId) {
-            this.requestId = requestId;
-            return this;
-        }
-
-        public Builder code(SystemCode code) {
-            this.code = code;
-            return this;
-        }
-
-        public Builder message(String message) {
-            this.message = message;
-            return this;
-        }
-
-        public Builder traceStartTime(Long timestamp) {
-            this.traceStartTime = timestamp;
-            return this;
-        }
-
-        public Builder traceSourceIp(String sourceIp) {
-            this.traceSourceIp = sourceIp;
-            return this;
-        }
-
-        public Builder traceSourceSeq(int sourceSeq) {
-            this.traceSourceSeq = sourceSeq;
-            return this;
-        }
-
-        public Builder data(T data) {
-            this.data = data;
-            return this;
-        }
 
         /**
          * Build with context to BasicResponse.
@@ -174,6 +139,41 @@ public class BasicResponse<T> {
                 basicResponse.setData(data);
             }
             return basicResponse;
+        }
+
+        public Builder code(SystemCode code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder data(T data) {
+            this.data = data;
+            return this;
+        }
+
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        public Builder requestId(String requestId) {
+            this.requestId = requestId;
+            return this;
+        }
+
+        public Builder traceSourceIp(String sourceIp) {
+            this.traceSourceIp = sourceIp;
+            return this;
+        }
+
+        public Builder traceSourceSeq(int sourceSeq) {
+            this.traceSourceSeq = sourceSeq;
+            return this;
+        }
+
+        public Builder traceStartTime(Long timestamp) {
+            this.traceStartTime = timestamp;
+            return this;
         }
     }
 }

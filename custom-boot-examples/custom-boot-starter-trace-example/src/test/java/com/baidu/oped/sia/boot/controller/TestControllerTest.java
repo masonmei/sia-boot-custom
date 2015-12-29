@@ -1,7 +1,6 @@
 package com.baidu.oped.sia.boot.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.head;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,21 +40,13 @@ public class TestControllerTest {
     @org.junit.Test
     public void testHome() throws Exception {
         String traceId = UUID.randomUUID().toString();
-        this.mockMvc.perform(
-                get("/home")
-                        .header("X-IGITRAS-TRACE-ID", traceId)
-        )
-                .andExpect(status().isOk())
+        this.mockMvc.perform(get("/home").header("X-IGITRAS-TRACE-ID", traceId)).andExpect(status().isOk())
                 .andExpect(header().string("X-IGITRAS-TRACE-ID", traceId));
 
         long traceTimestamp = Calendar.getInstance().getTimeInMillis();
         this.mockMvc.perform(
-                get("/home")
-                        .header("X-IGITRAS-TRACE-ID", traceId)
-                        .header("X-IGITRAS-TRACE-TIMESTAMP", traceTimestamp)
-                        .header("X-IGITRAS-TRACE-SOURCE-SEQ", 3))
-                .andDo(print())
-                .andExpect(status().isOk())
+                get("/home").header("X-IGITRAS-TRACE-ID", traceId).header("X-IGITRAS-TRACE-TIMESTAMP", traceTimestamp)
+                        .header("X-IGITRAS-TRACE-SOURCE-SEQ", 3)).andDo(print()).andExpect(status().isOk())
                 .andExpect(header().string("X-IGITRAS-TRACE-ID", traceId))
                 .andExpect(header().longValue("X-IGITRAS-TRACE-TIMESTAMP", traceTimestamp))
                 .andExpect(header().string("X-IGITRAS-TRACE-SOURCE-IP", "0:0:0:0:0:0:0:1"))
