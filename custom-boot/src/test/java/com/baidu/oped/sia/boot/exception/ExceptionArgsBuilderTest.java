@@ -2,14 +2,18 @@ package com.baidu.oped.sia.boot.exception;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 
 /**
- * Created by mason on 12/8/15.
+ * Exception Arguments Builder test case.
+ *
+ * @author mason
  */
 public class ExceptionArgsBuilderTest {
 
-    @org.junit.Test
+    @Test
     public void testAnd() throws Exception {
         Object[] args = ExceptionArgsBuilder.get().and("test").args();
         assertEquals(1, args.length);
@@ -24,7 +28,7 @@ public class ExceptionArgsBuilderTest {
         assertEquals("test, test and test", args[0]);
     }
 
-    @org.junit.Test
+    @Test
     public void testAnd2() throws Exception {
         Object[] args = ExceptionArgsBuilder.get().and(Arrays.asList("test")).args();
         assertEquals(1, args.length);
@@ -39,7 +43,7 @@ public class ExceptionArgsBuilderTest {
         assertEquals("test, test and test", args[0]);
     }
 
-    @org.junit.Test
+    @Test
     public void testArgs() throws Exception {
         Object[] args = ExceptionArgsBuilder.get().args();
         assertEquals(0, args.length);
@@ -49,7 +53,7 @@ public class ExceptionArgsBuilderTest {
         assertEquals("test", args[0]);
     }
 
-    @org.junit.Test
+    @Test
     public void testJoin() throws Exception {
         String join = ExceptionArgsBuilder.get().join("and", "test");
         assertEquals("test", join);
@@ -61,7 +65,7 @@ public class ExceptionArgsBuilderTest {
         assertEquals("test, test and test", join);
     }
 
-    @org.junit.Test
+    @Test
     public void testJoin2() throws Exception {
         String join = ExceptionArgsBuilder.get().join("and", Arrays.asList("test"));
         assertEquals("test", join);
@@ -73,7 +77,7 @@ public class ExceptionArgsBuilderTest {
         assertEquals("test, test and test", join);
     }
 
-    @org.junit.Test
+    @Test
     public void testOr() throws Exception {
         Object[] args = ExceptionArgsBuilder.get().or("test").args();
         assertEquals(1, args.length);
@@ -88,7 +92,7 @@ public class ExceptionArgsBuilderTest {
         assertEquals("test, test or test", args[0]);
     }
 
-    @org.junit.Test
+    @Test
     public void testOr2() throws Exception {
         Object[] args = ExceptionArgsBuilder.get().or(Arrays.asList("test")).args();
         assertEquals(1, args.length);
@@ -103,7 +107,7 @@ public class ExceptionArgsBuilderTest {
         assertEquals("test, test or test", args[0]);
     }
 
-    @org.junit.Test
+    @Test
     public void testRange() throws Exception {
         Object[] args = ExceptionArgsBuilder.get().range(null, null).args();
         assertEquals(1, args.length);
@@ -122,7 +126,7 @@ public class ExceptionArgsBuilderTest {
         assertEquals("[4, 5]", args[0]);
     }
 
-    @org.junit.Test
+    @Test
     public void testWith() throws Exception {
         Object[] args = ExceptionArgsBuilder.get().with("test").args();
         assertEquals(1, args.length);

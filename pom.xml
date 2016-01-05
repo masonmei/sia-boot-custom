@@ -27,6 +27,9 @@
         <module>custom-boot-starters</module>
         <module>custom-boot-dependency</module>
         <module>custom-boot-examples</module>
+        <module>custom-boot-generate</module>
+        <module>custom-boot-dist</module>
+        <module>custom-boot-test</module>
     </modules>
 
 
